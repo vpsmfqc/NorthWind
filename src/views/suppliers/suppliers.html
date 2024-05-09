@@ -1,0 +1,79 @@
+<div class="container space">
+    <h2>Proveedores</h2>
+
+    <searcher-component rows-by-page="10" message="supplierCtrl.message" is-found="supplierCtrl.isFound"
+        is-loading="supplierCtrl.isLoading"></searcher-component>
+
+
+    <!-- Espacio para tabla  -->
+
+    <div ng-if="!supplierCtrl.isLoading" class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th></th>
+                    <th></th>
+                    <th>
+                        Identificación
+                        <a style="cursor: pointer;" ng-click="supplierCtrl.sortColumn(0)">
+                            <span class="ml-2" ng-if="supplierCtrl.orderArrays[0]">
+                                <i class="fa-solid fa-sort-up"></i></span>
+                            <span class="ml-2" ng-if="!supplierCtrl.orderArrays[0]">
+                                <i class="fa-solid fa-sort-down"></i></span>
+                        </a>
+                    </th>
+                    <th>Compañía
+                        <a style="cursor: pointer;" ng-click="supplierCtrl.sortColumn(1)">
+                            <span class="ml-2" ng-if="supplierCtrl.orderArrays[1]">
+                                <i class="fa-solid fa-sort-up"></i></span>
+                            <span class="ml-2" ng-if="!supplierCtrl.orderArrays[1]">
+                                <i class="fa-solid fa-sort-down"></i></span>
+                        </a>
+                    </th>
+                    <th>Nombre
+                        <a style="cursor: pointer;" ng-click="supplierCtrl.sortColumn(2)">
+                            <span class="ml-2" ng-if="supplierCtrl.orderArrays[2]">
+                                <i class="fa-solid fa-sort-up"></i></span>
+                            <span class="ml-2" ng-if="!supplierCtrl.orderArrays[2]">
+                                <i class="fa-solid fa-sort-down"></i></span>
+                        </a>
+                    </th>
+                    <th>Cargo
+                        <a style="cursor: pointer;" ng-click="supplierCtrl.sortColumn(3)">
+                            <span class="ml-2" ng-if="supplierCtrl.orderArrays[3]">
+                                <i class="fa-solid fa-sort-up"></i></span>
+                            <span class="ml-2" ng-if="!supplierCtrl.orderArrays[3]">
+                                <i class="fa-solid fa-sort-down"></i></span>
+                        </a>
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="supplier in supplierCtrl.arrayOfSuppliersByPage">
+                    <td>{{supplierCtrl.getIndex(supplier.id)}}</td>
+                    <td>
+                        <a class="text-primary" style="cursor: pointer;" ng-click="supplierCtrl.goTo(supplier.id)">
+                            <i class="fa-solid fa-pencil"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a class="text-danger" style="cursor: pointer;"
+                            ng-click="supplierCtrl.deleteSupplier(supplier.id)">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
+                    <td> {{supplier.id}} </td>
+                    <td>{{supplier.companyName}}</td>
+                    <td>{{supplier.contactName}}</td>
+                    <td>{{supplier.contactTitle}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <paginator-component ng-if="!supplierCtrl.isLoading" is-loading="supplierCtrl.isLoading"
+        current-page="supplierCtrl.currentPage" last-page="supplierCtrl.getLastPage()"></paginator-component>
+
+</div>

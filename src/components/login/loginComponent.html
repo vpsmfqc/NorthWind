@@ -1,0 +1,31 @@
+<div ng-if="!loginCtrl.getIsLogged()" class="row">
+  <div class="col-md-6 offset-md-3 login-form">
+    <h2 class="text-center">Login</h2>
+    <form name="formLogin" ng-submit="loginCtrl.submit()">
+      <div class="form-group">
+        <label for="email">Correo:</label>
+        <input type="email" class="form-control" id="email" name="email" ng-model="loginCtrl.email" placeholder="Correo"
+          required>
+        <small class="text-danger"
+          ng-if="formLogin.email.$error.required && (formLogin.email.$touched || formLogin.$submitted)">Debe ingresar el
+          correo.</small>
+        <small class="text-danger"
+          ng-if="formLogin.email.$error.email && (formLogin.email.$touched || formLogin.$submitted)">Ingrese un correo
+          válido.</small>
+      </div>
+      <div class="form-group">
+        <label for="password">Contraseña:</label>
+        <input type="password" class="form-control" id="password" name="password" ng-model="loginCtrl.password"
+          placeholder="Contraseña" required>
+        <small class="text-danger"
+          ng-if="formLogin.password.$error.required && (formLogin.password.$touched || formLogin.$submitted)">Debe
+          ingresar la contraseña.</small>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" ng-disabled="formLogin.$invalid">Aceptar</button>
+    </form>
+  </div>
+</div>
+
+<div ng-if="loginCtrl.getIsLogged()" class="row">
+  <h2>Bienvenido</h2>
+</div>

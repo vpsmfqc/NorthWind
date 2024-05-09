@@ -1,0 +1,38 @@
+<div ng-if="tableCtrl.isVisible" class="card mt-3" style="margin-bottom: 1.5rem;">
+    <div class="card-header" style="display: flex; flex-direction: row; justify-content: space-between;">
+        <h4>Órdenes</h4>
+        <button type="button" class="btn btn-primary" ng-click="tableCtrl.close()">Cerrar</button>
+    </div>
+
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th></th>
+                    <th>ID</th>
+                    <th>ID Cliente</th>
+                    <th>Fecha órden</th>
+                    <th>Fecha Envío</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="order in tableCtrl.orderList">
+                    <td>{{$index + 1}}</td>
+                    <td>
+                        <a class="text-primary" style="cursor: pointer;" ng-click="tableCtrl.goTo(order.id)">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </a>
+                    </td>
+                    <td>{{order.id}}</td>
+                    <td>{{order.customerId}}</td>
+                    <td>{{order.orderDate}}</td>
+                    <td>{{order.shippedDate}}</td>                                        
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- <paginator-component  is-loading="false" current-page="1" last-page="10"></paginator-component> -->
+
+</div>

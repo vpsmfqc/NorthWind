@@ -1,0 +1,35 @@
+<div ng-if="!paginatorCtrl.isLoading"
+        style="display: flex; flex-direction: row; justify-content: center; padding-top: 3vh;">
+        <ul class="pagination">
+            <li ng-if="paginatorCtrl.isFirstBtn()" class="page-item">
+                <a class="page-link" style="cursor: pointer;" ng-click="paginatorCtrl.goToPage(1)"
+                    style="cursor: pointer;">Primera</a>
+            </li>
+
+            <li ng-if="paginatorCtrl.isPreviusBtn()" class="page-item">
+                <a class="page-link" ng-click="paginatorCtrl.goBackward()" style="cursor: pointer;">&laquo;</a>
+            </li>
+            <li ng-if="paginatorCtrl.isPreviusBtn()" class="page-item">
+                <span class="page-link" ng-click="paginatorCtrl.goToPage(paginatorCtrl.getNumPreviusPage())"
+                    style="cursor: pointer;">{{paginatorCtrl.getNumPreviusPage()}}</span>
+            </li>
+
+            <li class="page-item">
+                <span class="page-link text-danger">{{paginatorCtrl.currentPage}}</span>
+            </li>
+
+
+            <li ng-if="paginatorCtrl.isNextBtn()" class="page-item">
+                <span class="page-link" ng-click="paginatorCtrl.goToPage(paginatorCtrl.getNumNextPage())"
+                    style="cursor: pointer;">{{paginatorCtrl.getNumNextPage()}}</span>
+            </li>
+            <li ng-if="paginatorCtrl.isNextBtn()" class="page-item">
+                <a class="page-link" ng-click="paginatorCtrl.goForward()" style="cursor: pointer;">&raquo;</a>
+            </li>
+
+            <li ng-if="paginatorCtrl.isLastBtn()" class="page-item">
+                <a class="page-link" style="cursor: pointer;"
+                    ng-click="paginatorCtrl.goToPage(paginatorCtrl.getLastPage())">Última</a>
+            </li>
+        </ul>
+</div>

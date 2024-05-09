@@ -1,0 +1,109 @@
+<div class="container space">
+
+    <h2 ng-if="supplierEditCtrl.isNew">Nuevo Proveedor</h2>
+    <h2 ng-if="!supplierEditCtrl.isNew">Actualizar Proveedor</h2>
+
+    <!-- <div ng-if="supplierEditCtrl.isLoading" class="alert alert-info" role="alert">
+        <span class="mr-3"><i class="fa fa-spinner" aria-hidden="true"></i></span>  {{supplierEditCtrl.message}} 
+    </div> -->
+
+    <div ng-if="supplierEditCtrl.isLoading" class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div ng-if="!supplierEditCtrl.isLoading" class="row justify-content-center mt-3">
+        <div class="col-md-12">
+            <form name="formEdit" ng-submit="supplierEditCtrl.submit()" class="card">
+                <div class="card-header">
+                    <label for="id">ID</label>
+
+                    <input ng-if="!supplierEditCtrl.isNew" type="number" class="form-control" placeholder="Identificación"
+                        ng-model="supplierEditCtrl.supplierModel.id" readonly>
+
+                    <input ng-if="supplierEditCtrl.isNew" id="id" name="id" type="number" class="form-control"
+                        placeholder="Identificación" ng-model="supplierEditCtrl.supplierModel.id" readonly>
+
+                    <small ng-if="formEdit.id.$invalid && (formEdit.id.$touched||formEdit.id.$dirty)"
+                        class="form-text text-danger">Debe ingresar el id.</small>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="companyName">Compañía:</label>
+                        <input id="companyName" name="companyName" type="text" class="form-control"
+                            placeholder="Compañía" ng-model="supplierEditCtrl.supplierModel.companyName" required>
+                        <small
+                            ng-if="formEdit.companyName.$invalid && (formEdit.companyName.$touched || formEdit.companyName.$dirty)"
+                            class="form-text text-danger">Debe ingresar el nombre de la compañía.</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contactName">Nombre:</label>
+                        <input id="contactName" name="contactName" type="text" class="form-control" placeholder="Nombre"
+                            ng-model="supplierEditCtrl.supplierModel.contactName" required>
+                        <small
+                            ng-if="formEdit.contactName.$invalid && (formEdit.contactName.$touched || formEdit.contactName.$dirty)"
+                            class="form-text text-danger">Debe ingresar el nombre del cliente.</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contactTitle">Cargo:</label>
+                        <input id="contactTitle" name="contactTitle" type="text" class="form-control"
+                            placeholder="Cargo" ng-model="supplierEditCtrl.supplierModel.contactTitle" required>
+                        <small
+                            ng-if="formEdit.contactTitle.$invalid && (formEdit.contactTitle.$touched || formEdit.contactTitle.$dirty)"
+                            class="form-text text-danger">Debe ingresar el cargo.</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone">Teléfono:</label>
+                        <input id="phone" name="phone" type="text" class="form-control" placeholder="Teléfono"
+                            ng-model="supplierEditCtrl.supplierModel.address.phone" required>
+                        <small ng-if="formEdit.phone.$invalid && (formEdit.phone.$touched || formEdit.phone.$dirty)"
+                            class="form-text text-danger">Debe ingresar el teléfono.</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="country">Pais:</label>
+                        <input id="country" name="country" type="text" class="form-control" placeholder="Pais"
+                            ng-model="supplierEditCtrl.supplierModel.address.country" required>
+                        <small
+                            ng-if="formEdit.country.$invalid && (formEdit.country.$touched || formEdit.country.$dirty)"
+                            class="form-text text-danger">Debe ingresar el pais.</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="city">Ciudad:</label>
+                        <input id="city" name="city" type="text" class="form-control" placeholder="Ciudad"
+                            ng-model="supplierEditCtrl.supplierModel.address.city" required>
+                        <small ng-if="formEdit.city.$invalid && (formEdit.city.$touched || formEdit.city.$dirty)"
+                            class="form-text text-danger">Debe ingresar la ciudad.</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="postalCode">Código Postal:</label>
+                        <input id="postalCode" name="postalCode" type="text" class="form-control"
+                            placeholder="Código Postal" ng-model="supplierEditCtrl.supplierModel.address.postalCode" required>
+                        <small
+                            ng-if="formEdit.postalCode.$invalid && (formEdit.postalCode.$touched || formEdit.postalCode.$dirty)"
+                            class="form-text text-danger">Debe ingresar el código postal.</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="region">Región:</label>
+                        <input id="region" name="region" type="text" class="form-control" placeholder="Región"
+                            ng-model="supplierEditCtrl.supplierModel.address.region" required>
+                        <small ng-if="formEdit.region.$invalid && (formEdit.region.$touched || formEdit.region.$dirty)"
+                            class="form-text text-danger">Debe ingresar el nombre de la región.</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dirección">Dirección:</label>
+                        <input id="dirección" name="street" type="text" class="form-control" placeholder="Dirección"
+                            ng-model="supplierEditCtrl.supplierModel.address.street" required>
+                        <small ng-if="formEdit.street.$invalid && (formEdit.street.$touched || formEdit.street.$dirty)"
+                            class="form-text text-danger">Debe ingresar la dirección.</small>
+                    </div>
+                    <div>                        
+                        <button type="submit" class="btn btn-primary" ng-disabled="formEdit.$invalid">Guardar</button>
+                        <button type="button" class="btn btn-secondary"
+                            ng-click="supplierEditCtrl.goBack()">Atrás</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NorthWind API</title>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-animate/1.8.3/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-touch/1.8.3/angular-touch.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js"></script>
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
+
+    <link rel="stylesheet" href="https://npmcdn.com/angular-toastr/dist/angular-toastr.css" />
+    <link rel="stylesheet" href="./assets/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+
+<body ng-app="app" ng-controller="appController as appCtrl">
+    <header>
+        <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="#">NorthWind</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+
+                    <ul ng-if="appCtrl.isMenu()" class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#!/customers">Clientes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#!/products">Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#!/suppliers">Proveedores</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#!/orders">Órdenes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#!/" ng-click="appCtrl.logOut()">Salir</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav> -->
+
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid" style="margin-left: 10rem;">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">NorthWind</a>
+                </div>
+                <ul ng-if="appCtrl.isMenu()" class="nav navbar-nav navbar-left">
+                    <li>
+                        <a class="nav-link" href="#!/customers">Clientes</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="#!/products">Productos</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="#!/suppliers">Proveedores</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="#!/orders">Órdenes</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="#!/" ng-click="appCtrl.logOut()">Salir</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <ng-view></ng-view>
+
+    <!-- Applicacion MAIN point -->
+    <script src="./index.js"></script>
+
+    <!-- Auth service -->
+    <script src="./services/auth/authService.js"></script>
+
+    <!--Main Controller-->
+    <script src="./controllers/mainController.js"></script>
+
+    <!-- MODALES -->
+    <script src="./components/modalTable/modalTable.js"></script>
+    <!-- Components -->
+    <!-- <script src="./components/productRow/productRowComponent.js"></script> -->
+    <script src="./components/table/tableComponent.js"></script>
+    <script src="./components/login/loginComponent.js"></script>
+    <script src="./components/paginator/paginatorComponent.js"></script>
+    <script src="./components/searcher/searcherComponent.js"></script>
+    <script src="./components/detail/detailComponent.js"></script>
+
+
+    <!-- Suppliers -->
+    <script src="./services/suppliers/supplierService.js"></script>
+    <script src="./controllers/suppliers/suppliersController.js"></script>
+    <script src="./controllers/suppliers/supplierEditController.js"></script>
+
+    <!-- Categories -->
+    <script src="./services/categories/categoryService.js"></script>
+
+    <!--  Products -->
+    <script src="./services/produtcs/productService.js"></script>
+    <script src="./controllers/products/productsController.js"></script>
+    <script src="./controllers/products/productEditController.js"></script>
+
+    <!-- Customers -->
+    <script src="./services/customers/customerService.js"></script>
+    <script src="./controllers/customers/customersController.js"></script>
+    <script src="./controllers/customers/customerEditController.js"></script>
+
+    <!-- Orders -->
+    <script src="./services/orders/orderService.js"></script>
+    <script src="./controllers/orders/ordersController.js"></script>
+    <script src="./controllers/orders/orderEditController.js"></script>
+
+    <!--Bootstarp and JQuery-->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/831729e861.js" crossorigin="anonymous"></script>
+
+    <!-- Toastr  -->
+    <script src="https://npmcdn.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
+    <!-- momentjs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+    <!-- Simplify Js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/amplifyjs/1.1.2/amplify.min.js"></script>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap-tpls.js"></script>
+
+</body>
+
+</html>

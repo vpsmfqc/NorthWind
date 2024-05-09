@@ -1,0 +1,98 @@
+<div class="container space">
+    <h2>Clientes</h2>
+    <div class="pt-3 pb-3" style="display: flex; flex-direction: row; justify-content: space-between;">
+        <button type="button" class="btn btn-primary" ng-click="customerCtrl.goToNew()">Crear</button>
+        <select class="form-select form-control" style="width: 8rem;" ng-change="customerCtrl.paginate()" ng-model="customerCtrl.rowsByPage">
+            <option ng-repeat="page in customerCtrl.listOfPages" ng-value="page">{{page}}</option>
+        </select>
+    </div>
+    <div class="pb-3" style="display: flex; flex-direction: row;">
+        <input class="form-control" type="text" placeholder="Buscar" ng-model="customerCtrl.searchInput"
+            ng-keyup="customerCtrl.search()">
+        <button type="button" class="btn btn-primary ml-3" ng-click="customerCtrl.search()">Buscar</button>
+    </div>
+    <!-- <div ng-if="customerCtrl.isLoading" class="alert alert-info" role="alert">
+        <span class="mr-3"><i class="fa fa-spinner" aria-hidden="true"></i></span> {{customerCtrl.message}} 
+    </div> -->
+    <div ng-if="!customerCtrl.isFound && customerCtrl.isTyping" class="alert alert-info" role="alert">
+        {{customerCtrl.message}}
+    </div>
+
+    <div ng-if="customerCtrl.isLoading" class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div ng-if="!customerCtrl.isLoading" class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th></th>
+                    <th></th>
+                    <th>
+                        Identificación
+                        <a style="cursor: pointer;" ng-click="customerCtrl.sortColumn(0)">
+                            <span class="ml-2" ng-if="customerCtrl.orderArrays[0]">
+                                <i class="fa-solid fa-sort-up"></i></span>
+                            <span class="ml-2" ng-if="!customerCtrl.orderArrays[0]">
+                                <i class="fa-solid fa-sort-down"></i></span>
+                        </a>
+                    </th>
+                    <th>Compañía
+                        <a style="cursor: pointer;" ng-click="customerCtrl.sortColumn(1)">
+                            <span class="ml-2" ng-if="customerCtrl.orderArrays[1]">
+                                <i class="fa-solid fa-sort-up"></i></span>
+                            <span class="ml-2" ng-if="!customerCtrl.orderArrays[1]">
+                                <i class="fa-solid fa-sort-down"></i></span>
+                        </a>
+                    </th>
+                    <th>Nombre
+                        <a style="cursor: pointer;" ng-click="customerCtrl.sortColumn(2)">
+                            <span class="ml-2" ng-if="customerCtrl.orderArrays[2]">
+                                <i class="fa-solid fa-sort-up"></i></span>
+                            <span class="ml-2" ng-if="!customerCtrl.orderArrays[2]">
+                                <i class="fa-solid fa-sort-down"></i></span>
+                        </a>
+                    </th>
+                    <th>Cargo
+                        <a style="cursor: pointer;" ng-click="customerCtrl.sortColumn(3)">
+                            <span class="ml-2" ng-if="customerCtrl.orderArrays[3]">
+                                <i class="fa-solid fa-sort-up"></i></span>
+                            <span class="ml-2" ng-if="!customerCtrl.orderArrays[3]">
+                                <i class="fa-solid fa-sort-down"></i></span>
+                        </a>
+                    </th>
+                    <th><a>Teléfono</a></th>
+                    <th><a>Pais</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="customer in customerCtrl.arrayOfCustomersByPage">
+                    <td>{{customerCtrl.getIndex(customer.id)}}</td>
+                    <td>
+                        <a class="text-primary" style="cursor: pointer;" ng-click="customerCtrl.goTo(customer.id)">
+                            <i class="fa-solid fa-pencil"></i></a>
+                    </td>
+                    <td>
+                        <a class="text-danger" style="cursor: pointer;"
+                            ng-click="customerCtrl.deleteCustomer(customer.id)">
+                            <i class="fa-solid fa-trash"></i></a>
+                    </td>
+                    <td> {{customer.id}} </td>
+                    <td>{{customer.companyName}}</td>
+                    <td>{{customer.contactName}}</td>
+                    <td>{{customer.contactTitle}}</td>
+                    <td>{{customer.address.phone}}</td>
+                    <td>{{customer.address.country}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>   
+
+
+    <paginator-component ng-if="!customerCtrl.isLoading && !customerCtrl.isTyping" is-loading="customerCtrl.isLoading" current-page="customerCtrl.currentPage" last-page="customerCtrl.getLastPage()"></paginator-component>
+
+    
+</div>

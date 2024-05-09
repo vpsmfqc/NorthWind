@@ -1,0 +1,84 @@
+<div class="container space">
+    <h2>Productos</h2>
+    <div class="pt-3 pb-3" style="display: flex; flex-direction: row; justify-content: space-between;">
+        <button type="button" class="btn btn-primary" ng-click="productCtrl.goToNew()">Crear</button>
+        <select class="form-select form-control" style="width: 8rem;" ng-change="productCtrl.paginate()" ng-model="productCtrl.rowsByPage">
+            <option ng-repeat="page in productCtrl.listOfPages" ng-value="page">{{page}}</option>
+        </select>
+    </div>
+    <div class="pb-3" style="display: flex; flex-direction: row;">
+        <input class="form-control" type="text" placeholder="Buscar" ng-model="productCtrl.searchInput"
+            ng-keyup="productCtrl.search()">
+        <button type="button" class="btn btn-primary ml-3" ng-click="productCtrl.search()">Buscar</button>
+    </div>
+    <!-- <div ng-if="productCtrl.isLoading" class="alert alert-info" role="alert">
+        <span class="mr-3"><i class="fa fa-spinner" aria-hidden="true"></i></span> {{productCtrl.message}}
+    </div> -->
+    <div ng-if="!productCtrl.isFound && productCtrl.isTyping" class="alert alert-info" role="alert">
+        {{productCtrl.message}}
+    </div>
+
+    <div ng-if="productCtrl.isLoading" class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div ng-if="!productCtrl.isLoading" class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th></th>
+                    <th></th>
+                    <th>
+                        ID
+                        <a style="cursor: pointer;" ng-click="productCtrl.sortColumn(0)">
+                            <span class="ml-2" ng-if="productCtrl.orderArrays[0]">
+                                <i class="fa-solid fa-sort-up"></i></span>
+                            <span class="ml-2" ng-if="!productCtrl.orderArrays[0]">
+                                <i class="fa-solid fa-sort-down"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        Nombre
+                        <a style="cursor: pointer;" ng-click="productCtrl.sortColumn(1)">
+                            <span class="ml-2" ng-if="productCtrl.orderArrays[1]">
+                                <i class="fa-solid fa-sort-up"></i></span>
+                            <span class="ml-2" ng-if="!productCtrl.orderArrays[1]">
+                                <i class="fa-solid fa-sort-down"></i></span>
+                        </a>
+                    </th>
+                    <th><a>Proveedor</a></th>
+                    <th><a>Categoría</a></th>
+                    <th><a>Cantidad</a></th>
+                    <th><a>Precio</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="product in productCtrl.arrayOfProductsByPage">
+                    <td>{{productCtrl.getIndex(product.id)}}</td>
+                    <td>
+                        <a class="text-primary" style="cursor: pointer;" ng-click="productCtrl.goTo(product.id)">
+                            <i class="fa-solid fa-pencil"></i></a>
+                    </td>
+                    <td>
+                        <a class="text-danger" style="cursor: pointer;"
+                            ng-click="productCtrl.deleteProduct(product.id)">
+                            <i class="fa-solid fa-trash"></i></a>
+                    </td>
+                    <td>{{product.id}}</td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.companyName}}</td>
+                    <td>{{product.categoryName}}</td>
+                    <td>{{product.quantityPerUnit}}</td>
+                    <td>{{product.unitPrice}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <paginator-component ng-if="!productCtrl.isLoading && !productCtrl.isTyping" is-loading="productCtrl.isLoading"
+        current-page="productCtrl.currentPage" last-page="productCtrl.getLastPage()"></paginator-component>
+
+</div>
