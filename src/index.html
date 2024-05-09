@@ -48,33 +48,43 @@
                             <a class="nav-link" href="#!/" ng-click="appCtrl.logOut()">Salir</a>
                         </li>
                     </ul>
-
                 </div>
             </div>
         </nav> -->
 
         <nav class="navbar navbar-inverse">
-            <div class="container-fluid" style="margin-left: 10rem;">
+            <div class="container-fluid">
                 <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
                     <a class="navbar-brand" href="#">NorthWind</a>
                 </div>
-                <ul ng-if="appCtrl.isMenu()" class="nav navbar-nav navbar-left">
-                    <li>
-                        <a class="nav-link" href="#!/customers">Clientes</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="#!/products">Productos</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="#!/suppliers">Proveedores</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="#!/orders">Órdenes</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="#!/" ng-click="appCtrl.logOut()">Salir</a>
-                    </li>
-                </ul>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul ng-if="appCtrl.isMenu()" class="nav navbar-nav navbar-left">
+                        <li>
+                            <a class="nav-link" href="#!/customers">Clientes</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#!/products">Productos</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#!/suppliers">Proveedores</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#!/orders">Órdenes</a>
+                        </li>                       
+                    </ul>
+                    <ul ng-if="appCtrl.isMenu()" class="nav navbar-nav navbar-right">                       
+                        <li>
+                            <a class="nav-link" href="#!/" ng-click="appCtrl.logOut()">Salir</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>

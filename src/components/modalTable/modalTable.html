@@ -1,12 +1,45 @@
-<div style="opacity: 1;">
+<div>
 
     <div class="modal-header">
         dfds
     </div>
     <div class="modal-body">
-        dfsf
+        <div class="card-header" style="display: flex; flex-direction: row; justify-content: space-between;">
+            <h4>Órdenes</h4>
+        </div>
+
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th></th>
+                        <th>ID</th>
+                        <th>ID Cliente</th>
+                        <th>Fecha órden</th>
+                        <th>Fecha Envío</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="order in modalTableCtrl.listOfOrders">
+                        <td>{{$index + 1}}</td>
+                        <td>
+                            <a class="text-primary" style="cursor: pointer;" ng-click="modalTableCtrl.goTo(order.id)">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </a>
+                        </td>
+                        <td>{{order.id}}</td>
+                        <td>{{order.customerId}}</td>
+                        <td>{{order.orderDate}}</td>
+                        <td>{{order.shippedDate}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
     <div class="modal-footer">
-        sdfsdfsd
+        <button type="button" class="btn btn-primary" ng-click="modalTableCtrl.accept()">Aceptar</button>
+        <button type="button" class="btn btn-secondary" ng-click="modalTableCtrl.cancel()">Cancelar</button>
     </div>
 </div>
