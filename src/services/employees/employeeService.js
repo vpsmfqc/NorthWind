@@ -6,8 +6,8 @@ app.service('employeeService', function ($http) {
     */
     this.init = () => { };
 
-    this.getEmployeeById = (id) => {
-        return $http.get(`${this.path}/${id}`);
+    this.getAllEmployees = () => {
+        return $http.get(`${this.path}`);
     };
     this.init();
 });

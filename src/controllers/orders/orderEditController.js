@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-undef
-app.controller('orderEditController', function (customerService, productService, orderService, $location, $routeParams, toastr) {
+app.controller('orderEditController', function (customerService, employeeService, shipperService, orderService, $location, $routeParams, toastr) {
     let mv = this;
     mv.isLoading = false;
     mv.message = '';
@@ -7,6 +7,8 @@ app.controller('orderEditController', function (customerService, productService,
     mv.isNew = true;
     mv.updatedDetails = [];
     mv.customersList = [];
+    mv.shippersList = [];
+    mv.employeesList = [];
 
     //Json parameters
     mv.orderModel = null;
@@ -20,9 +22,42 @@ app.controller('orderEditController', function (customerService, productService,
         mv.isNew = (mv.currentOrderId == 0);
         if (!mv.isNew) {
             mv.getOrderById();
+            mv.getAllShippers();
+            mv.getAllEmployees();
         } else {
             mv.getAllCustomers();
+            mv.getAllShippers();
+            mv.getAllEmployees();
         }
+    };
+
+    mv.getAllShippers = () => {
+        mv.isLoading = true;
+        mv.shippersList = [];
+        shipperService.getAllShippers()
+            .then((value) => {
+                mv.shippersList = value.data;
+                mv.isLoading = false;
+            })
+            // eslint-disable-next-line no-unused-vars
+            .catch((err) => {
+                mv.isLoading = false;
+            });
+    };
+
+    mv.getAllEmployees = () => {
+        mv.isLoading = true;
+        mv.employeesList = [];
+        employeeService.getAllEmployees()
+            .then((value) => {
+                mv.employeesList = value.data;
+                // console.log(value.data);
+                mv.isLoading = false;
+            })
+            // eslint-disable-next-line no-unused-vars
+            .catch((err) => {
+                mv.isLoading = false;
+            });
     };
 
     mv.getAllCustomers = () => {
@@ -33,6 +68,7 @@ app.controller('orderEditController', function (customerService, productService,
                 mv.customersList = value.data;
                 mv.isLoading = false;
             })
+            // eslint-disable-next-line no-unused-vars
             .catch((err) => {
                 mv.isLoading = false;
             });
@@ -74,7 +110,7 @@ app.controller('orderEditController', function (customerService, productService,
     /**
      * Methods for updating the Stock
      */
-    mv.updateStock = () => {       
+    mv.updateStock = () => {
         for (let i = 0; i < mv.updatedDetails.length; i++) {
             // eslint-disable-next-line no-unused-vars
             mv.updatedDetails[i].updateStock().then((value) => {
@@ -106,7 +142,7 @@ app.controller('orderEditController', function (customerService, productService,
             .catch((err) => {
                 mv.isLoading = false;
                 mv.displayError('¡Se produjo un error!', 'Error');
-            });
+            });            
     };
 
     // Format the updated details array 
@@ -157,9 +193,9 @@ app.controller('orderEditController', function (customerService, productService,
         let isOk = true;
         if (mv.updatedDetails.length > 0) {
             mv.updatedDetails.forEach((obj) => {
-                if (obj.isEditable || obj.quantity == 0) {
+                if(obj.isUnChecked()){
                     isOk = false;
-                }
+                }               
             });
         } else {
             isOk = false;
@@ -171,7 +207,7 @@ app.controller('orderEditController', function (customerService, productService,
         if (mv.verify()) {
             if (mv.isNew) {
                 mv.createOrder();
-            } else {                
+            } else {
                 mv.updateOrder();
             }
         } else {

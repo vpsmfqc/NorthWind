@@ -6,8 +6,8 @@ app.service('shipperService', function ($http) {
     */
     this.init = () => { };
 
-    this.getShipperById = (id) => {
-        return $http.get(`${this.path}/${id}`);
+    this.getAllShippers = () => {
+        return $http.get(`${this.path}`);
     };
     this.init();
 });

@@ -1,7 +1,8 @@
 <div class="card mt-3">
     <div class="card-header" style="display: flex; flex-direction: row; justify-content: space-between;">
         <h4>Productos</h4>
-        <button type="button" class="btn btn-primary" ng-click="detailCtrl.add()">Agregar</button>
+        <button type="button" uib-popover="{{detailCtrl.info}}" class="btn btn-primary"
+            ng-click="detailCtrl.add()">Agregar</button>
     </div>
 
     <div class="card-body">
@@ -17,7 +18,7 @@
                     <th>Cantidad</th>
                     <th>Descuento</th>
                     <th>Disponibles</th>
-                    <th></th>                    
+                    <th></th>
                     <th>Total</th>
                 </tr>
             </thead>
@@ -26,43 +27,48 @@
                     <td>{{$index+1}}</td>
                     <td>
                         <a class="text-primary" style="cursor: pointer;" ng-if="!product.isEditable"
-                            uib-popover="Editar" popover-trigger="'mouseenter'" ng-click="product.toggle()">
+                            uib-popover="Editar" popover-trigger="'mouseenter'"
+                            ng-click="detailCtrl.edit(product.productId)">
                             <i class="fa-solid fa-pencil"></i>
                         </a>
                         <a class="text-primary" style="cursor: pointer;" ng-if="product.isEditable"
-                            uib-popover="Guardar" popover-trigger="'mouseenter'" ng-click="product.toggle()">
+                            uib-popover="Guardar" popover-trigger="'mouseenter'"
+                            ng-click="detailCtrl.save(product.productId)">
                             <i class="fa-solid fa-floppy-disk"></i>
                         </a>
                     </td>
                     <td>
-                        <a class="text-danger" style="cursor: pointer;"
-                        uib-popover="Eliminar" popover-trigger="'mouseenter'"
-                        ng-click="detailCtrl.remove(product.productId)">
+                        <a class="text-danger" style="cursor: pointer;" uib-popover="Eliminar"
+                            popover-trigger="'mouseenter'" ng-click="detailCtrl.remove(product.productId)">
                             <i class="fa-solid fa-trash"></i></a>
                     </td>
-                    <td> <span uib-popover="Identicicación del producto" popover-trigger="'mouseenter'" >{{product.productId}}</span></td>
                     <td>
-                        <span ng-if="!product.isEditable"> {{product.name}}</span>
-                        <select ng-if="product.isEditable" class="form-select form-control"
-                            ng-model="detailCtrl.listId[$index]"
-                            ng-change="product.setProduct(detailCtrl.listId[$index])">
-                            <option ng-repeat="item in detailCtrl.rawArrayOfProducts" ng-value="item.id">{{ item.name+ "
-                                (" + item.unitsInStock + ")"}}</option>
+                        <span uib-popover="Identicicación del producto"
+                            popover-trigger="'mouseenter'">{{product.productId}}</span>
+                    </td>
+                    <td ng-if="product.isEditable">
+                        <select class="form-select form-control" ng-model="detailCtrl.productId"
+                            ng-change="product.setProduct(detailCtrl.productId)">
+                            <option ng-repeat="item in detailCtrl.filterArrayOfProducts" ng-value="item.id">
+                                {{ item.name + " (" + item.unitsInStock + ")"}}
+                            </option>
                         </select>
+                    </td>
+                    <td ng-if="!product.isEditable" ng-click="product.toggle()" style="cursor: pointer;">
+                        <span> {{product.name}} </span>
                     </td>
                     <td>{{product.unitPrice}}</td>
                     <td>{{product.quantity}}</td>
                     <td>{{product.discount}}</td>
-                    <td> <span uib-popover="Unidades disponibles" popover-trigger="'mouseenter'">{{product.unitsInStock}}</span></td>
+                    <td> <span uib-popover="Unidades disponibles"
+                            popover-trigger="'mouseenter'">{{product.unitsInStock}}</span></td>
                     <td>
-                        <a class="text-primary" ng-click="product.addUnits()"
-                        uib-popover="Aumentar" popover-trigger="'mouseenter'" 
-                        style="margin-right: 2rem; cursor: pointer;">
+                        <a class="text-primary" ng-click="product.addUnits()" uib-popover="Aumentar"
+                            popover-trigger="'mouseenter'" style="margin-right: 2rem; cursor: pointer;">
                             <i class="fa-solid fa-plus"></i>
-                        </a>                   
-                        <a class="text-primary" ng-click="product.subUnits()"
-                        uib-popover="Disminuir" popover-trigger="'mouseenter'"
-                         style="cursor: pointer;">
+                        </a>
+                        <a class="text-primary" ng-click="product.subUnits()" uib-popover="Disminuir"
+                            popover-trigger="'mouseenter'" style="cursor: pointer;">
                             <i class="fa-solid fa-minus"></i>
                         </a>
                     </td>
@@ -77,7 +83,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>                    
+                    <td></td>
                     <td></td>
                     <td><strong>{{detailCtrl.getGreatTotal() | number:2 }}</strong></td>
                 </tr>

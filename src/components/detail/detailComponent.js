@@ -10,19 +10,30 @@ app.component('detailComponent', {
 });
 
 // eslint-disable-next-line no-undef
-app.controller('detailController', function ($location, $scope, productService) {
+app.controller('detailController', function (productService, toastr) {
 
     let mv = this;
     mv.isLoading = false;
     mv.rawArrayOfProducts = [];
+    mv.filterArrayOfProducts = [];
     mv.listOfProducts = [];
-    // mv.listOfDetailedProducts = [];
-    mv.listId = [];
+    // mv.listOfDetailedProducts = [];    
+    mv.productId = 0;
+
+    /**
+     * Bootstrap UI
+     */
+    mv.info = '';
+    /**
+     * end
+     */
+
 
     /**
      * Contructor
      */
     mv.init = () => {
+        mv.productId = 0;
         mv.listOfDetailedProducts = [];
         mv.getAllProducts();
     };
@@ -46,7 +57,6 @@ app.controller('detailController', function ($location, $scope, productService) 
 
     // Create the new table 
     mv.createTable = () => {
-        mv.listId = [];
         mv.listOfDetailedProducts = [];
         mv.listOfProducts.forEach((obj) => {
             let fProduct = mv.rawArrayOfProducts.find((product) => {
@@ -54,7 +64,6 @@ app.controller('detailController', function ($location, $scope, productService) 
             });
             let product = mv.createProductObj(fProduct.unitsInStock, false, obj.productId, obj.unitPrice, obj.quantity, obj.discount, fProduct.name);
             mv.listOfDetailedProducts.push(product);
-            mv.listOfProducts.push(0);
         });
     };
 
@@ -66,7 +75,6 @@ app.controller('detailController', function ($location, $scope, productService) 
         });
         return total;
     };
-
 
     // Product Class
     mv.createProductObj = (unitsInStock, isEditable, productId, unitPrice, quantity, discount, name) => {
@@ -82,12 +90,14 @@ app.controller('detailController', function ($location, $scope, productService) 
                 if (this.unitsInStock > 0) {
                     this.quantity++;
                     this.unitsInStock--;
+                    this.isEditable = false;
                 }
             },
             subUnits: function () {
                 if (this.quantity > 0) {
                     this.quantity--;
                     this.unitsInStock++;
+                    this.isEditable = false;
                 }
             },
             toggle: function () {
@@ -112,8 +122,11 @@ app.controller('detailController', function ($location, $scope, productService) 
                     productId: this.productId,
                     unitsInStock: (this.unitsInStock - this.discount)
                 };
-                return productService.updateProduct(this.productId, obj);                    
-            }
+                return productService.updateProduct(this.productId, obj);
+            },
+            isUnChecked: function () {
+                return this.isEditable || (this.quantity == 0);
+            },
         };
         return product;
     };
@@ -123,13 +136,48 @@ app.controller('detailController', function ($location, $scope, productService) 
             return obj.productId == id;
         });
         mv.listOfDetailedProducts.splice(index, 1);
-        mv.listId.splice(index, 1);
+    };
+
+    mv.edit = (id) => {
+        mv.productId = id;
+        mv.filterToEdit(mv.productId);
+        let index = mv.listOfDetailedProducts.findIndex((obj) => {
+            return obj.productId == id;
+        });
+        mv.listOfDetailedProducts.forEach((obj) => {
+            obj.isEditable = false;
+        });
+        mv.listOfDetailedProducts[index].toggle();
+    };
+
+    mv.save = (id) => {
+        mv.productId = id;
+        let index = mv.listOfDetailedProducts.findIndex((obj) => {
+            return obj.productId == id;
+        });
+        mv.listOfDetailedProducts[index].toggle();
     };
 
     mv.add = () => {
-        let product = mv.createProductObj(0, true, 0, 0, 0, 0, 0, '');
-        mv.listId.push(0);
-        mv.listOfDetailedProducts.push(product);
+        if (mv.listOfDetailedProducts.length > 0) {
+            let index = mv.listOfDetailedProducts.length - 1;
+            if (!mv.listOfDetailedProducts[index].isUnChecked()) {
+                mv.info = '';
+                mv.filter();
+                mv.productId = 0;
+                mv.listOfDetailedProducts.forEach((obj) => {
+                    obj.isEditable = false;
+                });
+                let product = mv.createProductObj(0, true, 0, 0, 0, 0, 0, '');
+                mv.listOfDetailedProducts.push(product);
+            } else {
+                mv.info = '¡Elija un producto, una cantidad y guarde!';
+            }
+        } else {
+            mv.filter();
+            let product = mv.createProductObj(0, true, 0, 0, 0, 0, 0, '');
+            mv.listOfDetailedProducts.push(product);
+        }
     };
 
     // Remove all the products that are not available
@@ -140,7 +188,25 @@ app.controller('detailController', function ($location, $scope, productService) 
                 filterList.push(product);
             }
         });
-        mv.rawArrayOfProducts = filterList;
+        mv.listOfDetailedProducts.forEach((product) => {
+            let index = filterList.findIndex((obj) => {
+                return obj.id == product.productId;
+            });
+            filterList.splice(index, 1);
+        });
+        mv.filterArrayOfProducts = filterList;
+        console.log(mv.filterArrayOfProducts);
+    };
+
+    //Filter adn add the current product
+    mv.filterToEdit = (productId) => {
+        mv.filter();
+        let fproduct = mv.rawArrayOfProducts.find((product) => {
+            return product.id == productId;
+        });
+        if (fproduct) {
+            mv.filterArrayOfProducts.push(fproduct);
+        }
     };
 
     mv.init();

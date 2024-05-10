@@ -25,6 +25,9 @@ app.controller('modalTableController', function ($uibModalInstance, customerId, 
         let copy = [];
         mv.listOfOrders.forEach((order) => {
             if (order.customerId == customerId) {
+                order.orderDate = new Date(order.orderDate);
+                order.requiredDate = new Date(order.requiredDate);
+                order.shippedDate = new Date(order.shippedDate);
                 copy.push(order);
             }
         });

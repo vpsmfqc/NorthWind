@@ -1,13 +1,9 @@
 <div>
 
     <div class="modal-header">
-        dfds
+        <h4>Órdenes</h4>
     </div>
-    <div class="modal-body">
-        <div class="card-header" style="display: flex; flex-direction: row; justify-content: space-between;">
-            <h4>Órdenes</h4>
-        </div>
-
+    <div class="modal-body">       
         <div class="card-body">
             <table class="table table-striped">
                 <thead>
@@ -31,8 +27,8 @@
                         </td>
                         <td>{{order.id}}</td>
                         <td>{{order.customerId}}</td>
-                        <td>{{order.orderDate}}</td>
-                        <td>{{order.shippedDate}}</td>
+                        <td>{{order.orderDate | date:'yyyy-MM-dd'}}</td>
+                        <td>{{order.shippedDate | date:'yyyy-MM-dd'}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -40,7 +36,7 @@
 
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary" ng-click="modalTableCtrl.accept()">Aceptar</button>
-        <button type="button" class="btn btn-secondary" ng-click="modalTableCtrl.cancel()">Cancelar</button>
+        <button type="button" class="btn btn-primary" ng-click="modalTableCtrl.accept()">Cerrar</button>
+        <!-- <button type="button" class="btn btn-secondary" ng-click="modalTableCtrl.cancel()">Cancelar</button> -->
     </div>
 </div>
