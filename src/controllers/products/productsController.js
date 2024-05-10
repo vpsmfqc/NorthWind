@@ -178,17 +178,22 @@ app.controller('productsController', function ($scope, $location, productService
             mv.arrayOfProductsByPage = [];
             mv.arrayOfProducts.forEach((obj) => {
                 try {
-                    if (obj.name.toLowerCase().includes(inputText) || obj.id.toString().toLowerCase() == inputText) {
+                    if (obj.name.toLowerCase().includes(inputText) ||
+                        obj.id.toString().toLowerCase() == inputText ||
+                        mv.getSupplierById(obj.supplierId).companyName.toString().toLowerCase().includes(inputText) ||
+                        mv.getCategoryById(obj.categoryId).name.toString().toLowerCase().includes(inputText) ||
+                        obj.unitPrice.toString().includes(inputText) ||
+                        obj.quantityPerUnit.toString().toLowerCase().includes(inputText)) {
                         productsArray.push(obj);
                     }
                 } catch (error) {
                     console.log(error);
-                }                
-            });           
-            mv.isFound = (productsArray.length > 0);           
+                }
+            });
+            mv.isFound = (productsArray.length > 0);
             if (mv.isFound) {
                 mv.arrayOfProductsByPage = productsArray;
-            } else {                
+            } else {
                 mv.message = 'No se encontró ningún resultado...';
             }
         } else {

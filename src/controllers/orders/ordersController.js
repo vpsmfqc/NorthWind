@@ -60,11 +60,11 @@ app.controller('ordersController', function ($scope, $location, orderService, to
 
     //Get all the orders 
     mv.getAllOrders = () => {
-        mv.isLoading = true;       
+        mv.isLoading = true;
         orderService.getAllOrders()
             .then((value) => {
                 mv.rawArrayOfOrders = mv.formatDate(value.data);
-                mv.arrayOfOrders = mv.rawArrayOfOrders;              
+                mv.arrayOfOrders = mv.rawArrayOfOrders;
                 mv.isLoading = false;
                 mv.paginate();
             })
@@ -72,7 +72,7 @@ app.controller('ordersController', function ($scope, $location, orderService, to
                 mv.message = err;
                 mv.isLoading = false;
             });
-    };    
+    };
 
     // Split the complete array of cunstomers into the number of pages 
     mv.splitIntoPage = () => {
@@ -111,6 +111,18 @@ app.controller('ordersController', function ($scope, $location, orderService, to
         $location.path(`/orders/${id}`);
     };
 
+    mv.dateToString = (value) => {
+        let format = '';
+        let date = new Date(value);        
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let smonth = (month < 10) ? `0${month}` : `${month}`;
+        let sday = (day < 10) ? `0${day}` : `${day}`;
+        format = `${year}-${smonth}-${sday}`;        
+        return format;
+    };
+
     // Search in the complete array for the input info
     mv.search = (value) => {
         let inputText = value.toLowerCase().trim();
@@ -120,9 +132,9 @@ app.controller('ordersController', function ($scope, $location, orderService, to
             try {
                 if (obj.id.toString().includes(inputText) ||
                     obj.customerId.toLowerCase().includes(inputText) ||
-                    obj.orderDate.toLowerCase().includes(inputText) ||
-                    obj.shippedDate.toLowerCase().includes(inputText) ||
-                    obj.requiredDate.toLowerCase().includes(inputText)) {
+                    mv.dateToString(obj.orderDate).toLowerCase().includes(inputText) ||
+                    mv.dateToString(obj.shippedDate).toLowerCase().includes(inputText) ||
+                    mv.dateToString(obj.requiredDate).toLowerCase().includes(inputText)) {
                     orderArray.push(obj);
                 }
             } catch (err) {
@@ -187,9 +199,9 @@ app.controller('ordersController', function ($scope, $location, orderService, to
         let copyArray = [];
         ordersArray.forEach(order => {
             let copy = order;
-            copy.orderDate = order.orderDate.replace(' 00:00:00.000', '').replace('T05:00:00.000Z','');
-            copy.shippedDate = order.shippedDate.replace(' 00:00:00.000', '').replace('T05:00:00.000Z','');
-            copy.requiredDate = order.requiredDate.replace(' 00:00:00.000', '').replace('T05:00:00.000Z','');
+            copy.orderDate = new Date(order.orderDate);
+            copy.shippedDate = new Date(order.shippedDate);
+            copy.requiredDate = new Date(order.requiredDate);
             copyArray.push(copy);
         });
         return copyArray;

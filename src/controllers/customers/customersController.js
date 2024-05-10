@@ -48,7 +48,7 @@ app.controller('customersController', function ($scope, $location, customerServi
         customerService.getAllCustomers()
             .then((value) => {
                 mv.arrayOfCustomers = value.data;
-                mv.isLoading = false;              
+                mv.isLoading = false;
                 mv.paginate();
             })
             .catch((err) => {
@@ -79,9 +79,9 @@ app.controller('customersController', function ($scope, $location, customerServi
             let endIndex = (i < (lastPage - 1)) ? startIndex + mv.rowsByPage : length;
             let pair = [startIndex, endIndex];
             mv.rowsFromTo.push(pair);
-        }       
-        mv.currentPage = 1;     
-        mv.splitIntoPage();  
+        }
+        mv.currentPage = 1;
+        mv.splitIntoPage();
     };
 
     // Get the las page
@@ -100,23 +100,28 @@ app.controller('customersController', function ($scope, $location, customerServi
     };
 
     // Search in the complete array for the input info
-    mv.search = () => {       
+    mv.search = () => {
         const inputText = mv.searchInput.trim().toLowerCase();
         mv.isTyping = mv.searchInput.trim() != '';
         if (mv.isTyping) {
             let customerArray = [];
             mv.arrayOfCustomersByPage = [];
-            mv.arrayOfCustomers.forEach((obj)=>{
+            mv.arrayOfCustomers.forEach((obj) => {
                 try {
-                    if (obj.id.toLowerCase().includes(inputText) || obj.companyName.toLowerCase().includes(inputText) || obj.contactName.toLowerCase().includes(inputText) || obj.contactTitle.toLowerCase().includes(inputText)) {
+                    if (obj.id.toLowerCase().includes(inputText) ||
+                        obj.companyName.toLowerCase().includes(inputText) ||
+                        obj.contactName.toLowerCase().includes(inputText) ||
+                        obj.contactTitle.toLowerCase().includes(inputText) ||
+                        obj.address.phone.toLowerCase().includes(inputText) ||
+                        obj.address.country.toLowerCase().includes(inputText)) {
                         customerArray.push(obj);
                     }
                 } catch (error) {
                     console.log(error);
                 }
-            });           
-            mv.isFound = (customerArray.length > 0);           
-            if (mv.isFound) {                
+            });
+            mv.isFound = (customerArray.length > 0);
+            if (mv.isFound) {
                 mv.arrayOfCustomersByPage = customerArray;
             } else {
                 mv.message = 'No se encontró ningún resultado...';

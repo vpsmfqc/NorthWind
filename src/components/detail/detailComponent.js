@@ -194,8 +194,7 @@ app.controller('detailController', function (productService, toastr) {
             });
             filterList.splice(index, 1);
         });
-        mv.filterArrayOfProducts = filterList;
-        console.log(mv.filterArrayOfProducts);
+        mv.filterArrayOfProducts = filterList;        
     };
 
     //Filter adn add the current product

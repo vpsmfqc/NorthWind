@@ -13,8 +13,8 @@
                     <th></th>
                     <th>
                         ID
-                        <a style="cursor: pointer;" ng-click="orderCtrl.sortColumn(0)"
-                        uib-popover="Ordenar" popover-trigger="'mouseenter'">
+                        <a style="cursor: pointer;" ng-click="orderCtrl.sortColumn(0)" uib-popover="Ordenar"
+                            popover-trigger="'mouseenter'">
                             <span class="ml-2" ng-if="orderCtrl.orderArrays[0]">
                                 <i class="fa-solid fa-sort-up"></i></span>
                             <span class="ml-2" ng-if="!orderCtrl.orderArrays[0]">
@@ -22,8 +22,8 @@
                         </a>
                     </th>
                     <th>Cliente ID
-                        <a style="cursor: pointer;" ng-click="orderCtrl.sortColumn(1)"
-                        uib-popover="Ordenar" popover-trigger="'mouseenter'">
+                        <a style="cursor: pointer;" ng-click="orderCtrl.sortColumn(1)" uib-popover="Ordenar"
+                            popover-trigger="'mouseenter'">
                             <span class="ml-2" ng-if="orderCtrl.orderArrays[1]">
                                 <i class="fa-solid fa-sort-up"></i></span>
                             <span class="ml-2" ng-if="!orderCtrl.orderArrays[1]">
@@ -31,8 +31,8 @@
                         </a>
                     </th>
                     <th>Fecha Orden
-                        <a style="cursor: pointer;" ng-click="orderCtrl.sortColumn(2)"
-                        uib-popover="Ordenar" popover-trigger="'mouseenter'">
+                        <a style="cursor: pointer;" ng-click="orderCtrl.sortColumn(2)" uib-popover="Ordenar"
+                            popover-trigger="'mouseenter'">
                             <span class="ml-2" ng-if="orderCtrl.orderArrays[2]">
                                 <i class="fa-solid fa-sort-up"></i></span>
                             <span class="ml-2" ng-if="!orderCtrl.orderArrays[2]">
@@ -40,8 +40,8 @@
                         </a>
                     </th>
                     <th>Fecha Envío
-                        <a style="cursor: pointer;" ng-click="orderCtrl.sortColumn(3)"
-                        uib-popover="Ordenar" popover-trigger="'mouseenter'">
+                        <a style="cursor: pointer;" ng-click="orderCtrl.sortColumn(3)" uib-popover="Ordenar"
+                            popover-trigger="'mouseenter'">
                             <span class="ml-2" ng-if="orderCtrl.orderArrays[3]">
                                 <i class="fa-solid fa-sort-up"></i></span>
                             <span class="ml-2" ng-if="!orderCtrl.orderArrays[3]">
@@ -49,8 +49,8 @@
                         </a>
                     </th>
                     <th>Fecha Requerida
-                        <a style="cursor: pointer;" ng-click="orderCtrl.sortColumn(4)"
-                        uib-popover="Ordenar" popover-trigger="'mouseenter'">
+                        <a style="cursor: pointer;" ng-click="orderCtrl.sortColumn(4)" uib-popover="Ordenar"
+                            popover-trigger="'mouseenter'">
                             <span class="ml-2" ng-if="orderCtrl.orderArrays[4]">
                                 <i class="fa-solid fa-sort-up"></i></span>
                             <span class="ml-2" ng-if="!orderCtrl.orderArrays[4]">
@@ -74,9 +74,9 @@
                     </td>
                     <td>{{order.id}}</td>
                     <td>{{order.customerId}}</td>
-                    <td>{{order.orderDate}}</td>
-                    <td>{{order.shippedDate}}</td>
-                    <td>{{order.requiredDate}}</td>
+                    <td>{{order.orderDate | date:'yyyy-MM-dd' }}</td>
+                    <td>{{order.shippedDate | date:'yyyy-MM-dd' }}</td>
+                    <td>{{order.requiredDate | date:'yyyy-MM-dd' }}</td>
                 </tr>
             </tbody>
         </table>
