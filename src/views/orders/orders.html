@@ -13,7 +13,8 @@
                     <th></th>
                     <th>
                         ID
-                        <a style="cursor: pointer;" ng-click="orderCtrl.sortColumn(0)">
+                        <a style="cursor: pointer;" ng-click="orderCtrl.sortColumn(0)"
+                        uib-popover="Ordenar" popover-trigger="'mouseenter'">
                             <span class="ml-2" ng-if="orderCtrl.orderArrays[0]">
                                 <i class="fa-solid fa-sort-up"></i></span>
                             <span class="ml-2" ng-if="!orderCtrl.orderArrays[0]">
@@ -21,7 +22,8 @@
                         </a>
                     </th>
                     <th>Cliente ID
-                        <a style="cursor: pointer;" ng-click="orderCtrl.sortColumn(1)">
+                        <a style="cursor: pointer;" ng-click="orderCtrl.sortColumn(1)"
+                        uib-popover="Ordenar" popover-trigger="'mouseenter'">
                             <span class="ml-2" ng-if="orderCtrl.orderArrays[1]">
                                 <i class="fa-solid fa-sort-up"></i></span>
                             <span class="ml-2" ng-if="!orderCtrl.orderArrays[1]">
@@ -29,7 +31,8 @@
                         </a>
                     </th>
                     <th>Fecha Orden
-                        <a style="cursor: pointer;" ng-click="orderCtrl.sortColumn(2)">
+                        <a style="cursor: pointer;" ng-click="orderCtrl.sortColumn(2)"
+                        uib-popover="Ordenar" popover-trigger="'mouseenter'">
                             <span class="ml-2" ng-if="orderCtrl.orderArrays[2]">
                                 <i class="fa-solid fa-sort-up"></i></span>
                             <span class="ml-2" ng-if="!orderCtrl.orderArrays[2]">
@@ -37,7 +40,8 @@
                         </a>
                     </th>
                     <th>Fecha Envío
-                        <a style="cursor: pointer;" ng-click="orderCtrl.sortColumn(3)">
+                        <a style="cursor: pointer;" ng-click="orderCtrl.sortColumn(3)"
+                        uib-popover="Ordenar" popover-trigger="'mouseenter'">
                             <span class="ml-2" ng-if="orderCtrl.orderArrays[3]">
                                 <i class="fa-solid fa-sort-up"></i></span>
                             <span class="ml-2" ng-if="!orderCtrl.orderArrays[3]">
@@ -45,7 +49,8 @@
                         </a>
                     </th>
                     <th>Fecha Requerida
-                        <a style="cursor: pointer;" ng-click="orderCtrl.sortColumn(4)">
+                        <a style="cursor: pointer;" ng-click="orderCtrl.sortColumn(4)"
+                        uib-popover="Ordenar" popover-trigger="'mouseenter'">
                             <span class="ml-2" ng-if="orderCtrl.orderArrays[4]">
                                 <i class="fa-solid fa-sort-up"></i></span>
                             <span class="ml-2" ng-if="!orderCtrl.orderArrays[4]">
@@ -58,11 +63,13 @@
                 <tr ng-repeat="order in orderCtrl.arrayOfOrdersByPage">
                     <td>{{orderCtrl.getIndex(order.id)}}</td>
                     <td>
-                        <a class="text-primary" style="cursor: pointer;" ng-click="orderCtrl.goTo(order.id)">
+                        <a class="text-primary" style="cursor: pointer;" uib-popover="Editar"
+                            popover-trigger="'mouseenter'" ng-click="orderCtrl.goTo(order.id)">
                             <i class="fa-solid fa-pencil"></i></a>
                     </td>
                     <td>
-                        <a class="text-danger" style="cursor: pointer;" ng-click="orderCtrl.deleteOrder(order.id)">
+                        <a class="text-danger" style="cursor: pointer;" uib-popover="Eliminar"
+                            popover-trigger="'mouseenter'" ng-click="orderCtrl.deleteOrder(order.id)">
                             <i class="fa-solid fa-trash"></i></a>
                     </td>
                     <td>{{order.id}}</td>

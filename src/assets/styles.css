@@ -13,7 +13,8 @@
 .mb-3 {
     margin-bottom: 1.5rem;
 }
-.mt-3{
+
+.mt-3 {
     margin-top: 0rem;
 }
 
@@ -27,22 +28,31 @@
     }
 }
 
-h2{
+h2 {
     margin-top: 1rem !important;
 }
 
-.space{
+.space {
     /* padding-top: 1rem; */
-    margin-bottom: 3rem;       
+    margin-bottom: 3rem;
 }
 
-.d-flex{
+.d-flex {
     display: flex;
 }
 
-.justify-content-center{
+.justify-content-center {
     flex-direction: row;
     justify-content: center;
+}
+
+th>a {
+    text-decoration: none !important;
+    color: #000;
+}
+
+th>a:hover {
+    color: #000;
 }
 
 .spinner-border {
@@ -54,13 +64,14 @@ h2{
     display: inline-block;
     box-sizing: border-box;
     animation: rotation 1s linear infinite;
-    }
+}
 
-    @keyframes rotation {
+@keyframes rotation {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
-    } 
+}

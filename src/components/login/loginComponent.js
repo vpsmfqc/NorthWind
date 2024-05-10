@@ -26,7 +26,7 @@ app.controller('loginController', function (authService, toastr) {
         let response = authService.signIn(mv.email, mv.password);
         if (response) {           
             authService.setSession();
-            mv.displaySuccess('Bien venido');
+            mv.displaySuccess('Bienvenido');
         } else {
             mv.displayError('Credenciales incorrectas');
         }

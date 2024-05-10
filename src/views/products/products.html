@@ -2,7 +2,8 @@
     <h2>Productos</h2>
     <div class="pt-3 pb-3" style="display: flex; flex-direction: row; justify-content: space-between;">
         <button type="button" class="btn btn-primary" ng-click="productCtrl.goToNew()">Crear</button>
-        <select class="form-select form-control" style="width: 8rem;" ng-change="productCtrl.paginate()" ng-model="productCtrl.rowsByPage">
+        <select class="form-select form-control" style="width: 8rem;" ng-change="productCtrl.paginate()"
+            ng-model="productCtrl.rowsByPage">
             <option ng-repeat="page in productCtrl.listOfPages" ng-value="page">{{page}}</option>
         </select>
     </div>
@@ -33,7 +34,8 @@
                     <th></th>
                     <th>
                         ID
-                        <a style="cursor: pointer;" ng-click="productCtrl.sortColumn(0)">
+                        <a style="cursor: pointer;" ng-click="productCtrl.sortColumn(0)" uib-popover="Ordenar"
+                            popover-trigger="'mouseenter'">
                             <span class="ml-2" ng-if="productCtrl.orderArrays[0]">
                                 <i class="fa-solid fa-sort-up"></i></span>
                             <span class="ml-2" ng-if="!productCtrl.orderArrays[0]">
@@ -42,7 +44,8 @@
                     </th>
                     <th>
                         Nombre
-                        <a style="cursor: pointer;" ng-click="productCtrl.sortColumn(1)">
+                        <a style="cursor: pointer;" ng-click="productCtrl.sortColumn(1)" uib-popover="Ordenar"
+                            popover-trigger="'mouseenter'">
                             <span class="ml-2" ng-if="productCtrl.orderArrays[1]">
                                 <i class="fa-solid fa-sort-up"></i></span>
                             <span class="ml-2" ng-if="!productCtrl.orderArrays[1]">
@@ -59,12 +62,13 @@
                 <tr ng-repeat="product in productCtrl.arrayOfProductsByPage">
                     <td>{{productCtrl.getIndex(product.id)}}</td>
                     <td>
-                        <a class="text-primary" style="cursor: pointer;" ng-click="productCtrl.goTo(product.id)">
+                        <a class="text-primary" style="cursor: pointer;" uib-popover="Editar"
+                            popover-trigger="'mouseenter'" ng-click="productCtrl.goTo(product.id)">
                             <i class="fa-solid fa-pencil"></i></a>
                     </td>
                     <td>
-                        <a class="text-danger" style="cursor: pointer;"
-                            ng-click="productCtrl.deleteProduct(product.id)">
+                        <a class="text-danger" style="cursor: pointer;" uib-popover="Eliminar"
+                            popover-trigger="'mouseenter'" ng-click="productCtrl.deleteProduct(product.id)">
                             <i class="fa-solid fa-trash"></i></a>
                     </td>
                     <td>{{product.id}}</td>

@@ -33,7 +33,7 @@
                     <th></th>
                     <th>
                         Identificación
-                        <a style="cursor: pointer;" ng-click="customerCtrl.sortColumn(0)">
+                        <a style="cursor: pointer;" ng-click="customerCtrl.sortColumn(0)"  uib-popover="Ordenar" popover-trigger="'mouseenter'">
                             <span class="ml-2" ng-if="customerCtrl.orderArrays[0]">
                                 <i class="fa-solid fa-sort-up"></i></span>
                             <span class="ml-2" ng-if="!customerCtrl.orderArrays[0]">
@@ -41,7 +41,7 @@
                         </a>
                     </th>
                     <th>Compañía
-                        <a style="cursor: pointer;" ng-click="customerCtrl.sortColumn(1)">
+                        <a style="cursor: pointer;" ng-click="customerCtrl.sortColumn(1)"  uib-popover="Ordenar" popover-trigger="'mouseenter'">
                             <span class="ml-2" ng-if="customerCtrl.orderArrays[1]">
                                 <i class="fa-solid fa-sort-up"></i></span>
                             <span class="ml-2" ng-if="!customerCtrl.orderArrays[1]">
@@ -49,7 +49,7 @@
                         </a>
                     </th>
                     <th>Nombre
-                        <a style="cursor: pointer;" ng-click="customerCtrl.sortColumn(2)">
+                        <a style="cursor: pointer;" ng-click="customerCtrl.sortColumn(2)"  uib-popover="Ordenar" popover-trigger="'mouseenter'">
                             <span class="ml-2" ng-if="customerCtrl.orderArrays[2]">
                                 <i class="fa-solid fa-sort-up"></i></span>
                             <span class="ml-2" ng-if="!customerCtrl.orderArrays[2]">
@@ -57,7 +57,7 @@
                         </a>
                     </th>
                     <th>Cargo
-                        <a style="cursor: pointer;" ng-click="customerCtrl.sortColumn(3)">
+                        <a style="cursor: pointer;" ng-click="customerCtrl.sortColumn(3)"  uib-popover="Ordenar" popover-trigger="'mouseenter'">
                             <span class="ml-2" ng-if="customerCtrl.orderArrays[3]">
                                 <i class="fa-solid fa-sort-up"></i></span>
                             <span class="ml-2" ng-if="!customerCtrl.orderArrays[3]">
@@ -72,11 +72,12 @@
                 <tr ng-repeat="customer in customerCtrl.arrayOfCustomersByPage">
                     <td>{{customerCtrl.getIndex(customer.id)}}</td>
                     <td>
-                        <a class="text-primary" style="cursor: pointer;" ng-click="customerCtrl.goTo(customer.id)">
+                        <a class="text-primary" style="cursor: pointer;" uib-popover="Editar" popover-trigger="'mouseenter'" 
+                         ng-click="customerCtrl.goTo(customer.id)">
                             <i class="fa-solid fa-pencil"></i></a>
                     </td>
                     <td>
-                        <a class="text-danger" style="cursor: pointer;"
+                        <a class="text-danger" style="cursor: pointer;"  uib-popover="Eliminar" popover-trigger="'mouseenter'" 
                             ng-click="customerCtrl.deleteCustomer(customer.id)">
                             <i class="fa-solid fa-trash"></i></a>
                     </td>
