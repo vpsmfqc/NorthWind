@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-undef
-app.service('supplierService', function ($http) {
+app.service('supplierService', function ($http) {    
     this.path = 'https://northwind.vercel.app/api/suppliers';   
    
     this.init = () => { };   

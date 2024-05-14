@@ -13,3 +13,7 @@ atlsql.vpsnotas.com nwuser Gj2tPWNnX5FC
 
 https://developer.okta.com/blog/2018/07/27/build-crud-app-in-aspnet-framework-webapi-and-angular%20de%20este%20tutorial%20se%20va%20a%20necesitar%20la%20parte%20de%20activar%20cors%20y%20cambiar%20el%20formateador%20a%20json
 
+
+
+
+Data Source=atlsql.vpsnotas.com;Initial Catalog=Northwind;User ID=nwuser;Encrypt=False
