@@ -50,6 +50,7 @@ app.controller('supplierEditController', function (supplierService, $location, $
             .then((value) => {
                 mv.displaySuccess(`¡Se ha creado satisfactoriamente el usuario con identificación ${value.data.id}!`, 'Información');
                 mv.currentSupplierId = value.data.id;
+                mv.supplierModel.id = value.data.id;
                 mv.isLoading = false;
                 mv.isNew = false;
             })
