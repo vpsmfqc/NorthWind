@@ -47,8 +47,9 @@ app.controller('productEditController', function ($scope, productService, suppli
         productService.getProductById(mv.currentProductId)
             .then((value) => {
                 mv.productModel = value.data;
-                mv.selectedSupplierId = value.data.supplierId;
-                mv.selectedCategoryId = value.data.categoryId;
+                mv.isNew = false;
+                // mv.selectedSupplierId = value.data.supplierId;
+                // mv.selectedCategoryId = value.data.categoryId;
                 mv.isLoading = false;
             })
             .catch((err) => {
@@ -92,10 +93,13 @@ app.controller('productEditController', function ($scope, productService, suppli
     mv.createProduct = () => {
         mv.isLoading = true;
         mv.message = 'Se está creando un nuevo producto';
+        // mv.productModel.categoryId = mv.selectedCategoryId;
+        // mv.productModel.supplierId = mv.selectedSupplierId;
         productService.createProduct(mv.productModel)
             .then((value) => {
                 mv.displaySuccess(`¡Se ha creado satisfactoriamente el producto con ID ${value.data.id}!`, 'Información');
-                mv.currentCustomerId = value.data.id;
+                // mv.currentCustomerId = value.data.id;
+                mv.productModel.id = value.data.id;
                 mv.isLoading = false;
                 mv.isNew = false;
             })
@@ -107,11 +111,14 @@ app.controller('productEditController', function ($scope, productService, suppli
     };
 
     mv.updateProduct = () => {
+        // mv.productModel.categoryId = mv.selectedCategoryId;
+        // mv.productModel.supplierId = mv.selectedSupplierId;
         productService.updateProduct(mv.currentProductId, mv.productModel)
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
                 mv.isLoading = false;
                 mv.displaySuccess(`¡Se ha actualizado satisfactoriamente el producto con ID ${value.data.id}!`, 'Información');
+                mv.isNew = false;
             })
             .catch((err) => {
                 console.log(err);
