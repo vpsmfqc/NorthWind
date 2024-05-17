@@ -84,6 +84,7 @@ app.controller('orderEditController', function (customerService, employeeService
         mv.isLoading = true;
         orderService.getOrderById(mv.currentOrderId)
             .then((value) => {
+                // console.log(value);
                 mv.fillForm(value.data);
                 mv.getAllCustomers();
             })
@@ -131,9 +132,10 @@ app.controller('orderEditController', function (customerService, employeeService
         orderService.createOrder(mv.orderModel)
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
-                mv.displaySuccess(`¡Se ha creado el pedido con ID ${value.data.id}!`, 'Información');
+                //mv.displaySuccess(`¡Se ha creado el pedido con ID ${value.data.id}!`, 'Información');
                 mv.currentOrderId = value.data.id;
                 mv.orderModel.id = mv.currentOrderId;
+                //console.log(value.data);
                 mv.updateStock();
                 //mv.isLoading = false;
                 mv.isNew = false;
@@ -142,7 +144,7 @@ app.controller('orderEditController', function (customerService, employeeService
             .catch((err) => {
                 mv.isLoading = false;
                 mv.displayError('¡Se produjo un error!', 'Error');
-            });            
+            });
     };
 
     // Format the updated details array 
@@ -163,9 +165,11 @@ app.controller('orderEditController', function (customerService, employeeService
     mv.updateOrder = () => {
         mv.isLoading = true;
         mv.orderModel.details = mv.getDetails();
+        mv.orderModel.id = mv.currentOrderId;
         orderService.updateOrder(mv.currentOrderId, mv.orderModel)
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
+                this.fillForm(value.data);
                 mv.updateStock();
             })
             // eslint-disable-next-line no-unused-vars
@@ -193,9 +197,9 @@ app.controller('orderEditController', function (customerService, employeeService
         let isOk = true;
         if (mv.updatedDetails.length > 0) {
             mv.updatedDetails.forEach((obj) => {
-                if(obj.isUnChecked()){
+                if (obj.isUnChecked()) {
                     isOk = false;
-                }               
+                }
             });
         } else {
             isOk = false;

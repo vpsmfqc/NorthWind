@@ -53,7 +53,7 @@
                         <select id="employee" name="employee" class="form-select form-control"
                             ng-model="orderEditCtrl.orderModel.employeeId">
                             <option ng-repeat="item in orderEditCtrl.employeesList" ng-value="item.id">
-                                {{item.firtsName + " ("+ item.id + ")"}}</option>
+                                {{item.firstName + " ("+ item.id + ")"}}</option>
                         </select>
                         <small ng-if="orderEditCtrl.orderModel.employeeId == 0 && formEdit.employee.$touched"
                             class="form-text text-danger">Debe seleccionar un empleado.</small>

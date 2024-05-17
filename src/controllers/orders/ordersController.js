@@ -62,7 +62,7 @@ app.controller('ordersController', function ($scope, $location, orderService, to
     mv.getAllOrders = () => {
         mv.isLoading = true;
         orderService.getAllOrders()
-            .then((value) => {
+            .then((value) => {                        
                 mv.rawArrayOfOrders = mv.formatDate(value.data);
                 mv.arrayOfOrders = mv.rawArrayOfOrders;
                 mv.isLoading = false;
