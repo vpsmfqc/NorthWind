@@ -139,7 +139,7 @@ app.controller('customersController', function ($scope, $location, customerServi
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
                 mv.getAllCustomers();
-                mv.displaySuccess('Se eliminó el cliente...', 'Información');
+                mv.displaySuccess(`Se eliminó el cliente con ID ${id}.`, 'Información');
                 mv.isLoading = false;
             })
             // eslint-disable-next-line no-unused-vars

@@ -209,7 +209,7 @@ app.controller('productsController', function ($scope, $location, productService
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
                 mv.getAllProducts();
-                mv.displaySuccess('Se eliminó el usuario...', 'Información');               
+                mv.displaySuccess(`Se eliminó el producto con ID ${id}.`, 'Información');
                 mv.isLoading = false;
             })
             // eslint-disable-next-line no-unused-vars

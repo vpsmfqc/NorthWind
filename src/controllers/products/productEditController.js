@@ -34,6 +34,8 @@ app.controller('productEditController', function ($scope, productService, suppli
     mv.init = () => {
         mv.currentProductId = Number.parseInt($routeParams.idProduct) || 0;
         mv.isNew = (mv.currentProductId == 0);
+        mv.productModel.categoryId = 0;
+        mv.productModel.supplierId = 0;
         if (!mv.isNew) {
             mv.getProductById();
         }
@@ -48,8 +50,6 @@ app.controller('productEditController', function ($scope, productService, suppli
             .then((value) => {
                 mv.productModel = value.data;
                 mv.isNew = false;
-                // mv.selectedSupplierId = value.data.supplierId;
-                // mv.selectedCategoryId = value.data.categoryId;
                 mv.isLoading = false;
             })
             .catch((err) => {
@@ -76,7 +76,7 @@ app.controller('productEditController', function ($scope, productService, suppli
         mv.isLoading = true;
         mv.message = 'Se estan cargando los datos...';
         categoryService.getAllCategories()
-            .then((value) => {                
+            .then((value) => {
                 mv.listOfAllCategories = value.data;
                 mv.isLoading = false;
             })
@@ -93,12 +93,9 @@ app.controller('productEditController', function ($scope, productService, suppli
     mv.createProduct = () => {
         mv.isLoading = true;
         mv.message = 'Se está creando un nuevo producto';
-        // mv.productModel.categoryId = mv.selectedCategoryId;
-        // mv.productModel.supplierId = mv.selectedSupplierId;
         productService.createProduct(mv.productModel)
             .then((value) => {
                 mv.displaySuccess(`¡Se ha creado satisfactoriamente el producto con ID ${value.data.id}!`, 'Información');
-                // mv.currentCustomerId = value.data.id;
                 mv.productModel.id = value.data.id;
                 mv.isLoading = false;
                 mv.isNew = false;
@@ -111,8 +108,6 @@ app.controller('productEditController', function ($scope, productService, suppli
     };
 
     mv.updateProduct = () => {
-        // mv.productModel.categoryId = mv.selectedCategoryId;
-        // mv.productModel.supplierId = mv.selectedSupplierId;
         productService.updateProduct(mv.currentProductId, mv.productModel)
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
@@ -141,11 +136,21 @@ app.controller('productEditController', function ($scope, productService, suppli
 
     mv.isValid = () => { return $scope.formEdit.$valid; };
 
+    mv.isValidSupplier = () => { return (mv.productModel.supplierId > 0); };
+
+    mv.isValidCategory = () => { return (mv.productModel.categoryId > 0); };
+
     mv.submit = () => {
-        if (mv.isNew) {
-            mv.createProduct();
+        if (!mv.isValidSupplier()) {
+            mv.displayInfo('Debe seleccionar un proveedor.', 'Validación');
+        } else if (!mv.isValidCategory()) {
+            mv.displayInfo('Debe seleccionar una categoría.', 'Validación');
         } else {
-            mv.updateProduct();
+            if (mv.isNew) {
+                mv.createProduct();
+            } else {
+                mv.updateProduct();
+            }
         }
     };
 
