@@ -1,30 +1,9 @@
 <div class="container space">
     <h2>Productos</h2>
-    <div class="pt-3 pb-3" style="display: flex; flex-direction: row; justify-content: space-between;">
-        <button type="button" class="btn btn-primary" ng-click="productCtrl.goToNew()">Crear</button>
-        <select class="form-select form-control" style="width: 8rem;" ng-change="productCtrl.paginate()"
-            ng-model="productCtrl.rowsByPage">
-            <option ng-repeat="page in productCtrl.listOfPages" ng-value="page">{{page}}</option>
-        </select>
-    </div>
-    <div class="pb-3" style="display: flex; flex-direction: row;">
-        <input class="form-control" type="text" placeholder="Buscar" ng-model="productCtrl.searchInput"
-            ng-keyup="productCtrl.search()">
-        <button type="button" class="btn btn-primary ml-3" ng-click="productCtrl.search()">Buscar</button>
-    </div>
-    <!-- <div ng-if="productCtrl.isLoading" class="alert alert-info" role="alert">
-        <span class="mr-3"><i class="fa fa-spinner" aria-hidden="true"></i></span> {{productCtrl.message}}
-    </div> -->
-    <div ng-if="!productCtrl.isFound && productCtrl.isTyping" class="alert alert-info" role="alert">
-        {{productCtrl.message}}
-    </div>
 
-    <div ng-if="productCtrl.isLoading" class="d-flex justify-content-center">
-        <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-    </div>
-
+    <searcher-component rows-by-page="10" message="productCtrl.message" is-found="productCtrl.isFound"
+        is-loading="productCtrl.isLoading"></searcher-component>
+        
     <div ng-if="!productCtrl.isLoading" class="table-responsive">
         <table class="table table-striped">
             <thead>

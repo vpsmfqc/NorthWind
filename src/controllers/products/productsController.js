@@ -22,6 +22,7 @@ app.controller('productsController', function ($scope, $location, productService
     mv.listOfPages = [];
 
     mv.rowsFromTo = [];
+    mv.rawArrayOfProducts = [];
 
     /**
      * Constructor
@@ -38,19 +39,41 @@ app.controller('productsController', function ($scope, $location, productService
         mv.getAllProducts();
     };
 
+    // Event repaginate
+    $scope.$on('paginateEvent', function (event, data) {
+        mv.rowsByPage = data;
+        mv.paginate();
+    });
+
     // Event to change the currentPage 
     $scope.$on('changePageEvent', function (event, data) {
         mv.currentPage = data;
         mv.splitIntoPage();
     });
 
-    //Get all the Products 
+    // Event to searching the text 
+    $scope.$on('searchingEvent', function (event, data) {
+        if (data.isTyping) {
+            mv.search(data.searchInput);
+        } else {
+            mv.arrayOfProducts = mv.rawArrayOfProducts;
+            mv.paginate();
+        }
+    });
+
+    // Event when clicking on
+    $scope.$on('gotoEvent', function (event, data) {
+        mv.goTo(data);
+    });
+
+    // Get all the Products 
     mv.getAllProducts = () => {
         mv.isLoading = true;
         mv.message = 'Se están cargando los datos.';
         productService.getAllProducts()
             .then((value) => {
-                mv.arrayOfProducts = value.data;
+                mv.rawArrayOfProducts = value.data;
+                mv.arrayOfProducts = mv.rawArrayOfProducts;
                 mv.getAllSuppliers();
             })
             .catch((err) => {
@@ -168,36 +191,31 @@ app.controller('productsController', function ($scope, $location, productService
         mv.goTo(0);
     };
 
-
     // Search in the complete array for the input info
-    mv.search = () => {
-        mv.isTyping = mv.searchInput.trim() != '';
-        const inputText = mv.searchInput.trim().toLowerCase();
-        if (mv.isTyping) {
-            let productsArray = [];
-            mv.arrayOfProductsByPage = [];
-            mv.arrayOfProducts.forEach((obj) => {
-                try {
-                    if (obj.name.toLowerCase().includes(inputText) ||
-                        obj.id.toString().toLowerCase() == inputText ||
-                        mv.getSupplierById(obj.supplierId).companyName.toString().toLowerCase().includes(inputText) ||
-                        mv.getCategoryById(obj.categoryId).name.toString().toLowerCase().includes(inputText) ||
-                        obj.unitPrice.toString().includes(inputText) ||
-                        obj.quantityPerUnit.toString().toLowerCase().includes(inputText)) {
-                        productsArray.push(obj);
-                    }
-                } catch (error) {
-                    console.log(error);
+    mv.search = (value) => {       
+        const inputText = value.toLowerCase().trim();
+        let productsArray = [];
+        mv.arrayOfProductsByPage = [];
+        mv.arrayOfProducts.forEach((obj) => {
+            try {
+                if (obj.name.toLowerCase().includes(inputText) ||
+                    obj.id.toString().toLowerCase() == inputText ||
+                    mv.getSupplierById(obj.supplierId).companyName.toString().toLowerCase().includes(inputText) ||
+                    mv.getCategoryById(obj.categoryId).name.toString().toLowerCase().includes(inputText) ||
+                    obj.unitPrice.toString().includes(inputText) ||
+                    obj.quantityPerUnit.toString().toLowerCase().includes(inputText)) {
+                    productsArray.push(obj);
                 }
-            });
-            mv.isFound = (productsArray.length > 0);
-            if (mv.isFound) {
-                mv.arrayOfProductsByPage = productsArray;
-            } else {
-                mv.message = 'No se encontró ningún resultado...';
+            } catch (error) {
+                console.log(error);
             }
-        } else {
+        });
+        mv.isFound = (productsArray.length > 0);
+        if (mv.isFound) {
+            mv.arrayOfProducts = productsArray;
             mv.paginate();
+        } else {
+            mv.message = 'No se encontró ningún resultado...';
         }
     };
 
