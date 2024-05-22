@@ -90,7 +90,11 @@ app.controller('customerEditController', function (customerService, $location, $
             .catch((err) => {
                 console.log(err);
                 mv.isLoading = false;
-                mv.displayError('¡Se produjo un error!', 'Error');
+                if(err.status == 409){
+                    mv.displayError(`¡Se produjo un error! El ID ${err.config.data.id} está duplicado.`,'Error');
+                }else{
+                    mv.displayError('¡Se produjo un error!', 'Error');
+                }                
             });
     };
 

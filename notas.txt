@@ -4,16 +4,16 @@ Database First en Entity Framework 6
 learn.microsoft.com
 https://learn.microsoft.com/es-es/ef/ef6/modeling/designer/workflows/database-first
 
-
 https://www.c-sharpcorner.com/article/crud-Asp-Net-web-api-with-entity-framework-in-Asp-Net-mvc/
-
 
 atlsql.vpsnotas.com nwuser Gj2tPWNnX5FC
 
-
 https://developer.okta.com/blog/2018/07/27/build-crud-app-in-aspnet-framework-webapi-and-angular%20de%20este%20tutorial%20se%20va%20a%20necesitar%20la%20parte%20de%20activar%20cors%20y%20cambiar%20el%20formateador%20a%20json
 
-
-
+https://www.entityframeworktutorial.net/entityframework6/querying-with-entityframework.aspx
 
 Data Source=atlsql.vpsnotas.com;Initial Catalog=Northwind;User ID=nwuser;Encrypt=False
+
+Instancia de sql server nueva SQLSERVER
+
+Instalar DBGATE
