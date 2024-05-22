@@ -7,6 +7,7 @@ app.controller('customersController', function ($scope, $location, customerServi
     //This array holds  the raw data
     mv.arrayOfCustomers = [];
     mv.arrayOfCustomersByPage = [];
+    mv.rawArrayOfCustomers = [];
 
     mv.searchInput = '';
     mv.isFound = false;
@@ -35,10 +36,31 @@ app.controller('customersController', function ($scope, $location, customerServi
         }
     };
 
+    // Event repaginate
+    $scope.$on('paginateEvent', function (event, data) {
+        mv.rowsByPage = data;
+        mv.paginate();
+    });
+
     // Event to change the currentPage 
     $scope.$on('changePageEvent', function (event, data) {
         mv.currentPage = data;
         mv.splitIntoPage();
+    });
+   
+    // Event to searching the text 
+    $scope.$on('searchingEvent', function (event, data) {
+        if (data.isTyping) {
+            mv.search(data.searchInput);
+        } else {
+            mv.arrayOfCustomers = mv.rawArrayOfCustomers;
+            mv.paginate();
+        }
+    });
+
+    // Event when clicking on
+    $scope.$on('gotoEvent', function (event, data) {
+        mv.goTo(data);
     });
 
     //Get all the customers 
@@ -47,7 +69,8 @@ app.controller('customersController', function ($scope, $location, customerServi
         mv.message = 'Se están cargando los datos.';
         customerService.getAllCustomers()
             .then((value) => {
-                mv.arrayOfCustomers = value.data;
+                mv.rawArrayOfCustomers = value.data;
+                mv.arrayOfCustomers = mv.rawArrayOfCustomers;
                 mv.isLoading = false;
                 mv.paginate();
             })
@@ -100,34 +123,30 @@ app.controller('customersController', function ($scope, $location, customerServi
     };
 
     // Search in the complete array for the input info
-    mv.search = () => {
-        const inputText = mv.searchInput.trim().toLowerCase();
-        mv.isTyping = mv.searchInput.trim() != '';
-        if (mv.isTyping) {
-            let customerArray = [];
-            mv.arrayOfCustomersByPage = [];
-            mv.arrayOfCustomers.forEach((obj) => {
-                try {
-                    if (obj.id.toLowerCase().includes(inputText) ||
-                        obj.companyName.toLowerCase().includes(inputText) ||
-                        obj.contactName.toLowerCase().includes(inputText) ||
-                        obj.contactTitle.toLowerCase().includes(inputText) ||
-                        obj.address.phone.toLowerCase().includes(inputText) ||
-                        obj.address.country.toLowerCase().includes(inputText)) {
-                        customerArray.push(obj);
-                    }
-                } catch (error) {
-                    console.log(error);
+    mv.search = (value) => {
+        let inputText = value.trim().toLowerCase();
+        let customerArray = [];
+        mv.arrayOfCustomersByPage = [];
+        mv.arrayOfCustomers.forEach((obj) => {
+            try {
+                if (obj.id.toLowerCase().includes(inputText) ||
+                    obj.companyName.toLowerCase().includes(inputText) ||
+                    obj.contactName.toLowerCase().includes(inputText) ||
+                    obj.contactTitle.toLowerCase().includes(inputText) ||
+                    obj.address.phone.toLowerCase().includes(inputText) ||
+                    obj.address.country.toLowerCase().includes(inputText)) {
+                    customerArray.push(obj);
                 }
-            });
-            mv.isFound = (customerArray.length > 0);
-            if (mv.isFound) {
-                mv.arrayOfCustomersByPage = customerArray;
-            } else {
-                mv.message = 'No se encontró ningún resultado...';
+            } catch (error) {
+                console.log(error);
             }
-        } else {
+        });
+        mv.isFound = (customerArray.length > 0);
+        if (mv.isFound) {
+            mv.arrayOfCustomers = customerArray;
             mv.paginate();
+        } else {
+            mv.message = 'No se encontró ningún resultado...';
         }
     };
 
