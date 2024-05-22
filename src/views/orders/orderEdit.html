@@ -32,7 +32,7 @@
                             <option ng-repeat="item in orderEditCtrl.customersList" ng-value="item.id">
                                 {{item.contactName + " ("+ item.id + ")"}}</option>
                         </select>
-                        <small ng-if="orderEditCtrl.orderModel.customerId == 0 && formEdit.customer.$touched"
+                        <small ng-if="orderEditCtrl.orderModel.customerId == null && formEdit.customer.$touched"
                             class="form-text text-danger">Debe seleccionar un cliente.</small>
                     </div>
 
@@ -43,7 +43,7 @@
                             <option ng-repeat="item in orderEditCtrl.shippersList" ng-value="item.id">
                                 {{item.companyName + " ("+ item.phone + ")"}}</option>
                         </select>
-                        <small ng-if="orderEditCtrl.orderModel.shipVia == 0 && formEdit.shipper.$touched"
+                        <small ng-if="orderEditCtrl.orderModel.shipVia == null && formEdit.shipper.$touched"
                             class="form-text text-danger">Debe seleccionar un repartidor.</small>
                     </div>
 
@@ -54,7 +54,7 @@
                             <option ng-repeat="item in orderEditCtrl.employeesList" ng-value="item.id">
                                 {{item.firstName + " ("+ item.id + ")"}}</option>
                         </select>
-                        <small ng-if="orderEditCtrl.orderModel.employeeId == 0 && formEdit.employee.$touched"
+                        <small ng-if="orderEditCtrl.orderModel.employeeId == null && formEdit.employee.$touched"
                             class="form-text text-danger">Debe seleccionar un empleado.</small>
                     </div>
 

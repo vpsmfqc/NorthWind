@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-undef
-app.controller('orderEditController', function (customerService, employeeService, shipperService, orderService, $location, $routeParams, toastr) {
+app.controller('orderEditController', function ($scope, customerService, employeeService, shipperService, orderService, $location, $routeParams, toastr) {
     let mv = this;
     mv.isLoading = false;
     mv.message = '';
@@ -113,14 +113,14 @@ app.controller('orderEditController', function (customerService, employeeService
      */
     mv.updateStock = () => {
         for (let i = 0; i < mv.updatedDetails.length; i++) {
-            // eslint-disable-next-line no-unused-vars
+            // eslint-disable-next-line no-unused-vars                        
             mv.updatedDetails[i].updateStock().then((value) => {
                 // console.log(value);               
-            }).catch((error) => {
-                console.log(error);
+            }).catch((err) => {
+                console.log(err);
             });
         }
-        mv.displaySuccess('¡Se ha guardado la order!', 'Información');
+        mv.displaySuccess(`¡Se ha creado la order con ID ${mv.currentOrderId}!`, 'Información');
         mv.isLoading = false;
     };
     /**
@@ -132,10 +132,8 @@ app.controller('orderEditController', function (customerService, employeeService
         orderService.createOrder(mv.orderModel)
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
-                //mv.displaySuccess(`¡Se ha creado el pedido con ID ${value.data.id}!`, 'Información');
                 mv.currentOrderId = value.data.id;
                 mv.orderModel.id = mv.currentOrderId;
-                //console.log(value.data);
                 mv.updateStock();
                 //mv.isLoading = false;
                 mv.isNew = false;
@@ -189,12 +187,45 @@ app.controller('orderEditController', function (customerService, employeeService
         toastr.success(message, title);
     };
 
-    // mv.displayInfo = (message, title) => {
-    //     toastr.info(message, title);
-    // };
+    mv.displayInfo = (message, title) => {
+        toastr.info(message, title);
+    };
+
+    mv.isValidEmployee = () => {
+        try {
+            return (mv.orderModel.employeeId != null && mv.orderModel.employeeId > 0);
+        } catch (error) {
+            return false;
+        }
+    };
+
+    mv.isValidShipper = () => {
+        try {
+            return (mv.orderModel.shipVia != null && mv.orderModel.shipVia > 0);
+        } catch (error) {
+            return false;
+        }
+    };
+
+    mv.isValidCustomer = () => {
+        try {
+            return (mv.orderModel.customerId != null);
+        } catch (error) {
+            return false;
+        }
+    };
 
     mv.verify = () => {
         let isOk = true;
+
+        if (!mv.isValidCustomer()) {
+            isOk = false;
+        } else if (!mv.isValidShipper()) {
+            isOk = false;
+        } else if (!mv.isValidEmployee()) {
+            isOk = false;
+        }
+
         if (mv.updatedDetails.length > 0) {
             mv.updatedDetails.forEach((obj) => {
                 if (obj.isUnChecked()) {
@@ -215,7 +246,15 @@ app.controller('orderEditController', function (customerService, employeeService
                 mv.updateOrder();
             }
         } else {
-            this.displayError('¡Debe guardar y seleccionar al menos una unidad de los productos!', 'Información');
+            if (!mv.isValidCustomer()) {
+                mv.displayInfo('Debe seleccionar un cliente.', 'Información');
+            } else if (!mv.isValidShipper()) {
+                mv.displayInfo('Debe seleccionar un repartidor.', 'Información');
+            } else if (!mv.isValidEmployee()) {
+                mv.displayInfo('Debe seleccionar un empleado.', 'Información');
+            } else {
+                mv.displayInfo('¡Debe agregar un producto y seleccionar al menos una unidad!', 'Información');
+            }
         }
     };
 
