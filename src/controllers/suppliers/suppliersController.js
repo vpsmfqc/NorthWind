@@ -12,11 +12,9 @@ app.controller('suppliersController', function ($scope, $location, supplierServi
     mv.searchInput = '';
     mv.isFound = false;
     mv.orderArrays = [];
-    mv.isTyping = false;
-    
+
     mv.currentPage = 1;
     mv.rowsByPage = 10;
-
 
     mv.rowsFromTo = [];
 
@@ -48,7 +46,7 @@ app.controller('suppliersController', function ($scope, $location, supplierServi
     // Event to searching the text 
     $scope.$on('searchingEvent', function (event, data) {
         if (data.isTyping) {
-            mv.search(data.searchInput);
+            mv.search(data.searchInput);           
         } else {
             mv.arrayOfSuppliers = mv.rawArrayOfSuppliers;
             mv.paginate();
@@ -118,11 +116,11 @@ app.controller('suppliersController', function ($scope, $location, supplierServi
     // Search in the complete array for the input info
     mv.search = (value) => {
         let inputText = value.toLowerCase().trim();
-        let supplierArray = [];        
+        let supplierArray = [];
         mv.arrayOfSuppliersByPage = [];
         mv.arrayOfSuppliers.forEach((obj) => {
             try {
-                if (obj.id.toString().toLowerCase() == inputText || obj.companyName.toLowerCase().includes(inputText) || obj.contactName.toLowerCase().includes(inputText) || obj.contactTitle.toLowerCase().includes(inputText)) {
+                if (obj.id.toString().toLowerCase().includes(inputText) || obj.companyName.toLowerCase().includes(inputText) || obj.contactName.toLowerCase().includes(inputText) || obj.contactTitle.toLowerCase().includes(inputText)) {
                     supplierArray.push(obj);
                 }
             } catch (err) {
@@ -131,7 +129,7 @@ app.controller('suppliersController', function ($scope, $location, supplierServi
         });
         mv.isFound = (supplierArray.length > 0);
         if (mv.isFound) {
-            mv.arrayOfSuppliers= supplierArray;
+            mv.arrayOfSuppliers = supplierArray;
             mv.paginate();
         } else {
             mv.message = 'No se encontró ningún resultado...';
@@ -146,7 +144,7 @@ app.controller('suppliersController', function ($scope, $location, supplierServi
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
                 mv.getAllSuppliers();
-                mv.displaySuccess('Se eliminó el proveedor...', 'Información');
+                mv.displaySuccess(`Se eliminó el proveedor con ID ${id}.`, 'Información');
                 mv.isLoading = false;
             })
             // eslint-disable-next-line no-unused-vars
