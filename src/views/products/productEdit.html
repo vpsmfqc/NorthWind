@@ -1,11 +1,6 @@
 <div class="container space">
 
-    <h2 ng-if="productEditCtrl.isNew">Nuevo Producto</h2>
-    <h2 ng-if="!productEditCtrl.isNew">Actualizar Producto</h2>
-
-    <!-- <div ng-if="productEditCtrl.isLoading" class="alert alert-info" role="alert">
-        <span class="mr-3"><i class="fa fa-spinner" aria-hidden="true"></i></span> {{productEditCtrl.message}}
-    </div> -->
+    <h2>{{productEditCtrl.isNew?'Nuevo':'Actualizar'}} Producto</h2>
 
     <div ng-if="productEditCtrl.isLoading" class="d-flex justify-content-center">
         <div class="spinner-border" role="status">
@@ -43,8 +38,7 @@
                             <option ng-repeat="item in productEditCtrl.listOfAllSuppliers" ng-value="item.id">
                                 {{item.contactName}}</option>
                         </select>
-                        <small
-                            ng-if="productEditCtrl.productModel.supplierId == 0 && formEdit.supplier.$touched"
+                        <small ng-if="productEditCtrl.productModel.supplierId == 0 && formEdit.supplier.$touched"
                             class="form-text text-danger">Debe seleccionar un proveedor.</small>
                     </div>
 
@@ -55,8 +49,7 @@
                             <option ng-repeat="item in productEditCtrl.listOfAllCategories" ng-value="item.id">
                                 {{item.name}}</option>
                         </select>
-                        <small
-                            ng-if="productEditCtrl.productModel.categoryId == 0 && formEdit.category.$touched"
+                        <small ng-if="productEditCtrl.productModel.categoryId == 0 && formEdit.category.$touched"
                             class="form-text text-danger">Debe seleccionar una categoría.</small>
                     </div>
 
@@ -71,8 +64,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="unitPrice">Precio por unidad:</label>
-                        <input id="unitPrice" name="unitPrice" type="text" class="form-control" placeholder="Precio por unidad"
-                            ng-model="productEditCtrl.productModel.unitPrice" required>
+                        <input id="unitPrice" name="unitPrice" type="text" class="form-control"
+                            placeholder="Precio por unidad" ng-model="productEditCtrl.productModel.unitPrice" required>
                         <small
                             ng-if="formEdit.unitPrice.$invalid && (formEdit.unitPrice.$touched || formEdit.unitPrice.$dirty)"
                             class="form-text text-danger">Debe ingresar el precio por unidad.</small>
@@ -80,7 +73,8 @@
                     <div class="mb-3">
                         <label for="unitsInStock">Unidades en almacén:</label>
                         <input id="unitsInStock" name="unitsInStock" type="number" class="form-control"
-                            placeholder="Unidades en almacén" ng-model="productEditCtrl.productModel.unitsInStock" required>
+                            placeholder="Unidades en almacén" ng-model="productEditCtrl.productModel.unitsInStock"
+                            required>
                         <small
                             ng-if="formEdit.unitsInStock.$invalid && (formEdit.unitsInStock.$touched || formEdit.unitsInStock.$dirty)"
                             class="form-text text-danger">Debe ingresar las unidades en almacén.</small>
@@ -88,7 +82,8 @@
                     <div class="mb-3">
                         <label for="unitsOnOrder">Unidades en orden:</label>
                         <input id="unitsOnOrder" name="unitsOnOrder" type="number" class="form-control"
-                            placeholder="Unidades en orden" ng-model="productEditCtrl.productModel.unitsOnOrder" required>
+                            placeholder="Unidades en orden" ng-model="productEditCtrl.productModel.unitsOnOrder"
+                            required>
                         <small
                             ng-if="formEdit.unitsOnOrder.$invalid && (formEdit.unitsOnOrder.$touched || formEdit.unitsOnOrder.$dirty)"
                             class="form-text text-danger">Debe ingresar las unidades en orden.</small>
@@ -96,7 +91,8 @@
                     <div class="mb-3">
                         <label for="reorderLevel">Nivel de reorden:</label>
                         <input id="reorderLevel" name="reorderLevel" type="number" class="form-control"
-                            placeholder="Nivel de reorden" ng-model="productEditCtrl.productModel.reorderLevel" required>
+                            placeholder="Nivel de reorden" ng-model="productEditCtrl.productModel.reorderLevel"
+                            required>
                         <small
                             ng-if="formEdit.reorderLevel.$invalid && (formEdit.reorderLevel.$touched || formEdit.reorderLevel.$dirty)"
                             class="form-text text-danger">Debe ingresar el nivel de reorden.</small>
@@ -104,16 +100,17 @@
                     <div class="mb-3">
                         <div class="form-check ">
                             <input id="discontinued" name="discontinued" class="form-check-input" type="checkbox"
-                                ng-model="productEditCtrl.productModel.discontinued" >
-                            <label for="discontinued" class="form-check-label" >Está
+                                ng-model="productEditCtrl.productModel.discontinued">
+                            <label for="discontinued" class="form-check-label">Está
                                 descontinuado?</label>
-                        </div>                        
+                        </div>
                     </div>
 
                     <div>
                         <button type="submit" class="btn btn-primary" ng-disabled="formEdit.$invalid">Guardar</button>
-                        <button type="button" class="btn btn-secondary" ng-click="productEditCtrl.goBack()">Atrás</button>
-                  </div>
+                        <button type="button" class="btn btn-secondary"
+                            ng-click="productEditCtrl.goBack()">Atrás</button>
+                    </div>
                 </div>
             </form>
         </div>

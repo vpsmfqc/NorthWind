@@ -1,7 +1,6 @@
 <div class="container space">
 
-    <h2 ng-if="orderEditCtrl.isNew">Nueva Orden</h2>
-    <h2 ng-if="!orderEditCtrl.isNew">Actualizar Orden</h2>
+    <h2>{{orderEditCtrl.isNew?'Nueva':'Actualizar'}} Orden</h2>
 
     <div ng-if="orderEditCtrl.isLoading" class="d-flex justify-content-center">
         <div class="spinner-border" role="status">
@@ -147,7 +146,7 @@
                             class="form-text text-danger">Debe ingresar el país.</small>
                     </div>
                 </div>
-                
+
                 <detail-component details-array="orderEditCtrl.orderModel.details"
                     list-of-detailed-products="orderEditCtrl.updatedDetails"></detail-component>
 

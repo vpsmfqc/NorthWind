@@ -1,11 +1,6 @@
 <div class="container space">
 
-    <h2 ng-if="supplierEditCtrl.isNew">Nuevo Proveedor</h2>
-    <h2 ng-if="!supplierEditCtrl.isNew">Actualizar Proveedor</h2>
-
-    <!-- <div ng-if="supplierEditCtrl.isLoading" class="alert alert-info" role="alert">
-        <span class="mr-3"><i class="fa fa-spinner" aria-hidden="true"></i></span>  {{supplierEditCtrl.message}} 
-    </div> -->
+    <h2>{{supplierEditCtrl.isNew?'Nuevo':'Actualizar'}} Proveedor</h2>
 
     <div ng-if="supplierEditCtrl.isLoading" class="d-flex justify-content-center">
         <div class="spinner-border" role="status">
@@ -19,8 +14,8 @@
                 <div class="card-header">
                     <label for="id">ID</label>
 
-                    <input ng-if="!supplierEditCtrl.isNew" type="number" class="form-control" placeholder="Identificación"
-                        ng-model="supplierEditCtrl.supplierModel.id" readonly>
+                    <input ng-if="!supplierEditCtrl.isNew" type="number" class="form-control"
+                        placeholder="Identificación" ng-model="supplierEditCtrl.supplierModel.id" readonly>
 
                     <input ng-if="supplierEditCtrl.isNew" id="id" name="id" type="number" class="form-control"
                         placeholder="Identificación" ng-model="supplierEditCtrl.supplierModel.id" readonly>
@@ -78,7 +73,8 @@
                     <div class="mb-3">
                         <label for="postalCode">Código Postal:</label>
                         <input id="postalCode" name="postalCode" type="text" class="form-control"
-                            placeholder="Código Postal" ng-model="supplierEditCtrl.supplierModel.address.postalCode" required>
+                            placeholder="Código Postal" ng-model="supplierEditCtrl.supplierModel.address.postalCode"
+                            required>
                         <small
                             ng-if="formEdit.postalCode.$invalid && (formEdit.postalCode.$touched || formEdit.postalCode.$dirty)"
                             class="form-text text-danger">Debe ingresar el código postal.</small>
@@ -97,7 +93,7 @@
                         <small ng-if="formEdit.street.$invalid && (formEdit.street.$touched || formEdit.street.$dirty)"
                             class="form-text text-danger">Debe ingresar la dirección.</small>
                     </div>
-                    <div>                        
+                    <div>
                         <button type="submit" class="btn btn-primary" ng-disabled="formEdit.$invalid">Guardar</button>
                         <button type="button" class="btn btn-secondary"
                             ng-click="supplierEditCtrl.goBack()">Atrás</button>
