@@ -158,7 +158,7 @@ app.controller('ordersController', function ($scope, $location, orderService, to
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
                 mv.getAllOrders();
-                mv.displaySuccess('Se eliminó el proveedor...', 'Información');
+                mv.displaySuccess(`Se eliminó la orden con ID ${id}`, 'Información');
                 mv.isLoading = false;
             })
             // eslint-disable-next-line no-unused-vars
