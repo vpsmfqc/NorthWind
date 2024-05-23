@@ -11,7 +11,7 @@
     <div ng-if="!orderEditCtrl.isLoading" class="row justify-content-center mt-3">
         <form name="formEdit" ng-submit="orderEditCtrl.submit()" class="col-md-12">
             <div class="card">
-                <div class="card-header">
+                <div ng-if="!orderEditCtrl.isNew" class="card-header">
                     <label for="id">ID</label>
 
                     <input ng-if="!orderEditCtrl.isNew" type="number" class="form-control" placeholder="Identificación"
@@ -28,7 +28,7 @@
                     <div class="mb-3">
                         <label for="customer">Cliente:</label>
                         <select id="customer" name="customer" class="form-select form-control"
-                            ng-model="orderEditCtrl.orderModel.customerId">
+                            ng-model="orderEditCtrl.orderModel.customerId" ng-change="orderEditCtrl.setCompanyName()">
                             <option ng-repeat="item in orderEditCtrl.customersList" ng-value="item.id">
                                 {{item.contactName + " ("+ item.id + ")"}}</option>
                         </select>
@@ -37,7 +37,54 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="shipper">Repartidor:</label>
+                        <label for="shipName">Nombre de la empresa:</label>
+                        <input id="shipName" name="shipName" type="text" class="form-control"
+                            placeholder="Nombre de Envío" ng-model="orderEditCtrl.orderModel.shipName" readonly required>
+                        <small
+                            ng-if="formEdit.shipName.$invalid && (formEdit.shipName.$touched || formEdit.shipName.$dirty)"
+                            class="form-text text-danger">Debe ingresar el nombre de envío.</small>
+                    </div>                    
+
+                    <div class="mb-3" ng-if="orderEditCtrl.employeesList.length > 0">
+                        <label for="employee">Empleado:</label>
+                        <select id="employee" name="employee" class="form-select form-control"
+                            ng-model="orderEditCtrl.orderModel.employeeId">
+                            <option ng-repeat="item in orderEditCtrl.employeesList" ng-value="item.id">
+                                {{item.firstName + " " + item.lastName}}</option>
+                        </select>
+                        <small ng-if="orderEditCtrl.orderModel.employeeId == null && formEdit.employee.$touched"
+                            class="form-text text-danger">Debe seleccionar un empleado.</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="orderDate">Fecha de la orden:  <span class="text-danger">(La entrega se realizará {{orderEditCtrl.shippedDays + 2}} días habiles depués de la orden)</span> </label>
+                        <input id="orderDate" name="orderDate" type="date" class="form-control" ng-change="orderEditCtrl.getDates()"
+                            placeholder="Fecha del Pedido" ng-model="orderEditCtrl.orderModel.orderDate" required>
+                        <small
+                            ng-if="formEdit.orderDate.$invalid && (formEdit.orderDate.$touched || formEdit.orderDate.$dirty)"
+                            class="form-text text-danger">Debe ingresar la fecha del pedido.</small>
+                    </div>                    
+
+                    <!-- <div class="mb-3">
+                        <label for="shippedDate">Fecha de Envío:</label>
+                        <input id="shippedDate" name="shippedDate" type="date" class="form-control"
+                            placeholder="Fecha de Envío" ng-model="orderEditCtrl.orderModel.shippedDate" required readonly>
+                        <small
+                            ng-if="formEdit.shippedDate.$invalid && (formEdit.shippedDate.$touched || formEdit.shippedDate.$dirty)"
+                            class="form-text text-danger">Debe ingresar la fecha de envío.</small>
+                    </div> -->
+
+                    <div class="mb-3">
+                        <label for="requiredDate">Fecha Entrega:</label>
+                        <input id="requiredDate" name="requiredDate" type="date" class="form-control"
+                            placeholder="Fecha Requerida" ng-model="orderEditCtrl.orderModel.requiredDate" required readonly>
+                        <small
+                            ng-if="formEdit.requiredDate.$invalid && (formEdit.requiredDate.$touched || formEdit.requiredDate.$dirty)"
+                            class="form-text text-danger">Debe ingresar la fecha requerida.</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="shipper">Empresa que realiza el envío:</label>
                         <select id="shipper" name="shipper" class="form-select form-control"
                             ng-model="orderEditCtrl.orderModel.shipVia">
                             <option ng-repeat="item in orderEditCtrl.shippersList" ng-value="item.id">
@@ -47,44 +94,6 @@
                             class="form-text text-danger">Debe seleccionar un repartidor.</small>
                     </div>
 
-                    <div class="mb-3" ng-if="orderEditCtrl.employeesList.length > 0">
-                        <label for="employee">Empleado:</label>
-                        <select id="employee" name="employee" class="form-select form-control"
-                            ng-model="orderEditCtrl.orderModel.employeeId">
-                            <option ng-repeat="item in orderEditCtrl.employeesList" ng-value="item.id">
-                                {{item.firstName + " ("+ item.id + ")"}}</option>
-                        </select>
-                        <small ng-if="orderEditCtrl.orderModel.employeeId == null && formEdit.employee.$touched"
-                            class="form-text text-danger">Debe seleccionar un empleado.</small>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="orderDate">Fecha del Pedido:</label>
-                        <input id="orderDate" name="orderDate" type="date" class="form-control"
-                            placeholder="Fecha del Pedido" ng-model="orderEditCtrl.orderModel.orderDate" required>
-                        <small
-                            ng-if="formEdit.orderDate.$invalid && (formEdit.orderDate.$touched || formEdit.orderDate.$dirty)"
-                            class="form-text text-danger">Debe ingresar la fecha del pedido.</small>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="requiredDate">Fecha Requerida:</label>
-                        <input id="requiredDate" name="requiredDate" type="date" class="form-control"
-                            placeholder="Fecha Requerida" ng-model="orderEditCtrl.orderModel.requiredDate" required>
-                        <small
-                            ng-if="formEdit.requiredDate.$invalid && (formEdit.requiredDate.$touched || formEdit.requiredDate.$dirty)"
-                            class="form-text text-danger">Debe ingresar la fecha requerida.</small>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="shippedDate">Fecha de Envío:</label>
-                        <input id="shippedDate" name="shippedDate" type="date" class="form-control"
-                            placeholder="Fecha de Envío" ng-model="orderEditCtrl.orderModel.shippedDate" required>
-                        <small
-                            ng-if="formEdit.shippedDate.$invalid && (formEdit.shippedDate.$touched || formEdit.shippedDate.$dirty)"
-                            class="form-text text-danger">Debe ingresar la fecha de envío.</small>
-                    </div>
-
                     <div class="mb-3">
                         <label for="freight">Flete:</label>
                         <input id="freight" name="freight" type="text" class="form-control" placeholder="Flete"
@@ -92,31 +101,15 @@
                         <small
                             ng-if="formEdit.freight.$invalid && (formEdit.freight.$touched || formEdit.freight.$dirty)"
                             class="form-text text-danger">Debe ingresar el flete.</small>
-                    </div>
+                    </div>                   
 
                     <div class="mb-3">
-                        <label for="shipName">Nombre de Envío:</label>
-                        <input id="shipName" name="shipName" type="text" class="form-control"
-                            placeholder="Nombre de Envío" ng-model="orderEditCtrl.orderModel.shipName" required>
+                        <label for="country">País:</label>
+                        <input id="country" name="country" type="text" class="form-control" placeholder="País"
+                            ng-model="orderEditCtrl.orderModel.shipAddress.country" required>
                         <small
-                            ng-if="formEdit.shipName.$invalid && (formEdit.shipName.$touched || formEdit.shipName.$dirty)"
-                            class="form-text text-danger">Debe ingresar el nombre de envío.</small>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="street">Calle:</label>
-                        <input id="street" name="street" type="text" class="form-control" placeholder="Nombre de Envío"
-                            ng-model="orderEditCtrl.orderModel.shipAddress.street" required>
-                        <small ng-if="formEdit.street.$invalid && (formEdit.street.$touched || formEdit.street.$dirty)"
-                            class="form-text text-danger">Debe ingresar el nombre de la calle.</small>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="city">Ciudad:</label>
-                        <input id="city" name="city" type="text" class="form-control" placeholder="Ciudad"
-                            ng-model="orderEditCtrl.orderModel.shipAddress.city" required>
-                        <small ng-if="formEdit.city.$invalid && (formEdit.city.$touched || formEdit.city.$dirty)"
-                            class="form-text text-danger">Debe ingresar la ciudad.</small>
+                            ng-if="formEdit.country.$invalid && (formEdit.country.$touched || formEdit.country.$dirty)"
+                            class="form-text text-danger">Debe ingresar el país.</small>
                     </div>
 
                     <div class="mb-3">
@@ -128,6 +121,22 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="city">Ciudad:</label>
+                        <input id="city" name="city" type="text" class="form-control" placeholder="Ciudad"
+                            ng-model="orderEditCtrl.orderModel.shipAddress.city" required>
+                        <small ng-if="formEdit.city.$invalid && (formEdit.city.$touched || formEdit.city.$dirty)"
+                            class="form-text text-danger">Debe ingresar la ciudad.</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="street">Dirección:</label>
+                        <input id="street" name="street" type="text" class="form-control" placeholder="Nombre de Envío"
+                            ng-model="orderEditCtrl.orderModel.shipAddress.street" required>
+                        <small ng-if="formEdit.street.$invalid && (formEdit.street.$touched || formEdit.street.$dirty)"
+                            class="form-text text-danger">Debe ingresar el nombre de la dirección.</small>
+                    </div>
+
+                    <div class="mb-3">
                         <label for="postalCode">Código Postal:</label>
                         <input id="postalCode" name="postalCode" type="text" class="form-control"
                             placeholder="Código Postal" ng-model="orderEditCtrl.orderModel.shipAddress.postalCode"
@@ -135,16 +144,7 @@
                         <small
                             ng-if="formEdit.postalCode.$invalid && (formEdit.postalCode.$touched || formEdit.postalCode.$dirty)"
                             class="form-text text-danger">Debe ingresar el código postal.</small>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="country">País:</label>
-                        <input id="country" name="country" type="text" class="form-control" placeholder="País"
-                            ng-model="orderEditCtrl.orderModel.shipAddress.country" required>
-                        <small
-                            ng-if="formEdit.country.$invalid && (formEdit.country.$touched || formEdit.country.$dirty)"
-                            class="form-text text-danger">Debe ingresar el país.</small>
-                    </div>
+                    </div>                    
                 </div>
 
                 <detail-component details-array="orderEditCtrl.orderModel.details"

@@ -11,7 +11,7 @@
     <div ng-if="!productEditCtrl.isLoading" class="row justify-content-center mt-3">
         <div class="col-md-12">
             <form name="formEdit" ng-submit="productEditCtrl.submit()" class="card">
-                <div class="card-header">
+                <div ng-if="!productEditCtrl.isNew" class="card-header">
                     <label for="id">ID</label>
 
                     <input ng-if="!productEditCtrl.isNew" type="text" class="form-control" placeholder="Identificación"
@@ -36,7 +36,7 @@
                         <select id="supplier" name="supplier" class="form-select form-control"
                             ng-model="productEditCtrl.productModel.supplierId">
                             <option ng-repeat="item in productEditCtrl.listOfAllSuppliers" ng-value="item.id">
-                                {{item.contactName}}</option>
+                                {{item.companyName}}</option>
                         </select>
                         <small ng-if="productEditCtrl.productModel.supplierId == 0 && formEdit.supplier.$touched"
                             class="form-text text-danger">Debe seleccionar un proveedor.</small>

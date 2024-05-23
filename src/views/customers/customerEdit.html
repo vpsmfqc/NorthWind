@@ -11,7 +11,7 @@
     <div ng-if="!customerEditCtrl.isLoading" class="row justify-content-center mt-3">
         <div class="col-md-12">
             <form name="formEdit" ng-submit="customerEditCtrl.submit()" class="card">
-                <div class="card-header">
+                <div ng-if="!customerEditCtrl.isNew" class="card-header">
                     <label for="id">ID</label>
                     <input ng-if="!customerEditCtrl.isNew" type="text" class="form-control" placeholder="Identificación"
                         ng-model="customerEditCtrl.id" readonly>

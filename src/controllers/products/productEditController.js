@@ -2,7 +2,7 @@
 app.controller('productEditController', function ($scope, productService, supplierService, $location, $routeParams, categoryService, toastr) {
     let mv = this;
     // Properties for the messages an edit a new one or uptade
-    mv.isLoading = false;  
+    mv.isLoading = false;
     mv.currentProductId = 0;
     mv.isNew = true;
 
@@ -43,7 +43,7 @@ app.controller('productEditController', function ($scope, productService, suppli
     };
 
     mv.getProductById = () => {
-        mv.isLoading = true;        
+        mv.isLoading = true;
         productService.getProductById(mv.currentProductId)
             .then((value) => {
                 mv.productModel = value.data;
@@ -57,10 +57,21 @@ app.controller('productEditController', function ($scope, productService, suppli
     };
 
     mv.getAllSuppliers = () => {
-        mv.isLoading = true;       
+        mv.isLoading = true;
         supplierService.getAllSuppliers()
             .then((value) => {
                 mv.listOfAllSuppliers = value.data;
+                mv.listOfAllSuppliers.sort((a, b) => {
+                    var nameA = a.companyName.toUpperCase();
+                    var nameB = b.companyName.toUpperCase();
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0;
+                });
                 mv.isLoading = false;
             })
             .catch((err) => {
@@ -70,10 +81,21 @@ app.controller('productEditController', function ($scope, productService, suppli
     };
 
     mv.getAllCategories = () => {
-        mv.isLoading = true;       
+        mv.isLoading = true;
         categoryService.getAllCategories()
             .then((value) => {
-                mv.listOfAllCategories = value.data;
+                mv.listOfAllCategories = value.data;              
+                mv.listOfAllCategories.sort((a, b) => {
+                    var nameA = a.name.toUpperCase();
+                    var nameB = b.name.toUpperCase();
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0;
+                });
                 mv.isLoading = false;
             })
             .catch((err) => {
@@ -87,7 +109,7 @@ app.controller('productEditController', function ($scope, productService, suppli
     };
 
     mv.createProduct = () => {
-        mv.isLoading = true;      
+        mv.isLoading = true;
         productService.createProduct(mv.productModel)
             .then((value) => {
                 mv.displaySuccess(`¡Se ha creado satisfactoriamente el producto con ID ${value.data.id}!`, 'Información');

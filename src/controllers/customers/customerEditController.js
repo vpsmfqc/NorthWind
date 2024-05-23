@@ -79,13 +79,12 @@ app.controller('customerEditController', function (customerService, $location, $
         customerService.createCustomer(data)
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
-                mv.displaySuccess(`¡Se ha creado exitosamente el usuario con identificación ${value.data.id}!`, 'Información');
+                mv.displaySuccess(`¡Se ha creado exitosamente el usuario con identificación ${value.data.id} !`, 'Información');
                 mv.currentCustomerId = value.data.id;
                 mv.isLoading = false;
                 mv.isNew = false;
             })
             .catch((err) => {
-                console.log(err);
                 mv.isLoading = false;
                 if(err.status == 409){
                     mv.displayError(`¡Se produjo un error! El ID ${err.config.data.id} está duplicado.`,'Error');

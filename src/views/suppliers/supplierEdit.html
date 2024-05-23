@@ -11,7 +11,7 @@
     <div ng-if="!supplierEditCtrl.isLoading" class="row justify-content-center mt-3">
         <div class="col-md-12">
             <form name="formEdit" ng-submit="supplierEditCtrl.submit()" class="card">
-                <div class="card-header">
+                <div ng-if="!supplierEditCtrl.isNew" class="card-header">
                     <label for="id">ID</label>
 
                     <input ng-if="!supplierEditCtrl.isNew" type="number" class="form-control"

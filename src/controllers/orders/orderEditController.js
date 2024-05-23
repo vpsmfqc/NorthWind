@@ -1,13 +1,14 @@
 // eslint-disable-next-line no-undef
 app.controller('orderEditController', function ($scope, customerService, employeeService, shipperService, orderService, $location, $routeParams, toastr) {
     let mv = this;
-    mv.isLoading = false;    
+    mv.isLoading = false;
     mv.currentOrderId = 0;
     mv.isNew = true;
     mv.updatedDetails = [];
     mv.customersList = [];
     mv.shippersList = [];
     mv.employeesList = [];
+    mv.shippedDays = 3;
 
     //Json parameters
     mv.orderModel = null;
@@ -36,6 +37,17 @@ app.controller('orderEditController', function ($scope, customerService, employe
         shipperService.getAllShippers()
             .then((value) => {
                 mv.shippersList = value.data;
+                mv.shippersList.sort((a, b) => {
+                    var nameA = a.companyName.toUpperCase();
+                    var nameB = b.companyName.toUpperCase();
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0;
+                });
                 mv.isLoading = false;
             })
             // eslint-disable-next-line no-unused-vars
@@ -50,7 +62,17 @@ app.controller('orderEditController', function ($scope, customerService, employe
         employeeService.getAllEmployees()
             .then((value) => {
                 mv.employeesList = value.data;
-                // console.log(value.data);
+                mv.employeesList.sort((a, b) => {
+                    var nameA = `${a.firstName.toUpperCase()} ${a.lastName.toUpperCase()}`;
+                    var nameB = `${b.firstName.toUpperCase()} ${b.lastName.toUpperCase()}`;
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0;
+                });
                 mv.isLoading = false;
             })
             // eslint-disable-next-line no-unused-vars
@@ -65,12 +87,48 @@ app.controller('orderEditController', function ($scope, customerService, employe
         customerService.getAllCustomers()
             .then((value) => {
                 mv.customersList = value.data;
+                mv.customersList.sort((a, b) => {
+                    var nameA = a.contactName.toUpperCase();
+                    var nameB = b.contactName.toUpperCase();
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0;
+                });
                 mv.isLoading = false;
             })
             // eslint-disable-next-line no-unused-vars
             .catch((err) => {
                 mv.isLoading = false;
             });
+    };
+
+    mv.setCompanyName = () => {
+        let id = mv.orderModel.customerId;
+        if (id != null) {
+            let customer = mv.customersList.find(c => c.id == id);
+            mv.orderModel.shipName = customer.companyName;
+        }
+    };
+
+    mv.getDates = () => {
+        mv.orderModel.shippedDate = mv.getDate(mv.shippedDays);
+        mv.orderModel.requiredDate = mv.getDate(mv.shippedDays + 2);
+    };
+
+    mv.getDate = (days) => {
+        let count = 0;
+        let newDate = new Date(mv.orderModel.orderDate);
+        while (count < days) {
+            if (newDate.getDay() !== 0 && newDate.getDay() !== 6) {
+                count++;
+            }
+            newDate.setDate(newDate.getDate() + 1);
+        }
+        return newDate;
     };
 
     // Go to the table of orders
@@ -83,7 +141,6 @@ app.controller('orderEditController', function ($scope, customerService, employe
         mv.isLoading = true;
         orderService.getOrderById(mv.currentOrderId)
             .then((value) => {
-                // console.log(value);
                 mv.fillForm(value.data);
                 mv.getAllCustomers();
             })
@@ -114,7 +171,6 @@ app.controller('orderEditController', function ($scope, customerService, employe
         for (let i = 0; i < mv.updatedDetails.length; i++) {
             // eslint-disable-next-line no-unused-vars                        
             mv.updatedDetails[i].updateStock().then((value) => {
-                // console.log(value);               
             }).catch((err) => {
                 console.log(err);
             });
@@ -138,7 +194,6 @@ app.controller('orderEditController', function ($scope, customerService, employe
                 mv.currentOrderId = value.data.id;
                 mv.orderModel.id = mv.currentOrderId;
                 mv.updateStock();
-                //mv.isLoading = false;
                 mv.isNew = false;
             })
             // eslint-disable-next-line no-unused-vars
