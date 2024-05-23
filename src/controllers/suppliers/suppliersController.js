@@ -23,8 +23,7 @@ app.controller('suppliersController', function ($scope, $location, supplierServi
      */
     mv.init = () => {
         mv.rowsByPage = 10;
-        mv.currentPage = 1;
-        mv.message = 'Se están cargando los datos...';
+        mv.currentPage = 1;        
         mv.getAllSuppliers();
         for (let j = 0; j < 4; j++) {
             mv.orderArrays.push(false);
@@ -60,8 +59,7 @@ app.controller('suppliersController', function ($scope, $location, supplierServi
 
     //Get all the Suppliers 
     mv.getAllSuppliers = () => {
-        mv.isLoading = true;
-        mv.message = 'Se están cargando los datos.';
+        mv.isLoading = true;       
         supplierService.getAllSuppliers()
             .then((value) => {
                 mv.rawArrayOfSuppliers = value.data;
@@ -138,8 +136,7 @@ app.controller('suppliersController', function ($scope, $location, supplierServi
 
     // Delete the selected Product by its id
     mv.deleteSupplier = (id) => {
-        mv.isLoading = true;
-        mv.message = 'Se está eliminando...';
+        mv.isLoading = true;        
         supplierService.deleteSupplier(id)
             // eslint-disable-next-line no-unused-vars
             .then((value) => {

@@ -1,8 +1,7 @@
 // eslint-disable-next-line no-undef
 app.controller('orderEditController', function ($scope, customerService, employeeService, shipperService, orderService, $location, $routeParams, toastr) {
     let mv = this;
-    mv.isLoading = false;
-    mv.message = '';
+    mv.isLoading = false;    
     mv.currentOrderId = 0;
     mv.isNew = true;
     mv.updatedDetails = [];
@@ -120,7 +119,11 @@ app.controller('orderEditController', function ($scope, customerService, employe
                 console.log(err);
             });
         }
-        mv.displaySuccess(`¡Se ha creado la order con ID ${mv.currentOrderId}!`, 'Información');
+        if (mv.isNew) {
+            mv.displaySuccess(`¡Se ha creado la order con ID ${mv.currentOrderId}!`, 'Información');
+        } else {
+            mv.displaySuccess(`¡Se ha actualizado la order con ID ${mv.currentOrderId}!`, 'Información');
+        }
         mv.isLoading = false;
     };
     /**

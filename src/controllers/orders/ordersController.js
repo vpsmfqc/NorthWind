@@ -23,8 +23,7 @@ app.controller('ordersController', function ($scope, $location, orderService, to
      */
     mv.init = () => {
         mv.rowsByPage = 10;
-        mv.currentPage = 1;
-        mv.message = 'Se están cargando los datos...';
+        mv.currentPage = 1;        
         mv.getAllOrders();
         for (let j = 0; j < 5; j++) {
             mv.orderArrays.push(false);
@@ -152,8 +151,7 @@ app.controller('ordersController', function ($scope, $location, orderService, to
 
     // Delete the selected order by its id
     mv.deleteOrder = (id) => {
-        mv.isLoading = true;
-        mv.message = 'Se está eliminando...';
+        mv.isLoading = true;       
         orderService.deleteOrder(id)
             // eslint-disable-next-line no-unused-vars
             .then((value) => {

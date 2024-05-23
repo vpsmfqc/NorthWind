@@ -1,8 +1,7 @@
 // eslint-disable-next-line no-undef
 app.controller('supplierEditController', function (supplierService, $location, $routeParams, toastr) {
     let mv = this;
-    mv.isLoading = false;
-    mv.message = '';
+    mv.isLoading = false;    
     mv.currentSupplierId = 0;
     mv.isNew = true;
 
@@ -25,8 +24,7 @@ app.controller('supplierEditController', function (supplierService, $location, $
     };
 
     mv.getSupplierById = () => {
-        mv.isLoading = true;
-        mv.message = 'Se estan cargando los datos...';
+        mv.isLoading = true;        
         supplierService.getSupplierById(mv.currentSupplierId)
             .then((value) => {
                 mv.fillForm(value.data);
@@ -43,8 +41,7 @@ app.controller('supplierEditController', function (supplierService, $location, $
     };
 
     mv.createSupplier = () => {
-        mv.isLoading = true;
-        mv.message = 'Se están guardando los datos...';
+        mv.isLoading = true;        
         supplierService.createSupplier(mv.supplierModel)
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
@@ -62,8 +59,7 @@ app.controller('supplierEditController', function (supplierService, $location, $
     };
 
     mv.updateSupplier = () => {
-        mv.isLoading = true;
-        mv.message = 'Se están guardando los datos...';
+        mv.isLoading = true;        
         supplierService.updateSupplier(mv.currentSupplierId, mv.supplierModel)
             // eslint-disable-next-line no-unused-vars
             .then((value) => {

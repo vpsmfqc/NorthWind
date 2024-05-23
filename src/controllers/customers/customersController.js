@@ -25,8 +25,7 @@ app.controller('customersController', function ($scope, $location, customerServi
      */
     mv.init = () => {
         mv.rowsByPage = 10;
-        mv.currentPage = 1;
-        mv.message = 'Se están cargando los datos...';
+        mv.currentPage = 1;        
         mv.getAllCustomers();
         for (let i = 5; i <= 20; i = i + 5) {
             mv.listOfPages.push(i);
@@ -65,8 +64,7 @@ app.controller('customersController', function ($scope, $location, customerServi
 
     //Get all the customers 
     mv.getAllCustomers = () => {
-        mv.isLoading = true;
-        mv.message = 'Se están cargando los datos.';
+        mv.isLoading = true;       
         customerService.getAllCustomers()
             .then((value) => {
                 mv.rawArrayOfCustomers = value.data;
@@ -152,8 +150,7 @@ app.controller('customersController', function ($scope, $location, customerServi
 
     // Delete the selected customer by its id
     mv.deleteCustomer = (id) => {
-        mv.isLoading = true;
-        mv.message = 'Se está eliminando...';
+        mv.isLoading = true;       
         customerService.deleteCustomer(id)
             // eslint-disable-next-line no-unused-vars
             .then((value) => {

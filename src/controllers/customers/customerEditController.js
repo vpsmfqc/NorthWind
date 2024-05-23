@@ -1,8 +1,7 @@
 // eslint-disable-next-line no-undef
 app.controller('customerEditController', function (customerService, $location, $routeParams, $uibModal, toastr) {
     let mv = this;
-    mv.isLoading = false;
-    mv.message = '';
+    mv.isLoading = false;    
     mv.currentCustomerId = '0';
     mv.isNew = true;
 
@@ -48,8 +47,7 @@ app.controller('customerEditController', function (customerService, $location, $
     };
 
     mv.getCustomerById = () => {
-        mv.isLoading = true;
-        mv.message = 'Se estan cargando los datos...';
+        mv.isLoading = true;       
         customerService.getCustomerById(mv.currentCustomerId)
             .then((value) => {
                 mv.fillForm(value.data);
@@ -77,12 +75,11 @@ app.controller('customerEditController', function (customerService, $location, $
     mv.createCustomer = () => {
         mv.address = mv.createAddressObject();
         const data = mv.createCustomerObject();
-        mv.isLoading = true;
-        mv.message = 'Se están guardando los datos...';
+        mv.isLoading = true;       
         customerService.createCustomer(data)
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
-                mv.displaySuccess(`¡Se ha creado satisfactoriamente el usuario con identificación ${value.data.id}!`, 'Información');
+                mv.displaySuccess(`¡Se ha creado exitosamente el usuario con identificación ${value.data.id}!`, 'Información');
                 mv.currentCustomerId = value.data.id;
                 mv.isLoading = false;
                 mv.isNew = false;
@@ -101,13 +98,12 @@ app.controller('customerEditController', function (customerService, $location, $
     mv.updateCustomer = () => {
         mv.address = mv.createAddressObject();
         const data = mv.createCustomerObject();
-        mv.isLoading = true;
-        mv.message = 'Se están guardando los datos...';
+        mv.isLoading = true;       
         customerService.updateCustomer(mv.currentCustomerId, data)
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
                 mv.isLoading = false;
-                mv.displaySuccess(`¡Se ha actualizado satisfactoriamente el usuario con identificación ${value.data.id}!`, 'Información');
+                mv.displaySuccess(`¡Se ha actualizado con exito el usuario con identificación ${value.data.id}!`, 'Información');
             })
             .catch((err) => {
                 console.log(err);

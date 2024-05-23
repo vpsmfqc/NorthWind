@@ -68,8 +68,7 @@ app.controller('productsController', function ($scope, $location, productService
 
     // Get all the Products 
     mv.getAllProducts = () => {
-        mv.isLoading = true;
-        mv.message = 'Se están cargando los datos.';
+        mv.isLoading = true;       
         productService.getAllProducts()
             .then((value) => {
                 mv.rawArrayOfProducts = value.data;
@@ -83,8 +82,7 @@ app.controller('productsController', function ($scope, $location, productService
     };
 
     // Get all the suppliers 
-    mv.getAllSuppliers = () => {
-        mv.message = 'Se estan cargando los datos..';
+    mv.getAllSuppliers = () => {       
         supplierService.getAllSuppliers()
             .then((value) => {
                 mv.listOfAllSuppliers = value.data;
@@ -97,8 +95,7 @@ app.controller('productsController', function ($scope, $location, productService
     };
 
     // Get all the categories 
-    mv.getAllCategories = () => {
-        mv.message = 'Se estan cargando los datos...';
+    mv.getAllCategories = () => {        
         categoryService.getAllCategories()
             .then((value) => {
                 mv.listOfAllCategories = value.data;
@@ -221,8 +218,7 @@ app.controller('productsController', function ($scope, $location, productService
 
     // Delete the selected Product by its id
     mv.deleteProduct = (id) => {
-        mv.isLoading = true;
-        mv.message = 'Se está eliminando...';
+        mv.isLoading = true;        
         productService.deleteProduct(id)
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
