@@ -41,8 +41,8 @@
 
 <div ng-if="loginCtrl.getIsLogged()" class="row">
   <h2>Bienvenido</h2>
-  <h3 class="text-danger">Inició sesión con el correo {{loginCtrl.userModel.email}}</h3>
-  <h3 class="text-danger">Su última sesión fue {{loginCtrl.userModel.lastLogin | date:'dd-MM-yyyy'}} </h3>
+  <h3 class="text-danger">Inició sesión con el correo {{loginCtrl.session.email}}</h3>
+  <h3 class="text-danger">Su última sesión fue {{loginCtrl.session.lastLogin | date:'dd-MM-yyyy'}} </h3>
 </div>
 
 <!-- seccion para crear cuenta -->

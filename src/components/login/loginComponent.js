@@ -17,6 +17,8 @@ app.controller('loginController', function (authService, toastr) {
     mv.confirm = '';
     mv.isLoading = false;
 
+    mv.session = null; 
+
     mv.userModel = {
         email: '',
         password: '',
@@ -27,7 +29,8 @@ app.controller('loginController', function (authService, toastr) {
      * Constructor
      */
 
-    mv.init = () => {
+    mv.init = () => {      
+        mv.session = authService.getSession()?authService.getSession():null; 
         mv.isLoading = false;
         mv.action = 0;
     };
@@ -40,7 +43,7 @@ app.controller('loginController', function (authService, toastr) {
                     authService.setSession(value.data);
                     toastr.success('Bienvenido', 'Información');
                     mv.isLoading = false;
-                    mv.userModel.lastLogin = authService.getSession().lastLogin;
+                    mv.session = authService.getSession();
                 })
                 .catch((err) => {
                     toastr.error(err.data.message, 'Error');
@@ -56,7 +59,7 @@ app.controller('loginController', function (authService, toastr) {
                     authService.setSession(value.data);
                     toastr.success('Su cuenta ha sido creada', 'Información');
                     mv.isLoading = false;
-                    mv.userModel.lastLogin = authService.getSession().lastLogin;
+                    mv.session = authService.getSession();                 
                 })
                 .catch((err) => {
                     toastr.error(err.data.message, 'Error');
