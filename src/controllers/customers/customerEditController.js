@@ -85,7 +85,8 @@ app.controller('customerEditController', function (customerService, $location, $
         mv.phone = data.address.phone;
     };
 
-    mv.createCustomer = () => {       
+    mv.createCustomer = () => {     
+        mv.contactName = `${mv.firstName} ${mv.lastName}`;  
         const data = mv.toCustomer();
         mv.isLoading = true;
         customerService.createCustomer(data)
@@ -106,7 +107,8 @@ app.controller('customerEditController', function (customerService, $location, $
             });
     };
 
-    mv.updateCustomer = () => {        
+    mv.updateCustomer = () => {   
+        mv.contactName = `${mv.firstName} ${mv.lastName}`;     
         const data = mv.toCustomer();
         mv.isLoading = true;
         customerService.updateCustomer(mv.currentCustomerId, data)

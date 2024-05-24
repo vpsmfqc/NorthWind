@@ -44,7 +44,7 @@ app.service('authService', function ($window, $location, $http) {
         // eslint-disable-next-line no-undef
         amplify.store.sessionStorage('isLogged', false);
         // eslint-disable-next-line no-undef
-        amplify.store.sessionStorage('session','');
+        amplify.store.sessionStorage('session', null);
     };
 
     this.authRoute = () => {
