@@ -6,28 +6,7 @@ app.service('customerService', function ($http) {
     /**
      * constructor
      */
-    this.init = () => { };
-
-    this.retrieveCostumer = (id, companyName, contactName, contactTitle, address) => {
-        return {
-            id: id,
-            companyName: companyName,
-            contactName: contactName,
-            contactTitle: contactTitle,
-            address: address
-        };
-    };
-
-    this.retrieveAddress = (street, city, region, postalCode, country, phone) => {
-        return {
-            street: street,
-            city: city,
-            region: region,
-            postalCode: postalCode,
-            country: country,
-            phone: phone
-        };
-    };   
+    this.init = () => { };   
 
     this.getAllCustomers = () => {
         return $http.get(this.path);

@@ -11,7 +11,7 @@
     <div ng-if="!customerEditCtrl.isLoading" class="row justify-content-center mt-3">
         <div class="col-md-12">
             <form name="formEdit" ng-submit="customerEditCtrl.submit()" class="card">
-                <div ng-if="!customerEditCtrl.isNew" class="card-header">
+                <div class="card-header">
                     <label for="id">ID</label>
                     <input ng-if="!customerEditCtrl.isNew" type="text" class="form-control" placeholder="Identificación"
                         ng-model="customerEditCtrl.id" readonly>
@@ -37,12 +37,20 @@
                             class="form-text text-danger">Debe ingresar el nombre de la compañía.</small>
                     </div>
                     <div class="mb-3">
-                        <label for="contactName">Nombre:</label>
-                        <input id="contactName" name="contactName" type="text" class="form-control" placeholder="Nombre"
-                            ng-model="customerEditCtrl.contactName" required>
+                        <label for="firstName">Nombre:</label>
+                        <input id="firstName" name="firstName" type="text" class="form-control" placeholder="Nombre"
+                            ng-model="customerEditCtrl.firstName" required>
                         <small
-                            ng-if="formEdit.contactName.$invalid && (formEdit.contactName.$touched || formEdit.contactName.$dirty)"
+                            ng-if="formEdit.firstName.$invalid && (formEdit.firstName.$touched || formEdit.firstName.$dirty)"
                             class="form-text text-danger">Debe ingresar el nombre del cliente.</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="lastName">Apellido:</label>
+                        <input id="lastName" name="lastName" type="text" class="form-control" placeholder="Apellido"
+                            ng-model="customerEditCtrl.lastName" required>
+                        <small
+                            ng-if="formEdit.lastName.$invalid && (formEdit.lastName.$touched || formEdit.lastName.$dirty)"
+                            class="form-text text-danger">Debe ingresar el apellido del cliente.</small>
                     </div>
                     <div class="mb-3">
                         <label for="contactTitle">Cargo:</label>

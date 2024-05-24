@@ -1,12 +1,15 @@
 // eslint-disable-next-line no-undef
 app.controller('customerEditController', function (customerService, $location, $routeParams, $uibModal, toastr) {
     let mv = this;
-    mv.isLoading = false;    
+    mv.isLoading = false;
     mv.currentCustomerId = '0';
     mv.isNew = true;
 
     //Json parameters
     mv.id = '';
+    mv.firstName = '';
+    mv.lastName = '';
+
     mv.companyName = '';
     mv.contactName = '';
     mv.contactTitle = '';
@@ -18,8 +21,6 @@ app.controller('customerEditController', function (customerService, $location, $
     mv.country = '';
     mv.phone = '';
     mv.isVisible = false;
-
-    // mv.customerEditCtrl = null;
 
     /**
      * Constructor
@@ -38,18 +39,27 @@ app.controller('customerEditController', function (customerService, $location, $
         $location.path('/customers');
     };
 
-    mv.createAddressObject = () => {
-        return customerService.retrieveAddress(mv.street, mv.city, mv.region, mv.postalCode, mv.country, mv.phone);
-    };
-
-    mv.createCustomerObject = () => {
-        return customerService.retrieveCostumer(mv.id, mv.companyName, mv.contactName, mv.contactTitle, mv.address);
-    };
+    mv.toCustomer = () => {
+        return {
+            id: mv.id,
+            companyName: mv.companyName,
+            contactName: mv.contactName,
+            contactTitle: mv.contactTitle,
+            address: {
+                city: mv.city,
+                country: mv.country,
+                phone: mv.phone,
+                postalCode: mv.postalCode,
+                region: mv.region,
+                street: mv.street,
+            }
+        };
+    };    
 
     mv.getCustomerById = () => {
-        mv.isLoading = true;       
+        mv.isLoading = true;
         customerService.getCustomerById(mv.currentCustomerId)
-            .then((value) => {
+            .then((value) => {               
                 mv.fillForm(value.data);
                 mv.isLoading = false;
             })
@@ -63,6 +73,9 @@ app.controller('customerEditController', function (customerService, $location, $
         mv.id = data.id;
         mv.companyName = data.companyName;
         mv.contactName = data.contactName;
+        let arr = data.contactName.split(' ');
+        mv.firstName = arr[0];
+        mv.lastName = arr[1];
         mv.contactTitle = data.contactTitle;
         mv.street = data.address.street;
         mv.city = data.address.city;
@@ -72,56 +85,42 @@ app.controller('customerEditController', function (customerService, $location, $
         mv.phone = data.address.phone;
     };
 
-    mv.createCustomer = () => {
-        mv.address = mv.createAddressObject();
-        const data = mv.createCustomerObject();
-        mv.isLoading = true;       
+    mv.createCustomer = () => {       
+        const data = mv.toCustomer();
+        mv.isLoading = true;
         customerService.createCustomer(data)
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
-                mv.displaySuccess(`¡Se ha creado exitosamente el usuario con identificación ${value.data.id} !`, 'Información');
+                toastr.success(`¡Se ha creado exitosamente el usuario con identificación ${value.data.id} !`, 'Información');
                 mv.currentCustomerId = value.data.id;
                 mv.isLoading = false;
                 mv.isNew = false;
             })
             .catch((err) => {
                 mv.isLoading = false;
-                if(err.status == 409){
-                    mv.displayError(`¡Se produjo un error! El ID ${err.config.data.id} está duplicado.`,'Error');
-                }else{
-                    mv.displayError('¡Se produjo un error!', 'Error');
-                }                
+                if (err.status == 409) {
+                    toastr.error(`¡Se produjo un error! ¡El ID ${err.config.data.id} está duplicado!`, 'Error');
+                } else {
+                    toastr.error('¡Se produjo un error!', 'Error');
+                }
             });
     };
 
-    mv.updateCustomer = () => {
-        mv.address = mv.createAddressObject();
-        const data = mv.createCustomerObject();
-        mv.isLoading = true;       
+    mv.updateCustomer = () => {        
+        const data = mv.toCustomer();
+        mv.isLoading = true;
         customerService.updateCustomer(mv.currentCustomerId, data)
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
                 mv.isLoading = false;
-                mv.displaySuccess(`¡Se ha actualizado con exito el usuario con identificación ${value.data.id}!`, 'Información');
+                toastr.success(`¡Se ha actualizado con éxito el usuario con identificación ${value.data.id} !`, 'Información');
             })
             .catch((err) => {
                 console.log(err);
                 mv.isLoading = false;
-                mv.displayError('¡Se produjo un error!', 'Error');
+                toastr.error('¡Se produjo un error!', 'Error');
             });
     };
-
-    mv.displayError = (message, title) => {
-        toastr.error(message, title);
-    };
-
-    mv.displaySuccess = (message, title) => {
-        toastr.success(message, title);
-    };
-
-    // mv.displayInfo = (message, title) => {
-    //     toastr.info(message, title);
-    // };
 
     mv.submit = () => {
         if (mv.isNew) {
@@ -148,7 +147,7 @@ app.controller('customerEditController', function (customerService, $location, $
             console.log(selectedItem);
         }, function () {
             console.log('Modal dismissed at: ' + new Date());
-        });        
+        });
     };
 
     mv.init();

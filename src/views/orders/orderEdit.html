@@ -75,7 +75,7 @@
                     </div> -->
 
                     <div class="mb-3">
-                        <label for="requiredDate">Fecha Entrega:</label>
+                        <label for="requiredDate">Fecha entrega:</label>
                         <input id="requiredDate" name="requiredDate" type="date" class="form-control"
                             placeholder="Fecha Requerida" ng-model="orderEditCtrl.orderModel.requiredDate" required readonly>
                         <small
@@ -84,7 +84,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="shipper">Empresa que realiza el envío:</label>
+                        <label for="shipper">Empresa que realiza la entrega:</label>
                         <select id="shipper" name="shipper" class="form-select form-control"
                             ng-model="orderEditCtrl.orderModel.shipVia">
                             <option ng-repeat="item in orderEditCtrl.shippersList" ng-value="item.id">
