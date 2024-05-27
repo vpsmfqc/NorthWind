@@ -111,6 +111,16 @@ app.config(function ($routeProvider) {
                 }
             }
         })
+        .when('/orders/:idOrder/:idCustomer', {
+            templateUrl: 'views/orders/orderEdit.html',
+            controller: 'orderEditController',
+            controllerAs: 'orderEditCtrl',
+            resolve: {
+                'check': function (authService) {
+                    authService.authRoute();
+                }
+            }
+        })
         .otherwise({ redirectTo: '/' });
 });
 

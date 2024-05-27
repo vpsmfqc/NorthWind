@@ -98,6 +98,7 @@ app.controller('orderEditController', function ($scope, customerService, employe
                     }
                     return 0;
                 });
+                console.log($routeParams.idCustomer);                
                 mv.isLoading = false;
             })
             // eslint-disable-next-line no-unused-vars

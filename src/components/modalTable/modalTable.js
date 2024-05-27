@@ -3,19 +3,21 @@ app.controller('modalTableController', function ($uibModalInstance, customerId, 
 
     let mv = this;
     mv.listOfOrders = [];
+    mv.isLoading = false;
     /**
      * Constructor
      */
-    mv.init = () => {
-        this.getAllOrders();
-        console.log('Hoa desde modal table' + customerId);
+    mv.init = () => {       
+        this.getAllOrders();      
     };
 
     mv.getAllOrders = () => {
+        mv.isLoading = true;
         orderService.getAllOrders()
-            .then((value) => {
-                mv.listOfOrders = value.data;
+            .then((value) => {                
+                mv.listOfOrders = value.data;              
                 mv.listOfOrders = mv.filter();
+                mv.isLoading = false;
             })
             .catch((err) => {
                 console.log(err);
@@ -36,6 +38,9 @@ app.controller('modalTableController', function ($uibModalInstance, customerId, 
 
     mv.goTo = (id) => {
         $location.path(`/orders/${id}`);
+    };
+    mv.create = ()=>{
+        $location.path(`/orders/0/${customerId}`);
     };
 
     mv.init();

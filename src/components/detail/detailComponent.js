@@ -10,7 +10,7 @@ app.component('detailComponent', {
 });
 
 // eslint-disable-next-line no-undef
-app.controller('detailController', function (productService, toastr) {
+app.controller('detailController', function (productService) {
 
     let mv = this;
     mv.isLoading = false;

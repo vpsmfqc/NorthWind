@@ -3,8 +3,13 @@
     <div class="modal-header">
         <h4>Órdenes</h4>
     </div>
-    <div class="modal-body">       
-        <div class="card-body">
+    <div class="modal-body"> 
+        <div ng-if="modalTableCtrl.isLoading" class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <div ng-if="!modalTableCtrl.isLoading" class="card-body">
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -33,10 +38,9 @@
                 </tbody>
             </table>
         </div>
-
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary" ng-click="modalTableCtrl.accept()">Cerrar</button>
-        <!-- <button type="button" class="btn btn-secondary" ng-click="modalTableCtrl.cancel()">Cancelar</button> -->
+        <button type="button" class="btn btn-primary" ng-click="modalTableCtrl.create()">Crear</button>
+        <button type="button" class="btn btn-secondary" ng-click="modalTableCtrl.accept()">Cerrar</button>       
     </div>
 </div>
