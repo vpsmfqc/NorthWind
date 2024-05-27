@@ -85,7 +85,17 @@ app.controller('detailController', function (productService, toastr) {
             unitPrice: unitPrice,
             quantity: quantity,
             discount: discount,
-            name: name,
+            percent: 0,
+            name: name,         
+            getDiff: function () {
+                return this.unitsInStock - this.quantity;
+            },
+            setUnits: function (num) {
+                if (this.unitsInStock > 0 && num <= this.unitsInStock) {
+                    this.quantity = num;
+                    this.isEditable = false;
+                }
+            },
             addUnits: function () {
                 if (this.unitsInStock > 0) {
                     this.quantity++;
@@ -102,6 +112,7 @@ app.controller('detailController', function (productService, toastr) {
             },
             toggle: function () {
                 this.isEditable = !this.isEditable;
+                this.discount = this.percent / 100;
             },
             totalPrice: function () {
                 return (this.unitPrice - (this.unitPrice * this.discount)) * this.quantity;
@@ -113,7 +124,7 @@ app.controller('detailController', function (productService, toastr) {
                 this.unitsInStock = fProduct.unitsInStock;
                 this.productId = fProduct.id;
                 this.unitPrice = fProduct.unitPrice;
-                this.quantity = 0;
+                this.quantity = 1;
                 this.discount = 0;
                 this.name = fProduct.name;
             },
@@ -171,7 +182,7 @@ app.controller('detailController', function (productService, toastr) {
                 let product = mv.createProductObj(0, true, 0, 0, 0, 0, 0, '');
                 mv.listOfDetailedProducts.push(product);
             } else {
-                mv.info = '¡Elija un producto, una cantidad y guarde!';
+                mv.info = '¡Elija un producto y confirme ✓!';
             }
         } else {
             mv.filter();
@@ -194,7 +205,7 @@ app.controller('detailController', function (productService, toastr) {
             });
             filterList.splice(index, 1);
         });
-        mv.filterArrayOfProducts = filterList;        
+        mv.filterArrayOfProducts = filterList;
     };
 
     //Filter adn add the current product

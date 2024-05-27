@@ -9,83 +9,55 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th></th>
-                    <th></th>
+                    <th>#</th> 
                     <th>ID</th>
-                    <th>Nombre</th>
+                    <th>Nombre</th>                   
+                    <th>Cantidad <span class="text-danger">(Disponibles)</span></th>                   
+                    <th>Descuento (%)</th>  
                     <th>Precio</th>
-                    <th>Cantidad</th>
-                    <th>Descuento</th>
-                    <th>Disponibles</th>
+                    <th style="text-align: end;">Total</th>
                     <th></th>
-                    <th>Total</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody>               
                 <tr ng-repeat="product in detailCtrl.listOfDetailedProducts">
-                    <td>{{$index+1}}</td>
-                    <td>
-                        <a class="text-primary" style="cursor: pointer;" ng-if="!product.isEditable"
-                            uib-popover="Editar" popover-trigger="'mouseenter'"
-                            ng-click="detailCtrl.edit(product.productId)">
-                            <i class="fa-solid fa-pencil"></i>
-                        </a>
-                        <a class="text-primary" style="cursor: pointer;" ng-if="product.isEditable"
-                            uib-popover="Guardar" popover-trigger="'mouseenter'"
-                            ng-click="detailCtrl.save(product.productId)">
-                            <i class="fa-solid fa-floppy-disk"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <a class="text-danger" style="cursor: pointer;" uib-popover="Eliminar"
-                            popover-trigger="'mouseenter'" ng-click="detailCtrl.remove(product.productId)">
-                            <i class="fa-solid fa-trash"></i></a>
-                    </td>
-                    <td>
-                        <span uib-popover="Identicicación del producto"
-                            popover-trigger="'mouseenter'">{{product.productId}}</span>
-                    </td>
+                    <td>{{$index+1}}</td> 
+                    <td ng-if="!product.isEditable">{{product.productId}}</td> 
+                    <td ng-if="!product.isEditable">{{product.name}}</td>
+                    <td ng-if="!product.isEditable">{{product.quantity}} <span class="text-danger">({{product.unitsInStock}})</span></td>
+                    <td ng-if="!product.isEditable">{{product.discount * 100}} %</td>                   
+                    <!--  -->
+                    <td ng-if="product.isEditable">{{product.productId}}</td>
                     <td ng-if="product.isEditable">
-                        <select class="form-select form-control" ng-model="detailCtrl.productId"
-                            ng-change="product.setProduct(detailCtrl.productId)">
-                            <option ng-repeat="item in detailCtrl.filterArrayOfProducts" ng-value="item.id">
-                                {{ item.name + " (" + item.unitsInStock + ")"}}
-                            </option>
+                        <select class="form-control" name="" id="" ng-change="product.setProduct(detailCtrl.productId)" ng-model="detailCtrl.productId">
+                            <option ng-value="item.id" ng-repeat="item in detailCtrl.filterArrayOfProducts">{{item.name}} ({{item.unitsInStock}})</option>
                         </select>
                     </td>
-                    <td ng-if="!product.isEditable" ng-click="product.toggle()" style="cursor: pointer;">
-                        <span> {{product.name}} </span>
+                    <td ng-if="product.isEditable" style="display: flex; flex-direction: row; justify-content: flex-start; align-items:start;">
+                        <input class="form-control" style="width: 8rem;" ng-model="product.quantity" type="number" name="" id="" min="1" max="{{product.unitsInStock}}">
+                        <span class="text-danger" style="margin-left: 1rem;">({{product.getDiff()}})</span>
                     </td>
+                    <td ng-if="product.isEditable">
+                        <input class="form-control" style="width: 8rem;" type="number" name="" id="" min="0" max="100" ng-model="product.percent">                       
+                    </td>
+                    <!--  -->
                     <td>{{product.unitPrice}}</td>
-                    <td>{{product.quantity}}</td>
-                    <td>{{product.discount}}</td>
-                    <td> <span uib-popover="Unidades disponibles"
-                            popover-trigger="'mouseenter'">{{product.unitsInStock}}</span></td>
-                    <td>
-                        <a class="text-primary" ng-click="product.addUnits()" uib-popover="Aumentar"
-                            popover-trigger="'mouseenter'" style="margin-right: 2rem; cursor: pointer;">
-                            <i class="fa-solid fa-plus"></i>
-                        </a>
-                        <a class="text-primary" ng-click="product.subUnits()" uib-popover="Disminuir"
-                            popover-trigger="'mouseenter'" style="cursor: pointer;">
-                            <i class="fa-solid fa-minus"></i>
-                        </a>
+                    <td style="text-align: end;">{{product.totalPrice() | number:2 }}</td>
+                    <td style="text-align: end;">
+                        <a ng-if="product.isEditable" style="cursor: pointer; margin-right: 2rem;" ng-click="product.toggle()"><i class="fa-solid fa-check"></i></a>
+                        <a ng-if="!product.isEditable" style="cursor: pointer; margin-right: 2rem;" ng-click="product.toggle()"><i class="fa-solid fa-pencil"></i></a>
+                        <a class="text-danger" style="cursor: pointer;" ng-click="detailCtrl.remove(product.productId)"><i class="fa-solid fa-trash-can"></i></a>
                     </td>
-                    <td>{{product.totalPrice() | number:2 }}</td>
                 </tr>
                 <tr>
+                    <td></td>                    
+                    <td></td>
+                    <td></td>                   
                     <td></td>
                     <td></td>
+                    <td></td> 
+                    <td style="text-align: end;"><strong>{{detailCtrl.getGreatTotal() | number:2 }}</strong></td>
                     <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><strong>{{detailCtrl.getGreatTotal() | number:2 }}</strong></td>
                 </tr>
             </tbody>
         </table>
