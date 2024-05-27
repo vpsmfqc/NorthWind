@@ -86,7 +86,9 @@ app.controller('orderEditController', function ($scope, customerService, employe
         mv.customersList = [];
         customerService.getAllCustomers()
             .then((value) => {
-                mv.customersList = value.data;
+                mv.customersList = value.data;                
+                console.log('Loading custome');
+                console.log($routeParams.idCustomer);
                 mv.customersList.sort((a, b) => {
                     var nameA = a.contactName.toUpperCase();
                     var nameB = b.contactName.toUpperCase();
@@ -98,7 +100,7 @@ app.controller('orderEditController', function ($scope, customerService, employe
                     }
                     return 0;
                 });
-                console.log($routeParams.idCustomer);                
+                mv.orderModel.customerId = $routeParams.idCustomer;
                 mv.isLoading = false;
             })
             // eslint-disable-next-line no-unused-vars
@@ -177,9 +179,9 @@ app.controller('orderEditController', function ($scope, customerService, employe
             });
         }
         if (mv.isNew) {
-            mv.displaySuccess(`¡Se ha creado la order con ID ${mv.currentOrderId}!`, 'Información');
+            toastr.success(`¡Se ha creado la order con ID ${mv.currentOrderId}!`, 'Información');
         } else {
-            mv.displaySuccess(`¡Se ha actualizado la order con ID ${mv.currentOrderId}!`, 'Información');
+            toastr.success(`¡Se ha actualizado la order con ID ${mv.currentOrderId}!`, 'Información');
         }
         mv.isLoading = false;
     };
@@ -200,7 +202,7 @@ app.controller('orderEditController', function ($scope, customerService, employe
             // eslint-disable-next-line no-unused-vars
             .catch((err) => {
                 mv.isLoading = false;
-                mv.displayError('¡Se produjo un error!', 'Error');
+                mv.toastr.error('¡Se produjo un error!', 'Error');
             });
     };
 
@@ -232,23 +234,9 @@ app.controller('orderEditController', function ($scope, customerService, employe
             // eslint-disable-next-line no-unused-vars
             .catch((err) => {
                 mv.isLoading = false;
-                mv.displayError('¡Se produjo un error!', 'Error');
+                mv.toastr.error('¡Se produjo un error!', 'Error');
             });
-    };
-
-    // Error message
-    mv.displayError = (message, title) => {
-        toastr.error(message, title);
-    };
-
-    // Success message 
-    mv.displaySuccess = (message, title) => {
-        toastr.success(message, title);
-    };
-
-    mv.displayInfo = (message, title) => {
-        toastr.info(message, title);
-    };
+    };     
 
     mv.isValidEmployee = () => {
         try {
@@ -306,13 +294,13 @@ app.controller('orderEditController', function ($scope, customerService, employe
             }
         } else {
             if (!mv.isValidCustomer()) {
-                mv.displayInfo('Debe seleccionar un cliente.', 'Información');
+                toastr.info('Debe seleccionar un cliente.', 'Información');
             } else if (!mv.isValidShipper()) {
-                mv.displayInfo('Debe seleccionar un repartidor.', 'Información');
+                toastr.info('Debe seleccionar un repartidor.', 'Información');
             } else if (!mv.isValidEmployee()) {
-                mv.displayInfo('Debe seleccionar un empleado.', 'Información');
+                toastr.info('Debe seleccionar un empleado.', 'Información');
             } else {
-                mv.displayInfo('¡Debe agregar un producto y seleccionar al menos una unidad!', 'Información');
+                toastr.info('¡Debe agregar un producto y seleccionar al menos una unidad!', 'Información');
             }
         }
     };
