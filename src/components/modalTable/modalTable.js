@@ -8,7 +8,7 @@ app.controller('modalTableController', function ($uibModalInstance, customerId, 
      * Constructor
      */
     mv.init = () => {       
-        this.getAllOrders();      
+        mv.getAllOrders();      
     };
 
     mv.getAllOrders = () => {
@@ -39,11 +39,10 @@ app.controller('modalTableController', function ($uibModalInstance, customerId, 
     mv.goTo = (id) => {
         $location.path(`/orders/${id}`);
     };
+    
     mv.create = ()=>{
         $location.path(`/orders/0/${customerId}`);
     };
-
-    mv.init();
 
     mv.accept = function () {
         $uibModalInstance.close(true);
@@ -52,4 +51,6 @@ app.controller('modalTableController', function ($uibModalInstance, customerId, 
     mv.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
+
+    mv.init();    
 });

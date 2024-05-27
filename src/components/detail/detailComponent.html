@@ -44,8 +44,8 @@
                     <td>{{product.unitPrice}}</td>
                     <td style="text-align: end;">{{product.totalPrice() | number:2 }}</td>
                     <td style="text-align: end;">
-                        <a ng-if="product.isEditable" style="cursor: pointer; margin-right: 2rem;" ng-click="product.toggle()"><i class="fa-solid fa-check"></i></a>
-                        <a ng-if="!product.isEditable" style="cursor: pointer; margin-right: 2rem;" ng-click="product.toggle()"><i class="fa-solid fa-pencil"></i></a>
+                        <a ng-if="product.isEditable" style="cursor: pointer; margin-right: 2rem;" ng-click="detailCtrl.save(product.productId)"><i class="fa-solid fa-check"></i></a>
+                        <a ng-if="!product.isEditable" style="cursor: pointer; margin-right: 2rem;" ng-click="detailCtrl.edit(product.productId)"><i class="fa-solid fa-pencil"></i></a>
                         <a class="text-danger" style="cursor: pointer;" ng-click="detailCtrl.remove(product.productId)"><i class="fa-solid fa-trash-can"></i></a>
                     </td>
                 </tr>

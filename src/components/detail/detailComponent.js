@@ -86,7 +86,7 @@ app.controller('detailController', function (productService) {
             quantity: quantity,
             discount: discount,
             percent: 0,
-            name: name,         
+            name: name,
             getDiff: function () {
                 return this.unitsInStock - this.quantity;
             },
@@ -111,8 +111,12 @@ app.controller('detailController', function (productService) {
                 }
             },
             toggle: function () {
-                this.isEditable = !this.isEditable;
-                this.discount = this.percent / 100;
+                if (this.discount > 0) {
+                    this.percent = this.discount * 100;
+                } else {                   
+                    this.discount = this.percent / 100;
+                }
+                this.isEditable = !this.isEditable;               
             },
             totalPrice: function () {
                 return (this.unitPrice - (this.unitPrice * this.discount)) * this.quantity;
@@ -126,7 +130,7 @@ app.controller('detailController', function (productService) {
                 this.unitPrice = fProduct.unitPrice;
                 this.quantity = 1;
                 this.discount = 0;
-                this.name = fProduct.name;
+                this.name = fProduct.name;               
             },
             updateStock: function () {
                 let obj = {
