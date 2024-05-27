@@ -24,7 +24,7 @@ app.controller('orderEditController', function ($scope, customerService, employe
             mv.getOrderById();
             mv.getAllShippers();
             mv.getAllEmployees();
-        } else {
+        } else {           
             mv.getAllCustomers();
             mv.getAllShippers();
             mv.getAllEmployees();
@@ -87,8 +87,6 @@ app.controller('orderEditController', function ($scope, customerService, employe
         customerService.getAllCustomers()
             .then((value) => {
                 mv.customersList = value.data;                
-                console.log('Loading custome');
-                console.log($routeParams.idCustomer);
                 mv.customersList.sort((a, b) => {
                     var nameA = a.contactName.toUpperCase();
                     var nameB = b.contactName.toUpperCase();
@@ -99,8 +97,12 @@ app.controller('orderEditController', function ($scope, customerService, employe
                         return 1;
                     }
                     return 0;
-                });
-                mv.orderModel.customerId = $routeParams.idCustomer;
+                }); 
+                if($routeParams.idCustomer){
+                    mv.orderModel = new Object();
+                    mv.orderModel.customerId = $routeParams.idCustomer;                     
+                    mv.setCompanyName();
+                }
                 mv.isLoading = false;
             })
             // eslint-disable-next-line no-unused-vars
