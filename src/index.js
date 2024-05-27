@@ -71,6 +71,16 @@ app.config(function ($routeProvider) {
                 }
             }
         })
+        .when('/products/0/:idSupplier', {
+            templateUrl: 'views/products/productEdit.html',
+            controller: 'productEditController',
+            controllerAs: 'productEditCtrl',
+            resolve: {
+                'check': function (authService) {
+                    authService.authRoute();
+                }
+            }
+        })
         .when('/suppliers', {
             templateUrl: 'views/suppliers/suppliers.html',
             controller: 'suppliersController',
@@ -111,7 +121,7 @@ app.config(function ($routeProvider) {
                 }
             }
         })
-        .when('/orders/:idOrder/:idCustomer', {
+        .when('/orders/0/:idCustomer', {
             templateUrl: 'views/orders/orderEdit.html',
             controller: 'orderEditController',
             controllerAs: 'orderEditCtrl',

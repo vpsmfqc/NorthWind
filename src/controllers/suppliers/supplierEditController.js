@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-undef
-app.controller('supplierEditController', function (supplierService, $location, $routeParams, toastr) {
+app.controller('supplierEditController', function (supplierService, $location, $routeParams, $uibModal, toastr) {
     let mv = this;
-    mv.isLoading = false;    
+    mv.isLoading = false;
     mv.currentSupplierId = 0;
     mv.isNew = true;
 
@@ -12,7 +12,7 @@ app.controller('supplierEditController', function (supplierService, $location, $
      * Constructor
      */
     mv.init = () => {
-        mv.currentSupplierId = Number.parseInt($routeParams.idSupplier) || 0;        
+        mv.currentSupplierId = Number.parseInt($routeParams.idSupplier) || 0;
         mv.isNew = (mv.currentSupplierId == 0);
         if (!mv.isNew) {
             mv.getSupplierById();
@@ -24,7 +24,7 @@ app.controller('supplierEditController', function (supplierService, $location, $
     };
 
     mv.getSupplierById = () => {
-        mv.isLoading = true;        
+        mv.isLoading = true;
         supplierService.getSupplierById(mv.currentSupplierId)
             .then((value) => {
                 mv.fillForm(value.data);
@@ -41,11 +41,11 @@ app.controller('supplierEditController', function (supplierService, $location, $
     };
 
     mv.createSupplier = () => {
-        mv.isLoading = true;        
+        mv.isLoading = true;
         supplierService.createSupplier(mv.supplierModel)
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
-                mv.displaySuccess(`¡Se ha creado satisfactoriamente el usuario con identificación ${value.data.id}!`, 'Información');
+                toastr.success(`¡Se ha creado satisfactoriamente el usuario con identificación ${value.data.id}!`, 'Información');
                 mv.currentSupplierId = value.data.id;
                 mv.supplierModel.id = value.data.id;
                 mv.isLoading = false;
@@ -54,36 +54,24 @@ app.controller('supplierEditController', function (supplierService, $location, $
             // eslint-disable-next-line no-unused-vars
             .catch((err) => {
                 mv.isLoading = false;
-                mv.displayError('¡Se produjo un error!', 'Error');
+                toastr.error('¡Se produjo un error!', 'Error');
             });
     };
 
     mv.updateSupplier = () => {
-        mv.isLoading = true;        
+        mv.isLoading = true;
         supplierService.updateSupplier(mv.currentSupplierId, mv.supplierModel)
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
                 mv.isLoading = false;
-                mv.displaySuccess(`¡Se ha actualizado satisfactoriamente el usuario con identificación ${value.data.id}!`, 'Información');
+                toastr.success(`¡Se ha actualizado satisfactoriamente el usuario con identificación ${value.data.id}!`, 'Información');
             })
             // eslint-disable-next-line no-unused-vars
             .catch((err) => {
                 mv.isLoading = false;
-                mv.displayError('¡Se produjo un error!', 'Error');
+                toastr.error('¡Se produjo un error!', 'Error');
             });
     };
-
-    mv.displayError = (message, title) => {
-        toastr.error(message, title);
-    };
-
-    mv.displaySuccess = (message, title) => {
-        toastr.success(message, title);
-    };
-
-    // mv.displayInfo = (message, title) => {
-    //     toastr.info(message, title);
-    // };
 
     mv.submit = () => {
         if (mv.isNew) {
@@ -91,6 +79,26 @@ app.controller('supplierEditController', function (supplierService, $location, $
         } else {
             mv.updateSupplier();
         }
+    };
+
+    mv.open = () => {
+        let modalInstance = $uibModal.open({
+            templateUrl: './components/modalProducts/modalProducts.html',
+            controller: 'modalProductsController',
+            controllerAs: 'modalProductsCtrl',
+            size: 'md',
+            resolve: {
+                supplierId: function () {
+                    return mv.currentSupplierId;
+                }
+            }
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+            console.log(selectedItem);
+        }, function () {
+            console.log('Modal dismissed at: ' + new Date());
+        });
     };
 
     mv.init();

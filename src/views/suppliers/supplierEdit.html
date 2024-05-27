@@ -24,6 +24,11 @@
                         class="form-text text-danger">Debe ingresar el id.</small>
                 </div>
                 <div class="card-body">
+                    <div ng-if="!supplierEditCtrl.isNew"
+                        style="display: flex; flex-direction: row; justify-content: flex-end;">
+                        <button type="button" class="btn btn-primary"
+                            ng-click="supplierEditCtrl.open()">Productos</button>
+                    </div>
                     <div class="mb-3">
                         <label for="companyName">Compañía:</label>
                         <input id="companyName" name="companyName" type="text" class="form-control"

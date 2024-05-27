@@ -120,7 +120,7 @@ app.controller('productEditController', function ($scope, productService, suppli
             .catch((err) => {
                 console.log(err);
                 mv.isLoading = false;
-                mv.displayError('¡Se produjo un error!', 'Error');
+                toastr.error('¡Se produjo un error!', 'Error');
             });
     };
 
@@ -135,22 +135,10 @@ app.controller('productEditController', function ($scope, productService, suppli
             .catch((err) => {
                 console.log(err);
                 mv.isLoading = false;
-                mv.displayError('¡Se produjo un error!', 'Error');
+                toastr.error('¡Se produjo un error!', 'Error');
             });
     };
-
-    mv.displayError = (message, title) => {
-        toastr.error(message, title);
-    };
-
-    mv.displaySuccess = (message, title) => {
-        toastr.success(message, title);
-    };
-
-    mv.displayInfo = (message, title) => {
-        toastr.info(message, title);
-    };
-
+   
     mv.isValid = () => { return $scope.formEdit.$valid; };
 
     mv.isValidSupplier = () => { return (mv.productModel.supplierId > 0); };
@@ -159,9 +147,9 @@ app.controller('productEditController', function ($scope, productService, suppli
 
     mv.submit = () => {
         if (!mv.isValidSupplier()) {
-            mv.displayInfo('Debe seleccionar un proveedor.', 'Validación');
+            toastr.info('Debe seleccionar un proveedor.', 'Validación');
         } else if (!mv.isValidCategory()) {
-            mv.displayInfo('Debe seleccionar una categoría.', 'Validación');
+            toastr.info('Debe seleccionar una categoría.', 'Validación');
         } else {
             if (mv.isNew) {
                 mv.createProduct();
