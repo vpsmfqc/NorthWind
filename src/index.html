@@ -47,7 +47,10 @@
                         </li>
                         <li>
                             <a class="nav-link" href="#!/orders">Órdenes</a>
-                        </li>                       
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#!/users">Usuarios</a>
+                        </li>                   
                     </ul>
                     <ul ng-if="appCtrl.isMenu()" class="nav navbar-nav navbar-right">                       
                         <li>
@@ -67,6 +70,9 @@
     <!-- Auth service -->
     <script src="./services/auth/authService.js"></script>
 
+    <!-- Classes and objets -->
+    <script src="./services/utilities/paginatorService.js"></script>
+
     <!--Main Controller-->
     <script src="./controllers/mainController.js"></script>
 
@@ -75,7 +81,7 @@
     <script src="./components/modalProducts/modalProducts.js"></script>
     
     <!-- Components -->
-    <!-- <script src="./components/productRow/productRowComponent.js"></script> -->
+    <script src="./components/productsTable/productsTable.js"></script>
     <script src="./components/table/tableComponent.js"></script>
     <script src="./components/login/loginComponent.js"></script>
     <script src="./components/paginator/paginatorComponent.js"></script>
@@ -110,6 +116,11 @@
     <script src="./services/orders/orderService.js"></script>
     <script src="./controllers/orders/ordersController.js"></script>
     <script src="./controllers/orders/orderEditController.js"></script>
+
+    <!-- Users -->
+    <script src="./services/users/userService.js"></script>
+    <script src="./controllers/users/usersController.js"></script>
+    <script src="./controllers/users/userEditController.js"></script>
 
     <!--Bootstarp and JQuery-->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

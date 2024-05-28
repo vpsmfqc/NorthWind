@@ -235,7 +235,7 @@ app.controller('productsController', function ($scope, $location, productService
 
     // Get the index of the Product by its id 
     mv.getIndex = (id) => {
-        const index = this.arrayOfProducts.findIndex((obj) => {
+        const index = mv.arrayOfProducts.findIndex((obj) => {
             return obj.id == id;
         });
         return index + 1;

@@ -32,8 +32,7 @@
                             class="form-text text-danger">Debe ingresar el nombre.</small>
                     </div>
                     <div class="mb-3">
-                        <label for="supplier">Proveedor:</label>
-                        <p>{{productEditCtrl.productModel.supplierId}}</p>
+                        <label for="supplier">Proveedor:</label>                        
                         <select id="supplier" name="supplier" class="form-select form-control"
                             ng-model="productEditCtrl.productModel.supplierId">
                             <option ng-repeat="item in productEditCtrl.listOfAllSuppliers" ng-value="item.id">

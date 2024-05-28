@@ -60,8 +60,7 @@ app.controller('productEditController', function ($scope, productService, suppli
         mv.isLoading = true;
         supplierService.getAllSuppliers()
             .then((value) => {
-                mv.listOfAllSuppliers = value.data;
-                console.log(mv.listOfAllSuppliers);
+                mv.listOfAllSuppliers = value.data;               
                 mv.listOfAllSuppliers.sort((a, b) => {
                     var nameA = a.companyName.toUpperCase();
                     var nameB = b.companyName.toUpperCase();

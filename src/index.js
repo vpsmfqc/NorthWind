@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-undef
-const app = angular.module('app', ['ngRoute','ngAnimate','ngTouch', 'toastr','ui.bootstrap']);
+const app = angular.module('app', ['ngRoute', 'ngAnimate', 'ngTouch', 'toastr', 'ui.bootstrap']);
 
 app.controller('appController', function (authService) {
     let mv = this;
@@ -125,6 +125,16 @@ app.config(function ($routeProvider) {
             templateUrl: 'views/orders/orderEdit.html',
             controller: 'orderEditController',
             controllerAs: 'orderEditCtrl',
+            resolve: {
+                'check': function (authService) {
+                    authService.authRoute();
+                }
+            }
+        })
+        .when('/users', {
+            templateUrl: 'views/users/users.html',
+            controller: 'usersController',
+            controllerAs: 'usersCtrl',
             resolve: {
                 'check': function (authService) {
                     authService.authRoute();

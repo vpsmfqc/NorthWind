@@ -8,8 +8,8 @@
         </div>
     </div>
 
-    <div ng-if="!supplierEditCtrl.isLoading" class="row justify-content-center mt-3">
-        <div class="col-md-12">
+    <uib-tabset ng-if="!supplierEditCtrl.isLoading" class="row justify-content-center mt-3">
+        <uib-tab heading="Información">
             <form name="formEdit" ng-submit="supplierEditCtrl.submit()" class="card">
                 <div ng-if="!supplierEditCtrl.isNew" class="card-header">
                     <label for="id">ID</label>
@@ -24,11 +24,11 @@
                         class="form-text text-danger">Debe ingresar el id.</small>
                 </div>
                 <div class="card-body">
-                    <div ng-if="!supplierEditCtrl.isNew"
+                    <!-- <div ng-if="!supplierEditCtrl.isNew"
                         style="display: flex; flex-direction: row; justify-content: flex-end;">
                         <button type="button" class="btn btn-primary"
                             ng-click="supplierEditCtrl.open()">Productos</button>
-                    </div>
+                    </div> -->
                     <div class="mb-3">
                         <label for="companyName">Compañía:</label>
                         <input id="companyName" name="companyName" type="text" class="form-control"
@@ -105,6 +105,9 @@
                     </div>
                 </div>
             </form>
-        </div>
-    </div>
+        </uib-tab>
+        <uib-tab heading="Productos">
+            <products-table supplier-id="supplierEditCtrl.currentSupplierId"></products-table>
+        </uib-tab>
+    </uib-tabset>
 </div>
