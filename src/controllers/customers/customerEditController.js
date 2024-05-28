@@ -145,8 +145,9 @@ app.controller('customerEditController', function (customerService, $location, $
             }
         });
 
+        // eslint-disable-next-line no-unused-vars
         modalInstance.result.then(function (selectedItem) {
-            console.log(selectedItem);
+            //console.log(selectedItem);
         }, function () {
             console.log('Modal dismissed at: ' + new Date());
         });

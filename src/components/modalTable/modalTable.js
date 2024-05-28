@@ -42,10 +42,11 @@ app.controller('modalTableController', function ($uibModalInstance, customerId, 
     
     mv.create = ()=>{
         $location.path(`/orders/0/${customerId}`);
+        $uibModalInstance.close(true);
     };
 
-    mv.accept = function () {
-        $uibModalInstance.close(true);
+    mv.accept = function () {    
+        $uibModalInstance.dismiss('accept');
     };
 
     mv.cancel = function () {

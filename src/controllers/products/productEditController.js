@@ -61,6 +61,7 @@ app.controller('productEditController', function ($scope, productService, suppli
         supplierService.getAllSuppliers()
             .then((value) => {
                 mv.listOfAllSuppliers = value.data;
+                console.log(mv.listOfAllSuppliers);
                 mv.listOfAllSuppliers.sort((a, b) => {
                     var nameA = a.companyName.toUpperCase();
                     var nameB = b.companyName.toUpperCase();
@@ -72,6 +73,10 @@ app.controller('productEditController', function ($scope, productService, suppli
                     }
                     return 0;
                 });
+                if ($routeParams.idSupplier) {
+                    console.log($routeParams.idSupplier);
+                    mv.productModel.supplierId = $routeParams.idSupplier;
+                }
                 mv.isLoading = false;
             })
             .catch((err) => {
@@ -84,7 +89,7 @@ app.controller('productEditController', function ($scope, productService, suppli
         mv.isLoading = true;
         categoryService.getAllCategories()
             .then((value) => {
-                mv.listOfAllCategories = value.data;              
+                mv.listOfAllCategories = value.data;
                 mv.listOfAllCategories.sort((a, b) => {
                     var nameA = a.name.toUpperCase();
                     var nameB = b.name.toUpperCase();
@@ -112,7 +117,7 @@ app.controller('productEditController', function ($scope, productService, suppli
         mv.isLoading = true;
         productService.createProduct(mv.productModel)
             .then((value) => {
-                mv.displaySuccess(`¡Se ha creado satisfactoriamente el producto con ID ${value.data.id}!`, 'Información');
+                toastr.success(`¡Se ha creado satisfactoriamente el producto con ID ${value.data.id}!`, 'Información');
                 mv.productModel.id = value.data.id;
                 mv.isLoading = false;
                 mv.isNew = false;
@@ -129,7 +134,7 @@ app.controller('productEditController', function ($scope, productService, suppli
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
                 mv.isLoading = false;
-                mv.displaySuccess(`¡Se ha actualizado satisfactoriamente el producto con ID ${value.data.id}!`, 'Información');
+                toastr.success(`¡Se ha actualizado satisfactoriamente el producto con ID ${value.data.id}!`, 'Información');
                 mv.isNew = false;
             })
             .catch((err) => {
@@ -138,7 +143,7 @@ app.controller('productEditController', function ($scope, productService, suppli
                 toastr.error('¡Se produjo un error!', 'Error');
             });
     };
-   
+
     mv.isValid = () => { return $scope.formEdit.$valid; };
 
     mv.isValidSupplier = () => { return (mv.productModel.supplierId > 0); };
@@ -160,5 +165,4 @@ app.controller('productEditController', function ($scope, productService, suppli
     };
 
     mv.init();
-
 });
