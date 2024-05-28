@@ -1,6 +1,6 @@
 <div class="container space">
 
-    <h2>{{productEditCtrl.isNew?'Nuevo':'Actualizar'}} Producto</h2>
+    <h2>Producto</h2>
 
     <div ng-if="productEditCtrl.isLoading" class="d-flex justify-content-center">
         <div class="spinner-border" role="status">
@@ -11,6 +11,10 @@
     <div ng-if="!productEditCtrl.isLoading" class="row justify-content-center mt-3">
         <div class="col-md-12">
             <form name="formEdit" ng-submit="productEditCtrl.submit()" class="card">
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary" ng-disabled="formEdit.$invalid">Guardar</button>
+                    <button type="button" class="btn btn-secondary" ng-click="productEditCtrl.goBack()">Atrás</button>
+                </div>
                 <div ng-if="!productEditCtrl.isNew" class="card-header">
                     <label for="id">ID</label>
 

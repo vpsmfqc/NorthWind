@@ -1,6 +1,6 @@
 <div class="container space">
 
-    <h2>{{supplierEditCtrl.isNew?'Nuevo':'Actualizar'}} Proveedor</h2>
+    <h2>Proveedor</h2>
 
     <div ng-if="supplierEditCtrl.isLoading" class="d-flex justify-content-center">
         <div class="spinner-border" role="status">
@@ -11,6 +11,10 @@
     <uib-tabset ng-if="!supplierEditCtrl.isLoading" class="row justify-content-center mt-3">
         <uib-tab heading="Información">
             <form name="formEdit" ng-submit="supplierEditCtrl.submit()" class="card">
+                <div class="mb-3" style="margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary" ng-disabled="formEdit.$invalid">Guardar</button>
+                    <button type="button" class="btn btn-secondary" ng-click="supplierEditCtrl.goBack()">Atrás</button>
+                </div>
                 <div ng-if="!supplierEditCtrl.isNew" class="card-header">
                     <label for="id">ID</label>
 

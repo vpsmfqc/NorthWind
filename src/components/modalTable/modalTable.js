@@ -38,6 +38,7 @@ app.controller('modalTableController', function ($uibModalInstance, customerId, 
 
     mv.goTo = (id) => {
         $location.path(`/orders/${id}`);
+        $uibModalInstance.dismiss('accept');
     };
     
     mv.create = ()=>{
