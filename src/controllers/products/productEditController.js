@@ -2,39 +2,21 @@
 app.controller('productEditController', function ($scope, productService, supplierService, $location, $routeParams, categoryService, toastr) {
     let mv = this;
     // Properties for the messages an edit a new one or uptade
-    mv.isLoading = false;
-    mv.currentProductId = 0;
+    mv.isLoading = false;   
     mv.isNew = true;
-
     //List of all suppliers
     mv.listOfAllSuppliers = [];
-    mv.selectedSupplierId = 0;
-
     //List of all suppliers
-    mv.listOfAllCategories = [];
-    mv.selectedCategoryId = 0;
-
+    mv.listOfAllCategories = []; 
     //Object or model
-    mv.productModel = {
-        id: 0,
-        supplierId: 0,
-        categoryId: 0,
-        quantityPerUnit: '',
-        unitPrice: '',
-        unitsInStock: 0,
-        unitsOnOrder: 0,
-        reorderLevel: 0,
-        discontinued: false,
-        name: ''
-    };
+    mv.productModel = null;
     /**
      * Constructor
      */
     mv.init = () => {
-        mv.currentProductId = Number.parseInt($routeParams.idProduct) || 0;
-        mv.isNew = (mv.currentProductId == 0);
-        mv.productModel.categoryId = 0;
-        mv.productModel.supplierId = 0;
+        mv.productModel = new Object();
+        mv.productModel.id = Number.parseInt($routeParams.idProduct) || 0;
+        mv.isNew = (mv.productModel.id == 0);       
         if (!mv.isNew) {
             mv.getProductById();
         }
@@ -44,7 +26,7 @@ app.controller('productEditController', function ($scope, productService, suppli
 
     mv.getProductById = () => {
         mv.isLoading = true;
-        productService.getProductById(mv.currentProductId)
+        productService.getProductById(mv.productModel.id)
             .then((value) => {
                 mv.productModel = value.data;
                 mv.isNew = false;
@@ -112,7 +94,7 @@ app.controller('productEditController', function ($scope, productService, suppli
         $location.path('/products');
     };
 
-    mv.createProduct = () => {
+    mv.create = () => {
         mv.isLoading = true;
         productService.createProduct(mv.productModel)
             .then((value) => {
@@ -128,8 +110,8 @@ app.controller('productEditController', function ($scope, productService, suppli
             });
     };
 
-    mv.updateProduct = () => {
-        productService.updateProduct(mv.currentProductId, mv.productModel)
+    mv.update = () => {
+        productService.updateProduct(mv.productModel.id, mv.productModel)
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
                 mv.isLoading = false;
@@ -156,9 +138,9 @@ app.controller('productEditController', function ($scope, productService, suppli
             toastr.info('Debe seleccionar una categoría.', 'Validación');
         } else {
             if (mv.isNew) {
-                mv.createProduct();
+                mv.create();
             } else {
-                mv.updateProduct();
+                mv.update();
             }
         }
     };
