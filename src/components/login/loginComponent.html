@@ -33,8 +33,7 @@
       <button type="submit" class="btn btn-primary btn-block" ng-disabled="formLogin.$invalid">Aceptar</button>
       <div class="form-group"
         style="display: flex; flex-direction: row; justify-content: space-evenly; margin-top: 2rem;">
-        <a ng-click="loginCtrl.show(1)" style="cursor: pointer;">Crear cuenta</a> <a ng-click="loginCtrl.show(2)"
-          style="cursor: pointer;">Cambiar contraseña</a>
+        <a ng-click="loginCtrl.show(1)" style="cursor: pointer;">Crear cuenta</a>
       </div>
     </form>
   </div>
@@ -86,7 +85,8 @@
           ng-if="formSignup.confirm.$error.required && (formSignup.confirm.$touched || formSignup.confirm.$dirty || formSignup.$submitted)">
           Debe confirmar la contraseña.
         </small>
-        <small class="text-danger" ng-if="!formSignup.confirm.$error.required && !loginCtrl.isConfirm() && (formSignup.confirm.$touched || formSignup.confirm.$dirty || formSignup.$submitted)">
+        <small class="text-danger"
+          ng-if="!formSignup.confirm.$error.required && !loginCtrl.isConfirm() && (formSignup.confirm.$touched || formSignup.confirm.$dirty || formSignup.$submitted)">
           Las contraseñas no coinciden.
         </small>
       </div>
