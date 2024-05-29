@@ -43,7 +43,7 @@ app.controller('usersController', function (userService, paginatorService, $scop
 
     // Event when clicking on
     $scope.$on('gotoEvent', function (event, data) {
-        alert(`${data} enviar a crear nuevo usuario`);
+        mv.edit(data);
     });
 
     /**

@@ -13,7 +13,7 @@
             <form name="formEdit" ng-submit="userEditCtrl.submit()" class="card">
                 <div>
                     <button type="submit" class="btn btn-primary"
-                        ng-disabled="!userEditCtrl.isConfirm()">Guardar</button>
+                        ng-disabled="!userEditCtrl.isValid()">Guardar</button>
                     <button type="button" class="btn btn-secondary" ng-click="userEditCtrl.goBack()">Atrás</button>
                 </div>
                 <div ng-if="!userEditCtrl.isNew" class="card-header">
@@ -71,7 +71,7 @@
                         </small>
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-primary" ng-disabled="!userEditCtrl.isConfirm()">Guardar</button>
+                        <button type="submit" class="btn btn-primary" ng-disabled="!userEditCtrl.isValid()">Guardar</button>
                         <button type="button" class="btn btn-secondary" ng-click="userEditCtrl.goBack()">Atrás</button>
                     </div>
                 </div>

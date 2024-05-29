@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-undef
-app.controller('userEditController', function (userService, $routeParams, $location, toastr) {
+app.controller('userEditController', function (authService, userService, $routeParams, $location, toastr) {
     let mv = this;
     mv.isLoading = false;
     mv.isNew = false;
@@ -12,7 +12,7 @@ app.controller('userEditController', function (userService, $routeParams, $locat
         mv.isNew = (mv.userModel.id == 0);
         mv.getUserbyId();
     };
-
+   
     mv.getUserbyId = () => {
         mv.isLoading = true;
         userService.getAllUserById(mv.userModel.id)
@@ -26,19 +26,43 @@ app.controller('userEditController', function (userService, $routeParams, $locat
             });
     };
 
+    mv.create = () => {
+        mv.isLoading = true;
+        authService.signup(mv.userModel)
+            .then((value) => {
+                mv.userModel = value.data;
+                mv.isLoading = false;
+                mv.isNew = false;
+                toastr.success('¡Se creó con exito!', 'Información');
+            })
+            .catch((err) => {
+                toastr.error(err.data.message, 'Error');
+                mv.isLoading = false;
+            });
+    };
+
     mv.update = () => {
         mv.isLoading = true;
         userService.updateUserById(mv.userModel.id, mv.userModel)
             .then((value) => {
                 mv.userModel = value.data;
                 mv.isLoading = false;
-                toastr.success('¡Se modificó la contraseña con exito!','Información');
+                mv.isNew = false;
+                toastr.success('¡Se modificó la contraseña con exito!', 'Información');
             })
-            .catch((err) => {
-                console.log(err);
-                toastr.success('¡No se pudo realizar la operación!','Error');
+            // eslint-disable-next-line no-unused-vars
+            .catch((err) => {               
+                toastr.error('¡No se pudo realizar la operación!', 'Error');
                 mv.isLoading = false;
             });
+    };
+
+    mv.isValid = () => {
+        try {
+            return mv.isConfirm() && mv.userModel.email.includes('@');
+        } catch (err) {
+            return false;
+        }
     };
 
     mv.isConfirm = () => {
@@ -51,11 +75,11 @@ app.controller('userEditController', function (userService, $routeParams, $locat
 
     mv.format = (value) => {
         let num = Number.parseInt(value);
-        if(isNaN(num)){
+        if (isNaN(num)) {
             return '00';
-        }else{
+        } else {
             return num < 10 ? `0${num}` : `${num}`;
-        }        
+        }
     };
 
     mv.formatDate = (value) => {
@@ -78,9 +102,11 @@ app.controller('userEditController', function (userService, $routeParams, $locat
     };
 
     mv.submit = () => {
-        if(!mv.isNew){
+        if (!mv.isNew) {
             mv.update();
-        }
+        }else{
+            mv.create();
+        } 
         mv.confirm = '';
     };
 
