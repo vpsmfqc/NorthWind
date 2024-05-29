@@ -141,6 +141,16 @@ app.config(function ($routeProvider) {
                 }
             }
         })
+        .when('/users/:idUser', {
+            templateUrl: 'views/users/userEdit.html',
+            controller: 'userEditController',
+            controllerAs: 'userEditCtrl',
+            resolve: {
+                'check': function (authService) {
+                    authService.authRoute();
+                }
+            }
+        })
         .otherwise({ redirectTo: '/' });
 });
 

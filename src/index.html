@@ -52,7 +52,10 @@
                             <a class="nav-link" href="#!/users">Usuarios</a>
                         </li>                   
                     </ul>
-                    <ul ng-if="appCtrl.isMenu()" class="nav navbar-nav navbar-right">                       
+                    <ul ng-if="appCtrl.isMenu()" class="nav navbar-nav navbar-right"> 
+                        <li>
+                            <a class="nav-link" href="#!/" ng-click="">Contraseña</a>
+                        </li>                      
                         <li>
                             <a class="nav-link" href="#!/" ng-click="appCtrl.logOut()">Salir</a>
                         </li>

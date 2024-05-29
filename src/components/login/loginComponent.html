@@ -42,7 +42,8 @@
 <div ng-if="loginCtrl.getIsLogged()" class="row">
   <h2>Bienvenido</h2>
   <h3 class="text-danger">Inició sesión con el correo {{loginCtrl.session.email}}</h3>
-  <h3 class="text-danger">Su última sesión fue {{loginCtrl.session.lastLogin | date:'dd-MM-yyyy'}} </h3>
+  <h3 class="text-danger">Su última sesión inició el {{loginCtrl.session.lastLogin | date:'dd-MM-yyyy'}} a las
+    {{loginCtrl.session.lastLogin | date:'HH:mm:ss' }} </h3>
 </div>
 
 <!-- seccion para crear cuenta -->
@@ -78,7 +79,7 @@
         </small>
       </div>
       <div class="form-group">
-        <label for="confirm">Confirmar Contraseña:</label>
+        <label for="confirm">Confirmar contraseña:</label>
         <input type="password" class="form-control" id="confirm" name="confirm" ng-model="loginCtrl.confirm"
           ng-minlength="8" placeholder="Contraseña" required>
         <small class="text-danger"

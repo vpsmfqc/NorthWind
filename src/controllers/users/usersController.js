@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-undef
-app.controller('usersController', function (userService, paginatorService, $scope) {
+app.controller('usersController', function (userService, paginatorService, $scope, $location) {
     let mv = this;
     mv.userList = [];
     mv.rawUserList = [];
@@ -104,7 +104,7 @@ app.controller('usersController', function (userService, paginatorService, $scop
     };
 
     mv.edit = (id) => {
-        console.log(id);
+        $location.path(`/users/${id}`);
     };
 
     mv.init();
