@@ -9,7 +9,7 @@ app.component('loginComponent', {
 });
 
 // eslint-disable-next-line no-undef
-app.controller('loginController', function (authService, toastr) {
+app.controller('loginController', function (authService, toastr, $location) {
     let mv = this;
     // action deals with changing the password or create an account  
     // two values signup or password  
@@ -30,9 +30,11 @@ app.controller('loginController', function (authService, toastr) {
      */
 
     mv.init = () => {
+        mv.action = 0;
         mv.session = authService.getSession() ? authService.getSession() : null;
         mv.isLoading = false;
-        mv.action = 0;
+        let url = $location.absUrl();
+        mv.action = url.endsWith('reset') ? 2 : 0;
     };
 
     mv.submit = () => {
@@ -99,8 +101,11 @@ app.controller('loginController', function (authService, toastr) {
         return !mv.getIsLogged() && (mv.action == 1) && !this.isLoading;
     };
 
-    mv.showChange = () => {
-        return !mv.getIsLogged() && (mv.action == 2) && !this.isLoading;
+    mv.showReset = () => {
+        return mv.getIsLogged() && (mv.action == 2) && !this.isLoading;
+    };
+    mv.showHome = () => {
+        return mv.getIsLogged() && !mv.showReset();
     };
 
     mv.getIsLogged = () => {

@@ -30,6 +30,11 @@ app.config(function ($routeProvider) {
             controller: 'mainController',
             controllerAs: 'mainCtrl',
         })
+        .when('/reset', {
+            templateUrl: 'components/main.html',
+            controller: 'mainController',
+            controllerAs: 'mainCtrl',
+        })
         .when('/customers', {
             templateUrl: 'views/customers/customers.html',
             controller: 'customersController',
