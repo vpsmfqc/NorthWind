@@ -2,12 +2,12 @@
 app.controller('productEditController', function ($scope, productService, supplierService, $location, $routeParams, categoryService, toastr) {
     let mv = this;
     // Properties for the messages an edit a new one or uptade
-    mv.isLoading = false;   
+    mv.isLoading = false;
     mv.isNew = true;
     //List of all suppliers
     mv.listOfAllSuppliers = [];
     //List of all suppliers
-    mv.listOfAllCategories = []; 
+    mv.listOfAllCategories = [];
     //Object or model
     mv.productModel = null;
     /**
@@ -16,7 +16,8 @@ app.controller('productEditController', function ($scope, productService, suppli
     mv.init = () => {
         mv.productModel = new Object();
         mv.productModel.id = Number.parseInt($routeParams.idProduct) || 0;
-        mv.isNew = (mv.productModel.id == 0);       
+        mv.productModel.supplierId = $routeParams.idSupplier ? Number.parseInt($routeParams.idSupplier) : 0;
+        mv.isNew = (mv.productModel.id == 0);
         if (!mv.isNew) {
             mv.getProductById();
         }
@@ -42,7 +43,7 @@ app.controller('productEditController', function ($scope, productService, suppli
         mv.isLoading = true;
         supplierService.getAllSuppliers()
             .then((value) => {
-                mv.listOfAllSuppliers = value.data;               
+                mv.listOfAllSuppliers = value.data;
                 mv.listOfAllSuppliers.sort((a, b) => {
                     var nameA = a.companyName.toUpperCase();
                     var nameB = b.companyName.toUpperCase();
@@ -54,10 +55,6 @@ app.controller('productEditController', function ($scope, productService, suppli
                     }
                     return 0;
                 });
-                if ($routeParams.idSupplier) {
-                    console.log($routeParams.idSupplier);
-                    mv.productModel.supplierId = $routeParams.idSupplier;
-                }
                 mv.isLoading = false;
             })
             .catch((err) => {
