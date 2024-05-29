@@ -40,7 +40,8 @@
                         <select id="supplier" name="supplier" class="form-select form-control"
                             ng-model="productEditCtrl.productModel.supplierId">
                             <option ng-repeat="item in productEditCtrl.listOfAllSuppliers" ng-value="item.id">
-                                {{item.companyName}}    ({{item.id}})</option>
+                                {{item.companyName}}
+                            </option>
                         </select>
                         <small ng-if="productEditCtrl.productModel.supplierId == 0 && formEdit.supplier.$touched"
                             class="form-text text-danger">Debe seleccionar un proveedor.</small>
