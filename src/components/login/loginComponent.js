@@ -17,7 +17,7 @@ app.controller('loginController', function (authService, toastr) {
     mv.confirm = '';
     mv.isLoading = false;
 
-    mv.session = null; 
+    mv.session = null;
 
     mv.userModel = {
         email: '',
@@ -29,8 +29,8 @@ app.controller('loginController', function (authService, toastr) {
      * Constructor
      */
 
-    mv.init = () => {      
-        mv.session = authService.getSession()?authService.getSession():null; 
+    mv.init = () => {
+        mv.session = authService.getSession() ? authService.getSession() : null;
         mv.isLoading = false;
         mv.action = 0;
     };
@@ -59,7 +59,7 @@ app.controller('loginController', function (authService, toastr) {
                     authService.setSession(value.data);
                     toastr.success('Su cuenta ha sido creada', 'Información');
                     mv.isLoading = false;
-                    mv.session = authService.getSession();                 
+                    mv.session = authService.getSession();
                 })
                 .catch((err) => {
                     toastr.error(err.data.message, 'Error');
@@ -68,15 +68,27 @@ app.controller('loginController', function (authService, toastr) {
                     mv.userModel.email = '';
                     mv.confirm = '';
                 });
-        }        
+        }
     };
 
     mv.show = (value) => {
         mv.action = value;
     };
 
+    mv.isValidSignup = () => {
+        try {
+            return mv.isConfirm() && mv.userModel.email.includes('@');
+        } catch (err) {
+            return false;
+        }
+    };
+
     mv.isConfirm = () => {
-        return (mv.userModel.password == mv.confirm && mv.userModel.password.length > 7);
+        try {
+            return (mv.userModel.password == mv.confirm && mv.userModel.password.length > 7);
+        } catch (err) {
+            return false;
+        }
     };
 
     mv.showLogin = () => {
@@ -94,7 +106,6 @@ app.controller('loginController', function (authService, toastr) {
     mv.getIsLogged = () => {
         return authService.getIsLogged();
     };
-
 
     mv.init();
 });
