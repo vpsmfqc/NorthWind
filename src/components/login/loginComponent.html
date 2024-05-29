@@ -86,7 +86,7 @@
           ng-if="formSignup.confirm.$error.required && (formSignup.confirm.$touched || formSignup.confirm.$dirty || formSignup.$submitted)">
           Debe confirmar la contraseña.
         </small>
-        <small class="text-danger" ng-if="!loginCtrl.isConfirm() && (formSignup.confirm.$touched || formSignup.confirm.$dirty || formSignup.$submitted)">
+        <small class="text-danger" ng-if="!formSignup.confirm.$error.required && !loginCtrl.isConfirm() && (formSignup.confirm.$touched || formSignup.confirm.$dirty || formSignup.$submitted)">
           Las contraseñas no coinciden.
         </small>
       </div>
