@@ -1,5 +1,7 @@
 <h3>{{productsTableCtrl.supplier.companyName}}</h3>
-
+<div>
+    <button type="button" class="btn btn-primary" ng-click="productsTableCtrl.create(productsTableCtrl.supplier.id)">Crear</button>    
+</div>
 <div ng-if="!productsTableCtrl.isLoading" class="table-responsive">
     <table class="table table-striped">
         <thead>

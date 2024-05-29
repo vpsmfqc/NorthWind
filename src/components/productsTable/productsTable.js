@@ -94,5 +94,9 @@ app.controller('productsTableController', function ($scope, productService, cate
         $location.path(`/products/${id}`);
     };
 
+    mv.create = (id) =>{
+        $location.path(`/products/0/${id}`);
+    };
+
     mv.init();
 });
