@@ -36,6 +36,7 @@ app.controller('userEditController', function (authService, userService, $routeP
                 mv.userModel = value.data;
                 mv.isLoading = false;
                 mv.isNew = false;
+                mv.getDates();
                 toastr.success('¡Se creó con exito!', 'Información');
             })
             .catch((err) => {
@@ -51,6 +52,7 @@ app.controller('userEditController', function (authService, userService, $routeP
                 mv.userModel = value.data;
                 mv.isLoading = false;
                 mv.isNew = false;
+                mv.getDates();
                 toastr.success('¡Se modificó la contraseña con exito!', 'Información');
             })
             // eslint-disable-next-line no-unused-vars
@@ -74,35 +76,13 @@ app.controller('userEditController', function (authService, userService, $routeP
         } catch (err) {
             return false;
         }
-    };
-
-    mv.format = (value) => {
-        let num = Number.parseInt(value);
-        if (isNaN(num)) {
-            return '00';
-        } else {
-            return num < 10 ? `0${num}` : `${num}`;
-        }
-    };
-
-    mv.formatDate = (value) => {
-        let d = new Date(value);
-        let date = `${mv.format(d.getDate())}-${mv.format(d.getMonth() + 1)}-${mv.format(d.getFullYear())}`;
-        let time = `${mv.format(d.getHours())}:${mv.format(d.getMinutes())}:${mv.format(d.getSeconds())}`;
-        return `${date} ${time}`;
-    };
-
-    mv.getLastLogin = () => {
-        return mv.formatDate(mv.userModel.lastLogin);
-    };
-
-    mv.getDatePassword = () => {
-        return mv.formatDate(mv.userModel.datePassword);
-    };
+    };   
 
     mv.getDates = ()=>{
-        mv.userModel.lastLogin = mv.getLastLogin();
-        mv.userModel.datePassword = mv.getDatePassword();
+        // eslint-disable-next-line no-undef
+        mv.userModel.lastLogin = moment(mv.userModel.lastLogin).format('DD-MM-YYYY HH:mm:ss');
+        // eslint-disable-next-line no-undef
+        mv.userModel.datePassword = moment(mv.userModel.datePassword).format('DD-MM-YYYY HH:mm:ss');
     };
 
     mv.goBack = () => {
