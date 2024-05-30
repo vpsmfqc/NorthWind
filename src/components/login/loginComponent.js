@@ -72,7 +72,8 @@ app.controller('loginController', function (authService, toastr, $location) {
                     mv.confirm = '';
                 });
         } else if (mv.action == 2) {
-            alert('reset password');
+            mv.isLoading = true;
+            console.log(authService.getSession());
         }
     };
 

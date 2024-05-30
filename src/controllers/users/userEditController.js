@@ -10,7 +10,9 @@ app.controller('userEditController', function (authService, userService, $routeP
         mv.userModel = new Object();
         mv.userModel.id = $routeParams.idUser ? Number.parseInt($routeParams.idUser) : 0;
         mv.isNew = (mv.userModel.id == 0);
-        mv.getUserbyId();
+        if(!mv.isNew){
+            mv.getUserbyId();
+        }        
     };
    
     mv.getUserbyId = () => {
@@ -18,6 +20,7 @@ app.controller('userEditController', function (authService, userService, $routeP
         userService.getAllUserById(mv.userModel.id)
             .then((value) => {
                 mv.userModel = value.data;
+                mv.getDates();
                 mv.isLoading = false;
             })
             .catch((err) => {
@@ -95,6 +98,11 @@ app.controller('userEditController', function (authService, userService, $routeP
 
     mv.getDatePassword = () => {
         return mv.formatDate(mv.userModel.datePassword);
+    };
+
+    mv.getDates = ()=>{
+        mv.userModel.lastLogin = mv.getLastLogin();
+        mv.userModel.datePassword = mv.getDatePassword();
     };
 
     mv.goBack = () => {

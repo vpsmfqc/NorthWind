@@ -18,6 +18,10 @@ app.service('authService', function ($window, $location, $http) {
         return $http.post(`${this.path}/signup`, data);
     };
 
+    this.reset = (id, data) => {
+        return $http.put(`${this.path}/reset/${id}`, data);
+    };
+
     this.setSession = (data) => {
         // eslint-disable-next-line no-undef
         amplify.store.sessionStorage('isLogged', true);
