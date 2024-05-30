@@ -9,7 +9,7 @@ app.component('loginComponent', {
 });
 
 // eslint-disable-next-line no-undef
-app.controller('loginController', function (authService, toastr, $location) {
+app.controller('loginController', function (authService, toastr, $location, $uibModal) {
     let mv = this;
     // action deals with changing the password or create an account  
     // two values signup or password  
@@ -141,6 +141,24 @@ app.controller('loginController', function (authService, toastr, $location) {
     mv.getIsLogged = () => {
         return authService.getIsLogged();
     };
+
+    mv.open = () => {
+        let modalInstance = $uibModal.open({
+            templateUrl: './components/modalPassword/modalPassword.html',
+            controller: 'modalPasswordController',
+            controllerAs: 'modalPasswordCtrl',
+            size: 'md',
+            resolve: {}
+        });
+
+        // eslint-disable-next-line no-unused-vars
+        modalInstance.result.then(function (selectedItem) {
+            //console.log(selectedItem);
+        }, function () {
+            console.log('Modal dismissed at: ' + new Date());
+        });
+    };
+
 
     mv.init();
 });
