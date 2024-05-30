@@ -30,7 +30,7 @@ app.controller('tableController', function (orderService, $location) {
         mv.isLoading = true;
         orderService.getAllOrders()
             .then((value) => {
-                mv.orderList = value.data;
+                mv.orderList = value.data;               
                 mv.filteredList();
                 mv.isLoading = false;
             })
@@ -43,10 +43,13 @@ app.controller('tableController', function (orderService, $location) {
     mv.filteredList = () => {
         let newList = [];
         mv.orderList.forEach((order) => {
-            if (order.customerId == mv.customerId) {
-                order.orderDate = order.orderDate.replace(' 00:00:00.000', '').replace('T05:00:00.000Z', '');
-                order.requiredDate = order.requiredDate.replace(' 00:00:00.000', '').replace('T05:00:00.000Z', '');
-                order.shippedDate = order.shippedDate.replace(' 00:00:00.000', '').replace('T05:00:00.000Z', '');
+            if (order.customerId == mv.customerId) {                 
+                // eslint-disable-next-line no-undef
+                order.orderDate = moment(order.orderDate).format('dd-MM-yyyy');                                               
+                // eslint-disable-next-line no-undef
+                order.requiredDate = moment(order.requiredDate).format('dd-MM-yyyy');                
+                // eslint-disable-next-line no-undef
+                order.shippedDate = moment(order.shippedDate).format('dd-MM-yyyy');
                 newList.push(order);
             }
         });
