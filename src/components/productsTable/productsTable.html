@@ -7,24 +7,26 @@
         <thead>
             <tr>
                 <th> ID </th>
+                <th></th>
                 <th> Nombre </th>
                 <th><a>Categoría</a></th>
                 <th><a>Precio</a></th>
-                <th></th>
+                <th><a>Disponibilidad</a></th>               
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="product in productsTableCtrl.paginator.objBypage">
                 <td>{{product.id}}</td>
-                <td>{{product.name}}</td>
-                <td>{{product.categoryName()}}</td>
-                <td>{{product.unitPrice}}</td>
                 <td>
                     <a class="text-primary" style="cursor: pointer;" uib-popover="Editar" popover-trigger="'mouseenter'"
                         ng-click="productsTableCtrl.goTo(product.id)">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </a>
                 </td>
+                <td>{{product.name}}</td>
+                <td>{{product.categoryName()}}</td>
+                <td>{{product.unitPrice}}</td>
+                <td>{{product.unitsInStock}}</td>                
             </tr>
         </tbody>
     </table>

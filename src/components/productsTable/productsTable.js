@@ -70,6 +70,7 @@ app.controller('productsTableController', function ($scope, productService, cate
                         return category ? category.name : '';
                     },
                     unitPrice: p.unitPrice,
+                    unitsInStock: p.unitsInStock
                 };
                 copy.push(item);
             }
