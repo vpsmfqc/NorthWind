@@ -25,7 +25,7 @@ app.controller('productsTableController', function ($scope, productService, cate
 
     // Event to change the currentPage 
     $scope.$on('changePageEvent', function (event, data) {
-        mv.paginator.setPage(data);
+        mv.paginator.setPage(10);
     });
 
     mv.getAllProducts = () => {
