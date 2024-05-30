@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-undef
-app.controller('usersController', function (userService, paginatorService, $scope, $location) {
+app.controller('usersController', function (userService, paginatorService, $scope, $location, toastr) {
     let mv = this;
     mv.userList = [];
     mv.rawUserList = [];
@@ -96,6 +96,7 @@ app.controller('usersController', function (userService, paginatorService, $scop
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
                 mv.getAllUsers();
+                toastr.success(`¡Se eliminó exitosamente el usuario con ID ${id} !`, 'Información');
                 mv.isLoading = false;
             })
             .catch((err) => {
