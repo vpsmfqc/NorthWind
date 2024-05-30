@@ -17,7 +17,7 @@ app.controller('userEditController', function (authService, userService, $routeP
    
     mv.getUserbyId = () => {
         mv.isLoading = true;
-        userService.getAllUserById(mv.userModel.id)
+        userService.getUserById(mv.userModel.id)
             .then((value) => {
                 mv.userModel = value.data;
                 mv.getDates();

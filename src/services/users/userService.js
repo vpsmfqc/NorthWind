@@ -11,7 +11,7 @@ app.service('userService', function ($http) {
         return $http.get(this.path);
     };
 
-    this.getAllUserById = (id) => {
+    this.getUserById = (id) => {
         return $http.get(`${this.path}/${id}`);
     };
 
