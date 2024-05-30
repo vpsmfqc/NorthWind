@@ -23,7 +23,8 @@ app.controller('loginController', function (authService, toastr, $location) {
         email: '',
         password: '',
         datePassword: null,
-        lastLogin: null
+        lastLogin: null,
+        oldPassword: ''
     };
     /**
      * Constructor
@@ -70,6 +71,8 @@ app.controller('loginController', function (authService, toastr, $location) {
                     mv.userModel.email = '';
                     mv.confirm = '';
                 });
+        } else if (mv.action == 2) {
+            alert('reset password');
         }
     };
 
@@ -80,6 +83,14 @@ app.controller('loginController', function (authService, toastr, $location) {
     mv.isValidSignup = () => {
         try {
             return mv.isConfirm() && mv.userModel.email.includes('@');
+        } catch (err) {
+            return false;
+        }
+    };
+
+    mv.isValidReset = () => {
+        try {
+            return mv.isConfirm() && mv.userModel.oldPassword.length > 7;
         } catch (err) {
             return false;
         }

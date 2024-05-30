@@ -100,6 +100,52 @@
   </div>
 </div>
 
+<!-- Change password -->
+
 <div ng-if="loginCtrl.showReset()" class="row">
-  Resetear contraseña
+  <div class="col-md-6 offset-md-3 login-form">
+    <h2 class="text-center">Cambiar contraseña</h2>
+    <form name="formReset" ng-submit="loginCtrl.submit()">
+      <div class="form-group">
+        <label for="oldPassword">Contraseña anterior:</label>
+        <input type="password" class="form-control" id="oldPassword" name="oldPassword" ng-minlength="8"
+          ng-model="loginCtrl.userModel.oldPassword" placeholder="Contraseña anterior" required>
+        <small class="text-danger"
+          ng-if="formReset.oldPassword.$error.required && (formReset.oldPassword.$touched || formReset.oldPassword.$dirty || formReset.$submitted)">
+          Debe ingresar la contraseña.
+        </small>
+        <small class="text-danger"
+          ng-if="formReset.oldPassword.$error.minlength && (formReset.oldPassword.$touched || formReset.oldPassword.$dirty || formReset.$submitted)">
+          La contraseña debe tener mínimo 8 caracteres.
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="password">Contraseña:</label>
+        <input type="password" class="form-control" id="password" name="password" ng-minlength="8"
+          ng-model="loginCtrl.userModel.password" placeholder="Contraseña" required>
+        <small class="text-danger"
+          ng-if="formReset.password.$error.required && (formReset.password.$touched || formReset.password.$dirty || formReset.$submitted)">
+          Debe ingresar la contraseña.
+        </small>
+        <small class="text-danger"
+          ng-if="formReset.password.$error.minlength && (formReset.password.$touched || formReset.password.$dirty || formReset.$submitted)">
+          La contraseña debe tener mínimo 8 caracteres.
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="confirm">Confirmar Contraseña:</label>
+        <input type="password" class="form-control" id="confirm" name="confirm" ng-model="loginCtrl.confirm"
+          ng-minlength="8" placeholder="Contraseña" required>
+        <small class="text-danger"
+          ng-if="formReset.confirm.$error.required && (formReset.confirm.$touched || formReset.confirm.$dirty || formReset.$submitted)">
+          Debe confirmar la contraseña.
+        </small>
+        <small class="text-danger"
+          ng-if="!formReset.confirm.$error.required && !loginCtrl.isConfirm() && (formReset.confirm.$touched || formReset.confirm.$dirty || formReset.$submitted)">
+          Las contraseñas no coinciden.
+        </small>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" ng-disabled="!loginCtrl.isValidReset()">Aceptar</button>      
+    </form>
+  </div>
 </div>
