@@ -1,13 +1,13 @@
 // eslint-disable-next-line no-undef
 app.service('authService', function ($window, $location, $http) {
-    this.sessionKey = 'token';
+
     this.path = 'https://localhost:44353/api/users';
 
     /**
   * constructor
   */
     this.init = () => {
-        // this.sessionKey = 'token';
+
     };
 
     this.login = (data) => {
@@ -18,8 +18,8 @@ app.service('authService', function ($window, $location, $http) {
         return $http.post(`${this.path}/signup`, data);
     };
 
-    this.reset = (id, data) => {
-        return $http.put(`${this.path}/reset/${id}`, data);
+    this.reset = (data) => {
+        return $http.post(`${this.path}/reset`, data);
     };
 
     this.setSession = (data) => {

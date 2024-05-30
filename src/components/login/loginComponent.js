@@ -49,12 +49,15 @@ app.controller('loginController', function (authService, toastr, $location) {
                     mv.session = authService.getSession();
                 })
                 .catch((err) => {
-                    toastr.error(err.data.message, 'Error');
+                    try {
+                        toastr.error(err.data.message, 'Error');
+                    } catch (error) {
+                        toastr.error('¡Se produjo un error!', 'Error');
+                    }
                     mv.isLoading = false;
                     mv.userModel.password = '';
                     mv.userModel.email = '';
                 });
-            // eslint-disable-next-line no-empty
         } else if (mv.action == 1) {
             mv.isLoading = true;
             authService.signup(mv.userModel)
@@ -73,7 +76,22 @@ app.controller('loginController', function (authService, toastr, $location) {
                 });
         } else if (mv.action == 2) {
             mv.isLoading = true;
-            console.log(authService.getSession());
+            let data = authService.getSession();
+            data.oldPassword = mv.userModel.oldPassword;
+            data.password = mv.userModel.password;
+            authService.reset(data)
+                .then((value) => {
+                    console.log(value);
+                    toastr.success('¡Se ha cambiado la contraseña exitosamente!', 'Información');
+                    mv.isLoading = false;
+                })
+                .catch((err) => {
+                    toastr.error(err.data.message, 'Error');
+                    mv.isLoading = false;
+                });
+            mv.confirm = '';
+            mv.userModel.oldPassword = '';
+            mv.userModel.password = '';
         }
     };
 
