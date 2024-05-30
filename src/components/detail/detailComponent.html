@@ -2,7 +2,7 @@
     <div class="card-header" style="display: flex; flex-direction: row; justify-content: space-between;">
         <h4>Productos</h4>
         <button type="button" uib-popover="{{detailCtrl.info}}" class="btn btn-primary"
-            ng-click="detailCtrl.add()">Agregar</button>
+        ng-disabled="detailCtrl.isDisabled()" ng-click="detailCtrl.add()">Agregar</button>
     </div>
 
     <div class="card-body">
@@ -38,15 +38,15 @@
                         <span class="text-danger" style="margin-left: 1rem;">({{product.getDiff()}})</span>
                     </td>
                     <td ng-if="product.isEditable">
-                        <input class="form-control" style="width: 8rem;" type="number" name="" id="" min="0" max="100" ng-model="product.percent">                       
+                        <input class="form-control" style="width: 8rem;" type="number" name="" id="" min="0" max="100" ng-model="product.percent" ng-change="product.calculate()">                       
                     </td>
                     <!--  -->
                     <td>{{product.unitPrice}}</td>
                     <td style="text-align: end;">{{product.totalPrice() | number:2 }}</td>
                     <td style="text-align: end;">
-                        <a ng-if="product.isEditable" style="cursor: pointer; margin-right: 2rem;" ng-click="detailCtrl.save(product.productId)"><i class="fa-solid fa-check"></i></a>
-                        <a ng-if="!product.isEditable" style="cursor: pointer; margin-right: 2rem;" ng-click="detailCtrl.edit(product.productId)"><i class="fa-solid fa-pencil"></i></a>
-                        <a class="text-danger" style="cursor: pointer;" ng-click="detailCtrl.remove(product.productId)"><i class="fa-solid fa-trash-can"></i></a>
+                        <a uib-popover="Confimar" popover-trigger="'mouseenter'" ng-if="product.isEditable" style="cursor: pointer; margin-right: 2rem;" ng-click="detailCtrl.save(product.productId)"><i class="fa-solid fa-check"></i></a>
+                        <a uib-popover="Editar" popover-trigger="'mouseenter'" ng-if="!product.isEditable" style="cursor: pointer; margin-right: 2rem;" ng-click="detailCtrl.edit(product.productId)"><i class="fa-solid fa-pencil"></i></a>
+                        <a uib-popover="Eliminar" popover-trigger="'mouseenter'" class="text-danger" style="cursor: pointer;" ng-click="detailCtrl.remove(product.productId)"><i class="fa-solid fa-trash-can"></i></a>
                     </td>
                 </tr>
                 <tr>

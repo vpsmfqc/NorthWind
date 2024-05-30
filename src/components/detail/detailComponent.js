@@ -110,13 +110,16 @@ app.controller('detailController', function (productService) {
                     this.isEditable = false;
                 }
             },
+            calculate: function(){
+                this.discount = this.percent / 100;
+            },
             toggle: function () {
                 if (this.discount > 0) {
                     this.percent = this.discount * 100;
-                } else {                   
-                    this.discount = this.percent / 100;
+                } else {
+                    this.calculate();
                 }
-                this.isEditable = !this.isEditable;               
+                this.isEditable = !this.isEditable;
             },
             totalPrice: function () {
                 return (this.unitPrice - (this.unitPrice * this.discount)) * this.quantity;
@@ -130,7 +133,7 @@ app.controller('detailController', function (productService) {
                 this.unitPrice = fProduct.unitPrice;
                 this.quantity = 1;
                 this.discount = 0;
-                this.name = fProduct.name;               
+                this.name = fProduct.name;
             },
             updateStock: function () {
                 let obj = {
@@ -192,6 +195,15 @@ app.controller('detailController', function (productService) {
             mv.filter();
             let product = mv.createProductObj(0, true, 0, 0, 0, 0, 0, '');
             mv.listOfDetailedProducts.push(product);
+        }
+    };
+
+    mv.isDisabled = () => {
+        if (mv.listOfDetailedProducts.length > 0) {
+            let index = mv.listOfDetailedProducts.length - 1;
+            return mv.listOfDetailedProducts[index].isUnChecked();
+        } else {
+            return false;
         }
     };
 

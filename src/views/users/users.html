@@ -9,19 +9,16 @@
             <thead>
                 <tr>                    
                     <th>ID</th>
+                    <th></th>
+                    <th></th>
                     <th>Correo</th>
                     <th>Cambio contraseña</th>
-                    <th>Último login</th>
-                    <th></th>
-                    <th></th>
+                    <th>Último login</th>                    
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="user in usersCtrl.paginator.objBypage">                    
+                <tr ng-repeat="user in usersCtrl.paginator.objBypage">    
                     <td>{{user.id}}</td>
-                    <td>{{user.email}}</td>
-                    <td>{{user.datePassword | date:'dd-MM-yyyy HH:mm:ss'}}</td>
-                    <td>{{user.lastLogin | date:'dd-MM-yyyy HH:mm:ss'}}</td>
                     <td>
                         <a class="text-primary" style="cursor: pointer;" uib-popover="Editar"
                             popover-trigger="'mouseenter'" ng-click="usersCtrl.edit(user.id)">
@@ -34,6 +31,9 @@
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.datePassword | date:'dd-MM-yyyy hh:mm a'}}</td>
+                    <td>{{user.lastLogin | date:'dd-MM-yyyy hh:mm a'}}</td>                    
                 </tr>
             </tbody>
         </table>
