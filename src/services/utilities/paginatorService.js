@@ -25,10 +25,12 @@ app.service('paginatorService', function () {
                 this.objBypage = this.objList.slice(point[0], point[1]);
             },
             // Get the complete objects array divided 
-            paginate: function (rows = 0) {
-                if (rows > 0) {
-                    this.rowsByPage = rows;
-                }
+            paginate: function (rows) {                
+                if(rows){
+                    if (rows > 0) {
+                        this.rowsByPage = rows;
+                    }
+                }               
                 this.rowsFromTo = [];
                 const length = this.objList.length;
                 const rest = length % this.rowsByPage;
