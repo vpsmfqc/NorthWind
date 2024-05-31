@@ -172,21 +172,7 @@ app.controller('orderEditController', function ($scope, customerService, employe
     /**
      * Methods for updating the Stock
      */
-    mv.updateStock = () => {
-        for (let i = 0; i < mv.updatedDetails.length; i++) {
-            // eslint-disable-next-line no-unused-vars                        
-            mv.updatedDetails[i].updateStock().then((value) => {
-            }).catch((err) => {
-                console.log(err);
-            });
-        }
-        if (mv.isNew) {
-            toastr.success(`¡Se ha creado la order con ID ${mv.currentOrderId}!`, 'Información');
-        } else {
-            toastr.success(`¡Se ha actualizado la order con ID ${mv.currentOrderId}!`, 'Información');
-        }
-        mv.isLoading = false;
-    };
+    
     /**
      * end
     */
@@ -197,8 +183,7 @@ app.controller('orderEditController', function ($scope, customerService, employe
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
                 mv.currentOrderId = value.data.id;
-                mv.orderModel.id = mv.currentOrderId;
-                mv.updateStock();
+                mv.orderModel.id = mv.currentOrderId;               
                 mv.isNew = false;
             })
             // eslint-disable-next-line no-unused-vars
@@ -230,8 +215,7 @@ app.controller('orderEditController', function ($scope, customerService, employe
         orderService.updateOrder(mv.currentOrderId, mv.orderModel)
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
-                this.fillForm(value.data);
-                mv.updateStock();
+                this.fillForm(value.data);                
             })
             // eslint-disable-next-line no-unused-vars
             .catch((err) => {

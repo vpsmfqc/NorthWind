@@ -134,12 +134,7 @@ app.controller('detailController', function (productService) {
                 this.quantity = 1;
                 this.discount = 0;
                 this.name = fProduct.name;
-            },
-            updateStock: function () {
-                let found = mv.rawArrayOfProducts.find((obj) => { return obj.id == this.productId; });
-                found.unitsInStock = this.getDiff();
-                return productService.updateProduct(this.productId, found);
-            },
+            },           
             isUnChecked: function () {
                 return this.isEditable || (this.quantity == 0);
             },
