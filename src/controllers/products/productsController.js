@@ -1,54 +1,37 @@
 // eslint-disable-next-line no-undef
-app.controller('productsController', function ($scope, $location, productService, supplierService, categoryService, toastr) {
+app.controller('productsController', function (paginatorService, $scope, $location, productService, supplierService, categoryService, toastr) {
     let mv = this;
     mv.isLoading = false;
     mv.message = '';
+    
+    mv.products = [];
+    mv.suppliers = [];
+    mv.categories = [];
+    mv.table = [];
 
-    //This array hold the raw data 
-    mv.arrayOfProducts = [];
-    mv.arrayOfProductsByPage = [];
-
-    mv.listOfAllProducts = [];
-    mv.listOfAllSuppliers = [];
-    mv.listOfAllCategories = [];
-
-    mv.searchInput = '';
     mv.isFound = false;
-    mv.isTyping = false;
-    mv.orderArrays = [];
+    mv.orderArrays = [];    
 
-    mv.currentPage = 1;
-    mv.rowsByPage = 5;
-    mv.listOfPages = [];
-
-    mv.rowsFromTo = [];
-    mv.rawArrayOfProducts = [];
+    mv.paginator = paginatorService.getPaginator();
 
     /**
      * Constructor
      */
-    mv.init = () => {
-        mv.rowsByPage = 10;
-        mv.currentPage = 1;
-        for (let i = 5; i <= 20; i = i + 5) {
-            mv.listOfPages.push(i);
-        }
+    mv.init = () => {      
         for (let j = 0; j < 2; j++) {
             mv.orderArrays.push(false);
         }
-        mv.getAllProducts();
+        mv.getProducts();
     };
 
     // Event repaginate
     $scope.$on('paginateEvent', function (event, data) {
-        mv.rowsByPage = data;
-        mv.paginate();
+        mv.paginator.paginate(data);
     });
 
     // Event to change the currentPage 
     $scope.$on('changePageEvent', function (event, data) {
-        mv.currentPage = data;
-        mv.splitIntoPage();
+        mv.paginator.setPage(data);
     });
 
     // Event to searching the text 
@@ -56,8 +39,8 @@ app.controller('productsController', function ($scope, $location, productService
         if (data.isTyping) {
             mv.search(data.searchInput);
         } else {
-            mv.arrayOfProducts = mv.rawArrayOfProducts;
-            mv.paginate();
+            mv.paginator.objList = mv.table;
+            mv.paginator.paginate();
         }
     });
 
@@ -67,13 +50,12 @@ app.controller('productsController', function ($scope, $location, productService
     });
 
     // Get all the Products 
-    mv.getAllProducts = () => {
-        mv.isLoading = true;       
+    mv.getProducts = () => {
+        mv.isLoading = true;
         productService.getAllProducts()
             .then((value) => {
-                mv.rawArrayOfProducts = value.data;
-                mv.arrayOfProducts = mv.rawArrayOfProducts;
-                mv.getAllSuppliers();
+                mv.products = value.data;                    
+                mv.getSuppliers();
             })
             .catch((err) => {
                 mv.message = err;
@@ -82,11 +64,11 @@ app.controller('productsController', function ($scope, $location, productService
     };
 
     // Get all the suppliers 
-    mv.getAllSuppliers = () => {       
+    mv.getSuppliers = () => {
         supplierService.getAllSuppliers()
             .then((value) => {
-                mv.listOfAllSuppliers = value.data;
-                mv.getAllCategories();
+                mv.suppliers = value.data;              
+                mv.getCategories();
             })
             .catch((err) => {
                 console.log(err);
@@ -95,12 +77,13 @@ app.controller('productsController', function ($scope, $location, productService
     };
 
     // Get all the categories 
-    mv.getAllCategories = () => {        
+    mv.getCategories = () => {
         categoryService.getAllCategories()
             .then((value) => {
-                mv.listOfAllCategories = value.data;
-                mv.arrayOfProducts = mv.createTable();
-                mv.paginate();
+                mv.categories = value.data;
+                mv.createTable();               
+                mv.paginator.objList = mv.table;
+                mv.paginator.paginate();
                 mv.isLoading = false;
             })
             .catch((err) => {
@@ -110,7 +93,7 @@ app.controller('productsController', function ($scope, $location, productService
     };
 
     // Format the obj of the raw list 
-    mv.retrieveProduct = (obj) => {
+    mv.getRow = (obj) => {
         try {
             return {
                 id: obj.id,
@@ -130,147 +113,97 @@ app.controller('productsController', function ($scope, $location, productService
     //Create the table to show the datas
     //This table takes data from Categorie, Suppliers and Products
     mv.createTable = () => {
-        mv.arrayOfProducts.forEach((obj) => {
-            let product = mv.retrieveProduct(obj);
-            if (product) {
-                mv.listOfAllProducts.push(product);
+        mv.table = [];
+        mv.products.forEach((obj) => {
+            let row = mv.getRow(obj);
+            if (row) {
+                mv.table.push(row);
             }
-        });
-        return mv.listOfAllProducts;
+        });       
     };
 
     mv.getSupplierById = (id) => {
-        return mv.listOfAllSuppliers.find((obj) => { return obj.id == id; });
+        return mv.suppliers.find((obj) => { return obj.id == id; });
     };
     mv.getCategoryById = (id) => {
-        return mv.listOfAllCategories.find((obj) => { return obj.id == id; });
+        return mv.categories.find((obj) => { return obj.id == id; });
     };
 
-    // Split the complete array of cunstomers into the number of pages 
-    mv.splitIntoPage = () => {
-        let index = mv.currentPage - 1;
-        mv.split(mv.rowsFromTo[index]);
-    };
-
-    mv.split = (point) => {
-        mv.arrayOfProductsByPage = mv.arrayOfProducts.slice(point[0], point[1]);
-    };
-
-    // Get the complete customers array divided 
-    mv.paginate = () => {
-        mv.rowsFromTo = [];
-        const length = mv.arrayOfProducts.length;
-        const rest = length % mv.rowsByPage;
-        const pages = Number.parseInt((length - rest) / mv.rowsByPage);
-        const lastPage = (rest > 0) ? pages + 1 : pages;
-        for (let i = 0; i < lastPage; i++) {
-            let startIndex = i * mv.rowsByPage;
-            let endIndex = (i < (lastPage - 1)) ? startIndex + mv.rowsByPage : length;
-            let pair = [startIndex, endIndex];
-            mv.rowsFromTo.push(pair);
-        }
-        mv.currentPage = 1;
-        mv.splitIntoPage();
-    };
-
-    // Get the las page
-    mv.getLastPage = () => {
-        return mv.rowsFromTo.length;
-    };
-
-    //Redirect to the Product detail by its id
     mv.goTo = (id) => {
         $location.path(`/products/${id}`);
     };
 
-    //Redirect to create a new Product
-    mv.goToNew = () => {
-        mv.goTo(0);
-    };
-
     // Search in the complete array for the input info
-    mv.search = (value) => {       
+    mv.search = (value) => {
         const inputText = value.toLowerCase().trim();
-        let productsArray = [];
-        mv.arrayOfProductsByPage = [];
-        mv.arrayOfProducts.forEach((obj) => {
+        let founds = [];       
+        mv.table.forEach((obj) => {           
             try {
                 if (obj.name.toLowerCase().includes(inputText) ||
                     obj.id.toString().toLowerCase() == inputText ||
-                    mv.getSupplierById(obj.supplierId).companyName.toString().toLowerCase().includes(inputText) ||
-                    mv.getCategoryById(obj.categoryId).name.toString().toLowerCase().includes(inputText) ||
+                    obj.companyName.toLowerCase().includes(inputText) ||
+                    obj.categoryName.toLowerCase().includes(inputText) ||
                     obj.unitPrice.toString().includes(inputText) ||
                     obj.quantityPerUnit.toString().toLowerCase().includes(inputText)) {
-                    productsArray.push(obj);
+                    founds.push(obj);                                     
                 }
             } catch (error) {
                 console.log(error);
             }
         });
-        mv.isFound = (productsArray.length > 0);
+        mv.isFound = (founds.length > 0);
         if (mv.isFound) {
-            mv.arrayOfProducts = productsArray;
-            mv.paginate();
+            mv.paginator.objList = founds;
+            mv.paginator.paginate();
         } else {
             mv.message = 'No se encontró ningún resultado...';
         }
     };
 
     // Delete the selected Product by its id
-    mv.deleteProduct = (id) => {
-        mv.isLoading = true;        
+    mv.delete = (id) => {
+        mv.isLoading = true;
         productService.deleteProduct(id)
             // eslint-disable-next-line no-unused-vars
             .then((value) => {
-                mv.getAllProducts();
-                mv.displaySuccess(`Se eliminó el producto con ID ${id}.`, 'Información');
+                mv.getProducts();
+                toastr.success(`Se eliminó el producto con ID ${id}.`, 'Información');
                 mv.isLoading = false;
             })
             // eslint-disable-next-line no-unused-vars
             .catch((err) => {
                 mv.isLoading = false;
-                mv.displayError('¡Se produjo un error!', 'Error');
+                toastr.error('¡Se produjo un error!', 'Error');
             });
     };
 
     // Get the index of the Product by its id 
     mv.getIndex = (id) => {
-        const index = mv.arrayOfProducts.findIndex((obj) => {
+        const index = mv.table.findIndex((obj) => {
             return obj.id == id;
         });
         return index + 1;
     };
 
-    mv.sortColumn = (index) => {
-        const fieldNames = ['id', 'name'];
-        let name = fieldNames[index];
-        if (isNaN(mv.arrayOfProductsByPage[0][name])) {
-            if (mv.orderArrays[index]) {
-                mv.arrayOfProductsByPage.sort((a, b) => a[name].localeCompare(b[name]));
-            } else {
-                mv.arrayOfProductsByPage.sort((a, b) => b[name].localeCompare(a[name]));
-            }
-        } else {
-            if (mv.orderArrays[index]) {
-                mv.arrayOfProductsByPage.sort((a, b) => a[name] - b[name]);
-            } else {
-                mv.arrayOfProductsByPage.sort((a, b) => b[name] - a[name]);
-            }
-        }
-        mv.orderArrays[index] = !mv.orderArrays[index];
+    mv.sort = (index) => {
+        // const fieldNames = ['id', 'name'];
+        // let name = fieldNames[index];
+        // if (isNaN(mv.arrayOfProductsByPage[0][name])) {
+        //     if (mv.orderArrays[index]) {
+        //         mv.arrayOfProductsByPage.sort((a, b) => a[name].localeCompare(b[name]));
+        //     } else {
+        //         mv.arrayOfProductsByPage.sort((a, b) => b[name].localeCompare(a[name]));
+        //     }
+        // } else {
+        //     if (mv.orderArrays[index]) {
+        //         mv.arrayOfProductsByPage.sort((a, b) => a[name] - b[name]);
+        //     } else {
+        //         mv.arrayOfProductsByPage.sort((a, b) => b[name] - a[name]);
+        //     }
+        // }
+        // mv.orderArrays[index] = !mv.orderArrays[index];
     };
 
-    mv.displayError = (message, title) => {
-        toastr.error(message, title);
-    };
-
-    mv.displaySuccess = (message, title) => {
-        toastr.success(message, title);
-    };
-
-    mv.displayInfo = (message, title) => {
-        toastr.info(message, title);
-    };
     // Initialized constructor
     mv.init();
 });
