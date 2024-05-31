@@ -53,7 +53,7 @@ app.controller('detailController', function (productService) {
             .catch((err) => {
                 mv.isLoading = false;
             });
-    };
+    };  
 
     // Create the new table 
     mv.createTable = () => {
@@ -110,7 +110,7 @@ app.controller('detailController', function (productService) {
                     this.isEditable = false;
                 }
             },
-            calculate: function(){
+            calculate: function () {
                 this.discount = this.percent / 100;
             },
             toggle: function () {
@@ -136,11 +136,9 @@ app.controller('detailController', function (productService) {
                 this.name = fProduct.name;
             },
             updateStock: function () {
-                let obj = {
-                    productId: this.productId,
-                    unitsInStock: (this.unitsInStock - this.discount)
-                };
-                return productService.updateProduct(this.productId, obj);
+                let found = mv.rawArrayOfProducts.find((obj) => { return obj.id == this.productId; });
+                found.unitsInStock = this.getDiff();
+                return productService.updateProduct(this.productId, found);
             },
             isUnChecked: function () {
                 return this.isEditable || (this.quantity == 0);
