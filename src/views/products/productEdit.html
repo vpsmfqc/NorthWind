@@ -11,7 +11,7 @@
     <div ng-if="!productEditCtrl.isLoading" class="row justify-content-center mt-3">
         <div class="col-md-12">
             <form name="formEdit" ng-submit="productEditCtrl.submit()" class="card">
-                <div class="mb-3">
+                <div class="mb-3" style="margin-top: 1rem;">
                     <button type="submit" class="btn btn-primary" ng-disabled="formEdit.$invalid">Guardar</button>
                     <button type="button" class="btn btn-secondary" ng-click="productEditCtrl.goBack()">Atrás</button>
                 </div>
