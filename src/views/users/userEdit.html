@@ -12,8 +12,7 @@
         <div class="col-md-12">
             <form name="formEdit" ng-submit="userEditCtrl.submit()" class="card">
                 <div>
-                    <button type="submit" class="btn btn-primary"
-                        ng-disabled="!userEditCtrl.isValid()">Guardar</button>
+                    <button type="submit" class="btn btn-primary" ng-disabled="!userEditCtrl.isValid()">Guardar</button>
                     <button type="button" class="btn btn-secondary" ng-click="userEditCtrl.goBack()">Atrás</button>
                 </div>
                 <div ng-if="!userEditCtrl.isNew" class="card-header">
@@ -38,7 +37,7 @@
                         <input id="lastLogin" name="lastLogin" type="text" class="form-control"
                             placeholder="Último login" ng-model="userEditCtrl.userModel.lastLogin" readonly>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3" ng-if="!userEditCtrl.isNew">
                         <label for="datePassword">Cambio contraseña:</label>
                         <input id="datePassword" name="datePassword" type="text" class="form-control"
                             placeholder="Cambio contraseña" ng-model="userEditCtrl.userModel.datePassword" readonly>
@@ -71,7 +70,8 @@
                         </small>
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-primary" ng-disabled="!userEditCtrl.isValid()">Guardar</button>
+                        <button type="submit" class="btn btn-primary"
+                            ng-disabled="!userEditCtrl.isValid()">Guardar</button>
                         <button type="button" class="btn btn-secondary" ng-click="userEditCtrl.goBack()">Atrás</button>
                     </div>
                 </div>

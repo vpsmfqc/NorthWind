@@ -40,14 +40,15 @@
 </div>
 
 <div ng-if="loginCtrl.showHome()" class="row">
-  <h2>Infomarción de la cuenta</h2>
+  <h2>Información de la cuenta</h2>
   <hr>
-  <h4>Correo: {{loginCtrl.session.email}}</h4>
-  <h4>Último logueo: {{loginCtrl.session.lastLogin | date:'dd-MM-yyyy HH:mm a'}} </h4>
-  <h4>Cambio contraseña: {{loginCtrl.session.datePassword | date:'dd-MM-yyyy HH:mm a'}} </h4>
+  <p style="font-size: 1.8rem;"><b>Correo:</b> {{loginCtrl.session.email}}</p>
+  <p style="font-size: 1.8rem;"><b>Último logueo:</b> {{loginCtrl.session.lastLogin | date:'dd-MM-yyyy HH:mm a'}} </p>
+  <p style="font-size: 1.8rem;"><b> Cambio contraseña: </b>{{loginCtrl.session.datePassword | date:'dd-MM-yyyy HH:mm a'}} </p>
   <hr>
   <div style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center;">
-    <h4 style="margin-right: 1rem;"> Contraseña: </h4> <button type="button" class="btn btn-primary btn-block" style="width: 8rem;" ng-click="loginCtrl.open()">Cambiar</button> 
+    <p style="margin-right: 1rem; font-size: 1.8rem;"> <b>Contraseña: </b> </p> <button type="button" class="btn btn-primary btn-block"
+      style="width: 8rem;" ng-click="loginCtrl.open()">Cambiar</button>
   </div>
 </div>
 

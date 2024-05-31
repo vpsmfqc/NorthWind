@@ -10,11 +10,11 @@ app.controller('userEditController', function (authService, userService, $routeP
         mv.userModel = new Object();
         mv.userModel.id = $routeParams.idUser ? Number.parseInt($routeParams.idUser) : 0;
         mv.isNew = (mv.userModel.id == 0);
-        if(!mv.isNew){
+        if (!mv.isNew) {
             mv.getUserbyId();
-        }        
+        }
     };
-   
+
     mv.getUserbyId = () => {
         mv.isLoading = true;
         userService.getUserById(mv.userModel.id)
@@ -56,7 +56,7 @@ app.controller('userEditController', function (authService, userService, $routeP
                 toastr.success('¡Se modificó la contraseña con exito!', 'Información');
             })
             // eslint-disable-next-line no-unused-vars
-            .catch((err) => {               
+            .catch((err) => {
                 toastr.error('¡No se pudo realizar la operación!', 'Error');
                 mv.isLoading = false;
             });
@@ -76,11 +76,13 @@ app.controller('userEditController', function (authService, userService, $routeP
         } catch (err) {
             return false;
         }
-    };   
+    };
 
-    mv.getDates = ()=>{
-        // eslint-disable-next-line no-undef
-        mv.userModel.lastLogin = moment(mv.userModel.lastLogin).format('DD-MM-YYYY HH:mm:ss');
+    mv.getDates = () => {
+        if (mv.userModel.lastLogin)
+            // eslint-disable-next-line no-undef
+            mv.userModel.lastLogin = moment(mv.userModel.lastLogin).format('DD-MM-YYYY HH:mm:ss');
+        
         // eslint-disable-next-line no-undef
         mv.userModel.datePassword = moment(mv.userModel.datePassword).format('DD-MM-YYYY HH:mm:ss');
     };
@@ -92,9 +94,9 @@ app.controller('userEditController', function (authService, userService, $routeP
     mv.submit = () => {
         if (!mv.isNew) {
             mv.update();
-        }else{
+        } else {
             mv.create();
-        } 
+        }
         mv.confirm = '';
     };
 
