@@ -185,24 +185,25 @@ app.controller('productsController', function (paginatorService, $scope, $locati
         return index + 1;
     };
 
-    mv.sort = (index) => {
-        // const fieldNames = ['id', 'name'];
-        // let name = fieldNames[index];
-        // if (isNaN(mv.arrayOfProductsByPage[0][name])) {
-        //     if (mv.orderArrays[index]) {
-        //         mv.arrayOfProductsByPage.sort((a, b) => a[name].localeCompare(b[name]));
-        //     } else {
-        //         mv.arrayOfProductsByPage.sort((a, b) => b[name].localeCompare(a[name]));
-        //     }
-        // } else {
-        //     if (mv.orderArrays[index]) {
-        //         mv.arrayOfProductsByPage.sort((a, b) => a[name] - b[name]);
-        //     } else {
-        //         mv.arrayOfProductsByPage.sort((a, b) => b[name] - a[name]);
-        //     }
-        // }
-        // mv.orderArrays[index] = !mv.orderArrays[index];
+    mv.sort = (index) => {      
+        const fieldNames = ['id', 'name'];
+        let name = fieldNames[index];
+        if (isNaN(mv.paginator.objBypage[0][name])) {
+            if (mv.orderArrays[index]) {
+                mv.paginator.objBypage.sort((a, b) => a[name].localeCompare(b[name]));
+            } else {
+                mv.paginator.objBypage.sort((a, b) => b[name].localeCompare(a[name]));
+            }
+        } else {
+            if (mv.orderArrays[index]) {
+                mv.paginator.objBypage.sort((a, b) => a[name] - b[name]);
+            } else {
+                mv.paginator.objBypage.sort((a, b) => b[name] - a[name]);
+            }
+        }
+        mv.orderArrays[index] = !mv.orderArrays[index];
     };
+    
 
     // Initialized constructor
     mv.init();
